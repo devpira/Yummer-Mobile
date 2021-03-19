@@ -1,0 +1,17 @@
+include: package:lint/analysis_options.yaml
+
+analyzer:
+  errors:
+    missing_return: error
+    prefer_const_constructors: error
+    prefer_final_locals: error
+    argument_type_not_assignable: warning
+    avoid_redundant_argument_values: error
+    sized_box_for_whitespace: error
+    camel_case_types: error
+    unused_import: error
+    unused_local_variable: warning
+    duplicate_import: error
+    unnecessary_new: error
+    unnecessary_await_in_return: error
+

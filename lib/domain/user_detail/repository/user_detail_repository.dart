@@ -1,0 +1,57 @@
+import 'package:injectable/injectable.dart';
+import 'package:meta/meta.dart';
+import 'package:yummer/data/core/graphql/graphql.dart';
+import 'package:yummer/data/data.dart';
+import 'package:yummer/domain/user_detail/user_detail.dart';
+
+@lazySingleton
+class UserDetailRepository {
+  final UserDetailApi _userDetailApi;
+
+  const UserDetailRepository({
+    @required UserDetailApi userDetailApi,
+  })  : assert(userDetailApi != null),
+        _userDetailApi = userDetailApi;
+
+  Future<void> createUserDetail(
+      {@required UserDetailModel userDetailModel}) async {
+    try {
+      await _userDetailApi.createUserDetail(
+        userDetailModel.firstName,
+        userDetailModel.lastName,
+        userDetailModel.email,
+      );
+    } on GraphQLException catch (e) {
+      print(e.toString());
+      throw UserDetailFailure(errorMessage: e.toString());
+    } catch (e) {
+      print(e.toString());
+      throw const UserDetailFailure(
+          errorMessage: "Failed to create user. Please try again");
+    }
+  }
+
+  Future<UserDetailModel> getUserDetail() async {
+    try {
+      return UserDetailModel.fromMap(await _userDetailApi.getUserDetail());
+    } on GraphQLException catch (e) {
+      print(e.toString());
+      throw UserDetailFailure(errorMessage: e.toString());
+    } catch (e) {
+      print(e.toString());
+      throw const UserDetailFailure(
+          errorMessage: "Failed to get user. Please try again");
+    }
+  }
+}
+
+class UserDetailFailure implements Exception {
+  final String errorCode;
+  final String errorMessage;
+  const UserDetailFailure({this.errorCode = "", this.errorMessage = ""});
+
+  @override
+  String toString() {
+    return errorMessage;
+  }
+}

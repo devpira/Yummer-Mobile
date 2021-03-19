@@ -1,0 +1,1 @@
+Authentication Library based on Firebase
