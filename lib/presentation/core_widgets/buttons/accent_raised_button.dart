@@ -36,7 +36,7 @@ class AccentRaisedButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        onPressed: () => onClick(),
+        onPressed: showProgressBar ? () => {} : () => onClick(),
         child: (!showProgressBar)
             ? Text(
                 text,

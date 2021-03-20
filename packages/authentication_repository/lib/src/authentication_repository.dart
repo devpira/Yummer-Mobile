@@ -455,6 +455,7 @@ extension on firebase_auth.User {
   UserModel get toUser {
     return UserModel(
       id: uid,
+      phoneNumber: phoneNumber,
       email: email,
       name: displayName,
       photo: photoURL,

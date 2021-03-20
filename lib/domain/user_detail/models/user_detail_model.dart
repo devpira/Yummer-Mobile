@@ -6,11 +6,11 @@ part 'user_detail_model.g.dart';
 class UserDetailModel {
   @JsonKey(name: '_id')
   String id;
-  String firstName;
-  String lastName;
+  String phoneNumber;
+  String name;
   String email;
 
-  UserDetailModel({this.id, this.firstName, this.lastName, this.email});
+  UserDetailModel({this.id, this.phoneNumber, this.name, this.email});
 
   factory UserDetailModel.fromJson(Map<String, dynamic> data) => _$UserDetailModelFromJson(data);
 
@@ -19,8 +19,8 @@ class UserDetailModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'firstName': firstName,
-      'lastName': lastName,
+      'phoneNumber': phoneNumber,
+      'name': name,
       'email': email,
     };
   }
@@ -30,8 +30,8 @@ class UserDetailModel {
   
     return UserDetailModel(
       id: map['id'] as String,
-      firstName: map['firstName'] as String,
-      lastName: map['lastName'] as String,
+      phoneNumber: map['phoneNumber'] as String,
+      name: map['name'] as String,
       email: map['email'] as String,
     );
   }

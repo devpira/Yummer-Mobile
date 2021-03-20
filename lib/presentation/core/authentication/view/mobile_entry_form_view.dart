@@ -12,13 +12,13 @@ class MobileEntryFormView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        // if (state.status.isSubmissionFailure) {
-        //   Scaffold.of(context)
-        //     ..hideCurrentSnackBar()
-        //     ..showSnackBar(
-        //       SnackBar(content: Text(state.errorMessage)),
-        //     );
-        // }
+        if (state.status.isSubmissionFailure) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(content: Text(state.errorMessage)),
+            );
+        }
       },
       child: LayoutBuilder(
         builder: (context, size) {
@@ -101,41 +101,19 @@ class _PhoneNumberInput extends StatelessWidget {
           previous.formSubmitted != current.formSubmitted,
       builder: (context, state) {
         print(state.phoneNumber.invalid);
-        return TextFormField(
-          onChanged: (phoneNumber) =>
+        return TextFieldStyleOne(
+          screenHeight: screenHeight,
+          screenWidth: screenWidth,
+          onChanged: (String phoneNumber) =>
               context.read<LoginCubit>().phoneNumberChanged(phoneNumber),
           keyboardType: TextInputType.phone,
-          // autofocus: true,
           textInputAction: TextInputAction.done,
           initialValue: state.phoneNumber.value,
-          decoration: InputDecoration(
-            labelText: 'Mobile Number',
-            labelStyle: TextStyle(
-              fontFamily: 'Quicksand',
-              fontWeight: FontWeight.w700,
-              color: AppConfig.of(context).theme.captionTextColor,
-            ),
-            filled: true,
-            fillColor: AppConfig.of(context).theme.textFieldOneBackgroundColor,
-            contentPadding: EdgeInsets.only(
-                left: screenWidth * 0.04,
-                right: screenWidth * 0.04,
-                top: screenHeight * 0.022,
-                bottom: screenHeight * 0.022),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[300]),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: AppConfig.of(context).theme.primaryColor),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            helperText: '',
-            errorText: state.formSubmitted && state.phoneNumber.invalid
-                ? 'Invalid Mobile Number'
-                : null,
-          ),
+          labelText: 'Mobile Number',
+          helperText: '',
+          errorText: state.formSubmitted && state.phoneNumber.invalid
+              ? 'Invalid Mobile Number'
+              : null,
         );
       },
     );

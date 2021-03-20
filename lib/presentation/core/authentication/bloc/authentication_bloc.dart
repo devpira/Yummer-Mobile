@@ -45,9 +45,9 @@ class AuthenticationBloc
       return const AuthenticationState.unauthenticated();
     }
 
-    if (!event.user.emailVerifed) {
-      return AuthenticationState.authenticatedEmailNotVerifed(event.user);
-    }
+    // if (!event.user.emailVerifed) {
+    //   return AuthenticationState.authenticatedEmailNotVerifed(event.user);
+    // }
 
     return AuthenticationState.authenticated(event.user);
   }

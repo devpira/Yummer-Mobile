@@ -6,11 +6,9 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:yummer/config/app_config.dart';
-import 'package:yummer/config/app_values.dart';
-import 'package:yummer/config/firebase_config.dart';
-import 'package:yummer/config/theme.dart';
-import 'package:yummer/presentation/core/authentication/authentication.dart';
+
+import 'package:yummer/config/config.dart';
+import 'package:yummer/presentation/core/core.dart';
 import 'package:yummer/routes/router.gr.dart';
 
 import 'injection.dart';
@@ -49,6 +47,15 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthenticationBloc>(
           create: (_) => getIt<AuthenticationBloc>(),
         ),
+        BlocProvider<UserDetailBloc>(
+          create: (_) => getIt<UserDetailBloc>(),
+        ),
+        BlocProvider<ErrorHandlingBloc>(
+          create: (_) => getIt<ErrorHandlingBloc>(),
+        ),
+        BlocProvider<InternetConnectivityCubit>(
+          create: (_) => getIt<InternetConnectivityCubit>(),
+        ),
       ],
       child: AppConfig(
         theme: getIt<AppThemeData>(),
@@ -73,41 +80,41 @@ class AppView extends StatelessWidget {
         builder: (context, child) {
           return MultiBlocListener(
             listeners: [
-              // BlocListener<ErrorHandlingBloc, ErrorHandlingState>(
-              //   listener: (context, state) {
-              //     if (state is ErrorHandlingNewErrorOccurred) {
-              //       ExtendedNavigator.root.pushAndRemoveUntil<void>(
-              //         Routes.systemErrorPage,
-              //         (route) => false,
-              //         arguments: SystemErrorPageArguments(
-              //           errorMessage: state.errorMessage,
-              //           tryAgainFunction: state.tryAgainFunction,
-              //           showLogOut: true,
-              //         ),
-              //       );
-              //     }
-              //   },
-              // ),
+              BlocListener<ErrorHandlingBloc, ErrorHandlingState>(
+                listener: (context, state) {
+                  if (state is ErrorHandlingNewErrorOccurred) {
+                    ExtendedNavigator.root.pushAndRemoveUntil<void>(
+                      Routes.systemErrorPage,
+                      (route) => false,
+                      arguments: SystemErrorPageArguments(
+                        errorMessage: state.errorMessage,
+                        tryAgainFunction: state.tryAgainFunction,
+                        showLogOut: true,
+                      ),
+                    );
+                  }
+                },
+              ),
               BlocListener<AuthenticationBloc, AuthenticationState>(
                 listener: (context, state) {
                   print(state.status.toString());
                   switch (state.status) {
                     case AuthenticationStatus.authenticated:
-                      // context.read<UserDetailBloc>().add(
-                      //       UserDetailLoadRequested(user: state.user),
-                      //     );
+                      context.read<UserDetailBloc>().add(
+                            UserDetailLoadRequested(user: state.user),
+                          );
                       break;
-                    case AuthenticationStatus.authenticatedEmailNotVerifed:
-                      ExtendedNavigator.root.pushAndRemoveUntil<void>(
-                        Routes.verifyEmailPage,
-                        (route) => false,
-                      );
-                      break;
+                    // case AuthenticationStatus.authenticatedEmailNotVerifed:
+                    //   ExtendedNavigator.root.pushAndRemoveUntil<void>(
+                    //     Routes.verifyEmailPage,
+                    //     (route) => false,
+                    //   );
+                    //   break;
                     case AuthenticationStatus.unauthenticated:
                       // Clear the user details when user logged out:
-                      // context
-                      //     .read<UserDetailBloc>()
-                      //     .add(UserDetailRemoveRequested());
+                      context
+                          .read<UserDetailBloc>()
+                          .add(UserDetailRemoveRequested());
                       ExtendedNavigator.root.pushAndRemoveUntil<void>(
                         Routes.loginPage,
                         (route) => false,
@@ -118,38 +125,38 @@ class AppView extends StatelessWidget {
                   }
                 },
               ),
-              // BlocListener<UserDetailBloc, UserDetailState>(
-              //   listener: (context, state) {
-              //     if (state is UserDetailLoaded) {
-              //       ExtendedNavigator.root.pushAndRemoveUntil<void>(
-              //         Routes.homePage,
-              //         (route) => false,
-              //       );
-              //     } else if (state is UserDetailLoading) {
-              //       ExtendedNavigator.root.pushAndRemoveUntil<void>(
-              //         Routes.loadingScreen,
-              //         (route) => false,
-              //       );
-              //     } else if (state is UserDetailLoadFailed) {
-              //       context.read<ErrorHandlingBloc>().emitSystemError(
-              //           errorMessage: state.errorMessage,
-              //           tryAgainFunction: () =>
-              //               context.read<UserDetailBloc>().add(
-              //                     UserDetailLoadRequested(user: state.user),
-              //                   ));
-              //     } else if (state is UserDetailNotCreated) {
-              //       ExtendedNavigator.root.pushAndRemoveUntil<void>(
-              //         Routes.createUserDetailsPage,
-              //         (route) => false,
-              //       );
-              //     } else if (state is UserDetailLoadLostInternet) {
-              //       ExtendedNavigator.root.pushAndRemoveUntil<void>(
-              //         Routes.noInternetPage,
-              //         (route) => false,
-              //       );
-              //     }
-              //   },
-              // ),
+              BlocListener<UserDetailBloc, UserDetailState>(
+                listener: (context, state) {
+                  if (state is UserDetailLoaded) {
+                    ExtendedNavigator.root.pushAndRemoveUntil<void>(
+                      Routes.homePage,
+                      (route) => false,
+                    );
+                  } else if (state is UserDetailLoading) {
+                    ExtendedNavigator.root.pushAndRemoveUntil<void>(
+                      Routes.loadingScreen,
+                      (route) => false,
+                    );
+                  } else if (state is UserDetailLoadFailed) {
+                    context.read<ErrorHandlingBloc>().emitSystemError(
+                        errorMessage: state.errorMessage,
+                        tryAgainFunction: () =>
+                            context.read<UserDetailBloc>().add(
+                                  UserDetailLoadRequested(user: state.user),
+                                ));
+                  } else if (state is UserDetailNotCreated) {
+                    ExtendedNavigator.root.pushAndRemoveUntil<void>(
+                      Routes.createUserDetailsPage,
+                      (route) => false,
+                    );
+                  } else if (state is UserDetailLoadLostInternet) {
+                    ExtendedNavigator.root.pushAndRemoveUntil<void>(
+                      Routes.noInternetPage,
+                      (route) => false,
+                    );
+                  }
+                },
+              ),
             ],
             child: child,
           );

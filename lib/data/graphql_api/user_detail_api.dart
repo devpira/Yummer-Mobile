@@ -11,14 +11,14 @@ class UserDetailApi extends AbstractGraphQL {
   }) : super.instance(appValues: appValues);
 
   Future<bool> createUserDetail(
-    String firstName,
-    String lastName,
+    String phoneNumber,
+    String name,
     String email,
   ) async {
     final Map<String, dynamic> result = await executeMutation(
       mutation: """
           mutation{
-            createUser(firstName: "$firstName", lastName: "$lastName", email: "$email"){
+            createUser(phoneNumber: "$phoneNumber", name: "$name", email: "$email"){
               status
               insertedId
             }
@@ -41,8 +41,8 @@ class UserDetailApi extends AbstractGraphQL {
           query GetUser() {
             userDetail {
               _id
-              firstName
-              lastName
+              phoneNumber
+              name
               email
             }
           }

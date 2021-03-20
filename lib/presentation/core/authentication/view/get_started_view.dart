@@ -14,17 +14,14 @@ class GetStartedView extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            // margin: EdgeInsets.only(bottom: screenHeight * 0.03),
-            //width: width * 0.6,
+          SizedBox(
             child: Center(
               child: Image.asset(
                 "assets/images/get_started_name.png",
-                // width: width * 0.6,
               ),
             ),
           ),
-          Container(
+          SizedBox(
             // margin: EdgeInsets.only(bottom: screenHeight * 0.03),
             //width: width * 0.6,
             child: Center(

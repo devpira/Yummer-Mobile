@@ -17,8 +17,8 @@ class UserDetailRepository {
       {@required UserDetailModel userDetailModel}) async {
     try {
       await _userDetailApi.createUserDetail(
-        userDetailModel.firstName,
-        userDetailModel.lastName,
+        userDetailModel.phoneNumber,
+        userDetailModel.name,
         userDetailModel.email,
       );
     } on GraphQLException catch (e) {

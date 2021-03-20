@@ -9,8 +9,8 @@ part of 'user_detail_model.dart';
 UserDetailModel _$UserDetailModelFromJson(Map<String, dynamic> json) {
   return UserDetailModel(
     id: json['_id'] as String,
-    firstName: json['firstName'] as String,
-    lastName: json['lastName'] as String,
+    phoneNumber: json['phoneNumber'] as String,
+    name: json['name'] as String,
     email: json['email'] as String,
   );
 }
@@ -18,7 +18,7 @@ UserDetailModel _$UserDetailModelFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$UserDetailModelToJson(UserDetailModel instance) =>
     <String, dynamic>{
       '_id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
+      'phoneNumber': instance.phoneNumber,
+      'name': instance.name,
       'email': instance.email,
     };
