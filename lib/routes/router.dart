@@ -8,9 +8,6 @@ import 'package:yummer/presentation/features/feature.dart';
     // initial route is named "/"
     AutoRoute(page: SplashPage, initial: true),
     CustomRoute<bool>(page: LoginPage, transitionsBuilder: TransitionsBuilders.fadeIn),
-    CustomRoute<bool>(page: SignUpPage, transitionsBuilder: TransitionsBuilders.slideBottom),
-    CustomRoute<bool>(page: ForgotPasswordPage),
-    CustomRoute<bool>(page: VerifyEmailPage),
     CustomRoute<bool>(page: CreateUserDetailsPage, transitionsBuilder: TransitionsBuilders.fadeIn),
 
      CustomRoute<bool>(page: HomePage, transitionsBuilder: TransitionsBuilders.fadeIn),
