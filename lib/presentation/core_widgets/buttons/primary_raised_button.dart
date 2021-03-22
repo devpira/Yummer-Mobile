@@ -34,7 +34,7 @@ class PrimaryRaisedButton extends StatelessWidget {
         elevation: elevation,
         color: AppConfig.of(context).theme.primaryButtonColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         onPressed: () => onClick(),
         child: (!showProgressBar)

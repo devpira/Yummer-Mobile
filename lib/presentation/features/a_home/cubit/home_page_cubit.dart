@@ -8,23 +8,24 @@ part 'home_page_state.dart';
 
 @injectable
 class HomePageCubit extends Cubit<HomePageState> {
-  HomePageCubit() : super(const HomePageState());
+  HomePageCubit()
+      : super(HomePageState(currentView: HomePageRestaurantsView()));
 
   void changeHomePageView({@required int index}) {
     HomePageViewType viewType;
     print(index);
     switch (index) {
       case 0:
-        viewType = HomePageUpcomingView();
+        viewType = HomePageRestaurantsView();
         break;
       case 1:
-        viewType = HomePageTripsView();
+        viewType = HomePageSocialView();
         break;
       case 2:
-        viewType = HomePageExploreView();
+        viewType = HomePageOrderHistoryView();
         break;
       case 3:
-        viewType = HomePageMeView();
+        viewType = HomePageProfileView();
         break;
       default:
         break;

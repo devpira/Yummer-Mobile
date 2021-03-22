@@ -104,12 +104,6 @@ class AppView extends StatelessWidget {
                             UserDetailLoadRequested(user: state.user),
                           );
                       break;
-                    // case AuthenticationStatus.authenticatedEmailNotVerifed:
-                    //   ExtendedNavigator.root.pushAndRemoveUntil<void>(
-                    //     Routes.verifyEmailPage,
-                    //     (route) => false,
-                    //   );
-                    //   break;
                     case AuthenticationStatus.unauthenticated:
                       // Clear the user details when user logged out:
                       context

@@ -1,6 +1,6 @@
 part of 'authentication_bloc.dart';
 
-enum AuthenticationStatus { authenticated, authenticatedEmailNotVerifed, unauthenticated, unknown }
+enum AuthenticationStatus { authenticated, unauthenticated, unknown }
 
 class AuthenticationState extends Equatable {
   final AuthenticationStatus status;
@@ -16,9 +16,6 @@ class AuthenticationState extends Equatable {
   const AuthenticationState.authenticated(UserModel user)
       : this._(status: AuthenticationStatus.authenticated, user: user);
   
-  const AuthenticationState.authenticatedEmailNotVerifed(UserModel user)
-      : this._(status: AuthenticationStatus.authenticatedEmailNotVerifed, user: user);
-
   const AuthenticationState.unauthenticated()
       : this._(status: AuthenticationStatus.unauthenticated);
 

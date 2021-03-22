@@ -28,10 +28,10 @@ abstract class HomePageViewType extends Equatable {
   List<Object> get props => [];
 }
 
-class HomePageUpcomingView extends HomePageViewType {}
+class HomePageRestaurantsView extends HomePageViewType {}
 
-class HomePageTripsView extends HomePageViewType {}
+class HomePageSocialView extends HomePageViewType {}
 
-class HomePageExploreView extends HomePageViewType {}
+class HomePageOrderHistoryView extends HomePageViewType {}
 
-class HomePageMeView extends HomePageViewType {}
+class HomePageProfileView extends HomePageViewType {}

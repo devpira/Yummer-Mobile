@@ -23,11 +23,15 @@ class AppThemeData {
   final Color primaryButtonColor = const Color(0xffff8e45);
   final Color offsetHeadingColor = const Color(0xFF314B69);
 
+  final Color lightGreyBackground = const Color(0xFFF9F9F9);
+  final Color greyBackground = const Color(0xFFDADADA);
+  final Color greyTextColor = const Color(0xFF929292);
+
   final Color whiteBackgroundColor = const Color(0xffFAFAFA);
   final Color unselectedNavBottomItemColor = Colors.blueGrey[300];
 
   final Color offsetTextColor = const Color(0xFF314B69);
-  final Color greyTextColor = Colors.blueGrey[300];
+
   final Color captionTextColor = const Color(0xFFBDBDBD);
 
   final Color textFieldOneBackgroundColor = const Color(0xFFF6F6F6);

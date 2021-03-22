@@ -10,7 +10,9 @@ import 'package:yummer/presentation/features/feature.dart';
     CustomRoute<bool>(page: LoginPage, transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute<bool>(page: CreateUserDetailsPage, transitionsBuilder: TransitionsBuilders.fadeIn),
 
-     CustomRoute<bool>(page: HomePage, transitionsBuilder: TransitionsBuilders.fadeIn),
+    CustomRoute<bool>(page: HomePage, transitionsBuilder: TransitionsBuilders.fadeIn),
+    CustomRoute<bool>(page: RestaurantPage, transitionsBuilder: TransitionsBuilders.fadeIn),
+    CustomRoute<bool>(page: RestaurantMenuItemPage, transitionsBuilder: TransitionsBuilders.fadeIn),
 
     //Core routes:
     CustomRoute<bool>(page: SystemErrorPage),

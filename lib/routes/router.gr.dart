@@ -10,28 +10,27 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../domain/menu/menu.dart';
 import '../presentation/core/core.dart';
 import '../presentation/features/feature.dart';
 
 class Routes {
   static const String splashPage = '/';
   static const String loginPage = '/login-page';
-  static const String signUpPage = '/sign-up-page';
-  static const String forgotPasswordPage = '/forgot-password-page';
-  static const String verifyEmailPage = '/verify-email-page';
   static const String createUserDetailsPage = '/create-user-details-page';
   static const String homePage = '/home-page';
+  static const String restaurantPage = '/restaurant-page';
+  static const String restaurantMenuItemPage = '/restaurant-menu-item-page';
   static const String systemErrorPage = '/system-error-page';
   static const String loadingScreen = '/loading-screen';
   static const String noInternetPage = '/no-internet-page';
   static const all = <String>{
     splashPage,
     loginPage,
-    signUpPage,
-    forgotPasswordPage,
-    verifyEmailPage,
     createUserDetailsPage,
     homePage,
+    restaurantPage,
+    restaurantMenuItemPage,
     systemErrorPage,
     loadingScreen,
     noInternetPage,
@@ -44,11 +43,10 @@ class MyRouter extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.splashPage, page: SplashPage),
     RouteDef(Routes.loginPage, page: LoginPage),
-    RouteDef(Routes.signUpPage, page: SignUpPage),
-    RouteDef(Routes.forgotPasswordPage, page: ForgotPasswordPage),
-    RouteDef(Routes.verifyEmailPage, page: VerifyEmailPage),
     RouteDef(Routes.createUserDetailsPage, page: CreateUserDetailsPage),
     RouteDef(Routes.homePage, page: HomePage),
+    RouteDef(Routes.restaurantPage, page: RestaurantPage),
+    RouteDef(Routes.restaurantMenuItemPage, page: RestaurantMenuItemPage),
     RouteDef(Routes.systemErrorPage, page: SystemErrorPage),
     RouteDef(Routes.loadingScreen, page: LoadingScreen),
     RouteDef(Routes.noInternetPage, page: NoInternetPage),
@@ -69,28 +67,6 @@ class MyRouter extends RouterBase {
         transitionsBuilder: TransitionsBuilders.fadeIn,
       );
     },
-    SignUpPage: (data) {
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const SignUpPage(),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.slideBottom,
-      );
-    },
-    ForgotPasswordPage: (data) {
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const ForgotPasswordPage(),
-        settings: data,
-      );
-    },
-    VerifyEmailPage: (data) {
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const VerifyEmailPage(),
-        settings: data,
-      );
-    },
     CreateUserDetailsPage: (data) {
       return PageRouteBuilder<bool>(
         pageBuilder: (context, animation, secondaryAnimation) =>
@@ -102,6 +78,24 @@ class MyRouter extends RouterBase {
     HomePage: (data) {
       return PageRouteBuilder<bool>(
         pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
+    RestaurantPage: (data) {
+      final args = data.getArgs<RestaurantPageArguments>(nullOk: false);
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            RestaurantPage(restaurantId: args.restaurantId),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
+    RestaurantMenuItemPage: (data) {
+      final args = data.getArgs<RestaurantMenuItemPageArguments>(nullOk: false);
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            RestaurantMenuItemPage(productItem: args.productItem),
         settings: data,
         transitionsBuilder: TransitionsBuilders.fadeIn,
       );
@@ -147,6 +141,18 @@ class MyRouter extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// RestaurantPage arguments holder class
+class RestaurantPageArguments {
+  final String restaurantId;
+  RestaurantPageArguments({@required this.restaurantId});
+}
+
+/// RestaurantMenuItemPage arguments holder class
+class RestaurantMenuItemPageArguments {
+  final MenuProductModel productItem;
+  RestaurantMenuItemPageArguments({@required this.productItem});
+}
 
 /// SystemErrorPage arguments holder class
 class SystemErrorPageArguments {

@@ -14,6 +14,7 @@ class TextFieldStyleOne extends StatelessWidget {
   final TextInputAction textInputAction;
   final TextInputType keyboardType;
   final bool autofocus;
+  final IconData iconData;
 
   const TextFieldStyleOne({
     Key key,
@@ -29,6 +30,7 @@ class TextFieldStyleOne extends StatelessWidget {
     this.textInputAction,
     this.keyboardType,
     this.autofocus = false,
+    this.iconData,
   }) : super(key: key);
 
   @override
@@ -63,6 +65,7 @@ class TextFieldStyleOne extends StatelessWidget {
               BorderSide(color: AppConfig.of(context).theme.primaryColor),
           borderRadius: BorderRadius.circular(8),
         ),
+        prefixIcon: iconData != null? Icon(iconData): null,
         helperText: helperText,
         errorText: errorText,
       ),
