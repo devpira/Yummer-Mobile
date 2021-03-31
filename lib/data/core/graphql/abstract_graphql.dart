@@ -14,14 +14,15 @@ abstract class AbstractGraphQL {
   Future<GraphQLClient> createClient() async {
     final String idToken =
         await firebase_auth.FirebaseAuth.instance.currentUser.getIdToken();
-    final httpLink = HttpLink(uri: _appValues.graphQLUri);
+    final httpLink = HttpLink(_appValues.graphQLUri);
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer $idToken',
     );
     final Link link = authLink.concat(httpLink);
 
     return GraphQLClient(
-      cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
+      cache: GraphQLCache(store: HiveStore()),
+      //cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
       link: link,
     );
   }
@@ -36,8 +37,13 @@ abstract class AbstractGraphQL {
   }) async {
     final client = await createClient();
     final QueryResult result = await client.query(QueryOptions(
-      documentNode: gql(query),
+      document: gql(query),
       variables: variables,
+      fetchPolicy: FetchPolicy.cacheAndNetwork,
+      // ignore all GraphQL errors.
+      errorPolicy: ErrorPolicy.ignore,
+      // ignore cache data.
+      cacheRereadPolicy: CacheRereadPolicy.mergeOptimistic
     ));
 
     checkForErrors(result: result, defaultErrorMessage: defaultErrorMessage);
@@ -55,7 +61,7 @@ abstract class AbstractGraphQL {
   }) async {
     final client = await createClient();
     final QueryResult result = await client.mutate(MutationOptions(
-      documentNode: gql(mutation),
+      document: gql(mutation),
       variables: variables,
     ));
 
@@ -79,8 +85,8 @@ abstract class AbstractGraphQL {
       }
 
       if (result.exception != null &&
-          result.exception.clientException != null &&
-          result.exception.clientException
+          result.exception.linkException != null &&
+          result.exception.linkException
               .toString()
               .contains("Failed to connect to")) {
         throw const GraphQLException(

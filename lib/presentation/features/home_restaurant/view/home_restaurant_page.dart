@@ -26,34 +26,7 @@ class _HomeRestaurantView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final screenWidth = MediaQuery.of(context).size.width;
-    // const List rowData = [
-    //   {
-    //     "name": "BRUNCH HEAVEN",
-    //     "imageUrl":
-    //         'https://cdn.theculturetrip.com/wp-content/uploads/2019/05/26542001279_e1002a6dab_o.jpg',
-    //   },
-    //   {
-    //     "name": "FANCY RESTAURANT",
-    //     "imageUrl":
-    //         'https://www.brampton.ca/EN/Arts-Culture-Tourism/Tourism-Brampton/Visitors/PublishingImages/Tourism%20Strategy%202020/PageBanner-FoodTourism.jpg',
-    //   },
-    //   {
-    //     "name": "SOME RESTAURANT",
-    //     "imageUrl":
-    //         'https://css1.www.cntower.ca/site_Files/Content/2019-landing-pgs/360/360-bg-2019-image.jpg',
-    //   },
-    //   {
-    //     "name": "GREAT RESTAURANT",
-    //     "imageUrl":
-    //         'https://lov.com/workspace/uploads/modules/patricia-brochu-photographe-4548-fr-1570030663.jpg',
-    //   },
-    //   {
-    //     "name": "PIRA RESTAURANT",
-    //     "imageUrl":
-    //         'https://www.brampton.ca/EN/Arts-Culture-Tourism/Tourism-Brampton/Visitors/PublishingImages/Tourism%20Strategy%202020/PageBanner-FoodTourism.jpg',
-    //   }
-    // ];
+
     return Scaffold(
       //backgroundColor: AppConfig.of(context).theme.greyBackground,
       backgroundColor: Colors.white,
@@ -88,7 +61,7 @@ class _HomeRestaurantView extends StatelessWidget {
                           width: double.infinity,
                           child: Container(
                             margin: EdgeInsets.only(
-                              top: height * 0.09,
+                              top: height * 0.07,
                               left: width * 0.053,
                               right: width * 0.053,
                             ),

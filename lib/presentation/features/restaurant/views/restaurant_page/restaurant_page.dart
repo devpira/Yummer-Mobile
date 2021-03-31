@@ -7,6 +7,7 @@ import 'package:yummer/config/app_config.dart';
 import 'package:yummer/domain/menu/menu.dart';
 import 'package:yummer/injection.dart';
 import 'package:yummer/presentation/core/core.dart';
+import 'package:yummer/presentation/core_widgets/core_widgets.dart';
 import 'package:yummer/presentation/features/restaurant/bloc/restaurant_bloc.dart';
 
 import 'menu_item_list_tab.dart';
@@ -89,6 +90,10 @@ class _LoadedRestaurantView extends StatelessWidget {
                   elevation: 0,
                   expandedHeight: screenHeight * 0.4,
                   backgroundColor: Colors.white,
+                  leading: Padding(
+                    padding: EdgeInsets.all(screenWidth * 0.012),
+                    child: const WhiteBackButton(shadow: 0),
+                  ),
                   actions: [
                     IconButton(
                       onPressed: () => {},

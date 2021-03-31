@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   
-  graphql_flutter: ^3.0.0
+  graphql_flutter: ^4.0.1
   path_provider: ^1.6.27
 
   # State Management:
@@ -51,7 +51,6 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   animated_bottom_navigation_bar: ^0.2.1
   cached_network_image: ^2.3.3
-  smart_select: ^4.3.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

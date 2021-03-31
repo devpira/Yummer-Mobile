@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:yummer/config/app_config.dart';
 import 'package:yummer/domain/menu/menu.dart';
+import 'package:yummer/presentation/core_widgets/core_widgets.dart';
 import 'package:yummer/routes/router.gr.dart';
 
 class RestaurantMenuItemRow extends StatelessWidget {
@@ -52,16 +53,26 @@ class RestaurantMenuItemRow extends StatelessWidget {
             ),
             Hero(
               tag: productItem.id,
-              child: Container(
+              child: SizedBox(
                 height: width * 0.266666,
                 width: width * 0.266666,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                        "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2015/08/hotDogsWorstDiabetesFood-956129522-770x533-1.jpg"),
-                  ),
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(10),
+
+                  // image: DecorationImage(
+                  //   fit: BoxFit.cover,
+                  //   image: NetworkImage(
+                  //     productItem.imageUrls.length > 0
+                  //         ? productItem.imageUrls[0]
+                  //         : "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2015/08/hotDogsWorstDiabetesFood-956129522-770x533-1.jpg",
+                  //   ),
+                  // ),
+                // ),
+                child: CachedImage(
+                  borderRadius: 10,
+                  imageUrl: productItem.imageUrls.length > 0
+                      ? productItem.imageUrls[0]
+                      : "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2015/08/hotDogsWorstDiabetesFood-956129522-770x533-1.jpg",
                 ),
               ),
             ),
