@@ -5,6 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:yummer/domain/menu/menu.dart';
+import 'package:yummer/domain/order_cart/models/order_cart_item_model.dart';
+import 'package:yummer/domain/order_cart/models/order_cart_model.dart';
 import 'package:yummer/domain/restaurant/models/detailed_restaurant_model.dart';
 import 'package:yummer/domain/restaurant/restaurant.dart';
 
@@ -56,10 +58,43 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
         isMenuFetchInProgress: false,
         menuModel: menuModel,
       );
+    } else if (event is RestaurantEventLoadCart) {
+      print("LOADING Cart");
+
+      yield state.copyWith(
+        orderCartModel: OrderCartModel(
+          id: event.restaurantId,
+          restaurantId: event.restaurantId,
+          cartItems: [],
+        ),
+      );
+    } else if (event is RestaurantEventAddToCart) {
+      print("Adding to Cart");
+
+      yield addToCart(event.productItem);
     } else if (event is RestaurantEventChangeCurrentMenuTab) {
       yield state.copyWith(
         currentTabIndex: event.index,
       );
     }
+  }
+
+  RestaurantState addToCart(MenuProductModel productItem) {
+    final oldCart = state.orderCartModel;
+    final oldCartItems = oldCart.cartItems;
+    oldCartItems.add(OrderCartItemModel(
+        productId: productItem.id,
+        quantity: 1,
+        priceUnitAmount: productItem.priceUnitAmount,
+        currencyCode: productItem.currencyCode,
+        name: productItem.name,
+        imageUrls: productItem.imageUrls));
+    return state.copyWith(
+      orderCartModel: oldCart.copyWith(
+        totalPriceUnitAmount:
+            oldCart.totalPriceUnitAmount + productItem.priceUnitAmount,
+        cartItems: oldCartItems,
+      ),
+    );
   }
 }

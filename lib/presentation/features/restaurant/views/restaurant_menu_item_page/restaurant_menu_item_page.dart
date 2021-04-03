@@ -1,24 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yummer/config/config.dart';
-// import 'package:yummer/config/config.dart';
 
 import 'package:yummer/domain/menu/menu.dart';
 import 'package:yummer/presentation/core_widgets/buttons/buttons.dart';
 import 'package:yummer/presentation/core_widgets/core_widgets.dart';
+import 'package:yummer/presentation/features/restaurant/bloc/restaurant_bloc.dart';
 
 class RestaurantMenuItemPage extends StatelessWidget {
+  final RestaurantBloc restaurantBloc;
   final MenuProductModel productItem;
 
   const RestaurantMenuItemPage({
     @required this.productItem,
+    @required this.restaurantBloc,
   });
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: restaurantBloc,
+      child: _RestaurantMenuItemView(productItem: productItem),
+    );
+  }
+}
 
+class _RestaurantMenuItemView extends StatelessWidget {
+  final MenuProductModel productItem;
+
+  const _RestaurantMenuItemView({
+    @required this.productItem,
+  });
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    print(productItem.name);
-    print(productItem.imageUrls);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: NestedScrollView(
@@ -81,31 +97,6 @@ class RestaurantMenuItemPage extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  // Hero(
-                  //   tag: productItem.id,
-                  //   child: Container(
-                  //     height: screenWidth * 0.9,
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.only(
-                  //           bottomLeft: Radius.circular(screenWidth * 0.03),
-                  //           bottomRight: Radius.circular(screenWidth * 0.03)),
-                  //       // image: DecorationImage(
-                  //       //   fit: BoxFit.cover,
-                  //       // image: NetworkImage(
-                  //       //    productItem.imageUrls.length > 0
-                  //       //   ? productItem.imageUrls[0]
-                  //       //   : "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2015/08/hotDogsWorstDiabetesFood-956129522-770x533-1.jpg",
-                  //       // ),
-                  //       // ),
-                  //     ),
-                  //     child: CachedImage(
-                  //       imageUrl: productItem.imageUrls.length > 0
-                  //           ? productItem.imageUrls[0]
-                  //           : "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2015/08/hotDogsWorstDiabetesFood-956129522-770x533-1.jpg",
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: screenHeight * 0.12,
                   ),
@@ -185,25 +176,18 @@ class RestaurantMenuItemPage extends StatelessWidget {
                                             print(selected))
                                   else
                                     CheckboxGroup(
-                                        activeColor: AppConfig.of(context)
-                                            .theme
-                                            .primaryColor,
-                                        labels: item.modifiers
-                                            .map((ProductModifierModel item) =>
-                                                item.name)
-                                            .toList(),
-                                        // labels: <String>[
-                                        //   "Sunday",
-                                        //   "Monday",
-                                        //   "Tuesday",
-                                        //   "Wednesday",
-                                        //   "Thursday",
-                                        //   "Friday",
-                                        //   "Saturday",
-                                        //   "Sunday",
-                                        // ],
-                                        onSelected: (List<String> checked) =>
-                                            print(checked.toString()))
+                                      activeColor: AppConfig.of(context)
+                                          .theme
+                                          .primaryColor,
+                                      labels: item.modifiers
+                                          .map((ProductModifierModel item) =>
+                                              item.name)
+                                          .toList(),
+                                      onSelected: (List<String> checked) =>
+                                          print(
+                                        checked.toString(),
+                                      ),
+                                    )
                                 ],
                               ),
                             ),
@@ -281,7 +265,11 @@ class RestaurantMenuItemPage extends StatelessWidget {
                     horizontal: screenWidth * 0.06,
                     vertical: screenHeight * 0.03),
                 child: AccentRaisedButton(
-                  onClick: () {},
+                  onClick: () {
+                    context.read<RestaurantBloc>().add(
+                        RestaurantEventAddToCart(productItem: productItem));
+                        Navigator.pop(context);
+                  },
                   elevation: 7,
                   text: "ADD TO CART (\$${productItem.priceUnitAmount / 100})",
                 ),

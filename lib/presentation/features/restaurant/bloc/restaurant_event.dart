@@ -23,6 +23,22 @@ class RestaurantEventLoadMenu extends RestaurantEvent {
   });
 }
 
+class RestaurantEventLoadCart extends RestaurantEvent {
+  final String restaurantId;
+
+  const RestaurantEventLoadCart({
+    @required this.restaurantId,
+  });
+}
+
+class RestaurantEventAddToCart extends RestaurantEvent {
+  final MenuProductModel productItem;
+
+  const RestaurantEventAddToCart({
+    @required this.productItem,
+  });
+}
+
 class RestaurantEventChangeCurrentMenuTab extends RestaurantEvent {
   final int index;
   

@@ -6,6 +6,7 @@ class RestaurantState extends Equatable {
 
   final bool isMenuFetchInProgress;
   final MenuModel menuModel;
+  final OrderCartModel orderCartModel;
 
   final int currentTabIndex;
   final String errorMessage;
@@ -14,6 +15,7 @@ class RestaurantState extends Equatable {
     this.restaurantModel,
     this.isRestaurantFetchInProgress = false,
     this.menuModel,
+    this.orderCartModel,
     this.isMenuFetchInProgress = false,
     this.currentTabIndex = 0,
     this.errorMessage,
@@ -24,6 +26,7 @@ class RestaurantState extends Equatable {
         isRestaurantFetchInProgress,
         restaurantModel,
         menuModel,
+        orderCartModel,
         isMenuFetchInProgress,
         currentTabIndex,
         errorMessage,
@@ -34,6 +37,7 @@ class RestaurantState extends Equatable {
     DetailedRestaurantModel restaurantModel,
     bool isMenuFetchInProgress,
     MenuModel menuModel,
+    OrderCartModel orderCartModel,
     int currentTabIndex,
     String errorMessage,
   }) {
@@ -44,7 +48,8 @@ class RestaurantState extends Equatable {
       isMenuFetchInProgress:
           isMenuFetchInProgress ?? this.isMenuFetchInProgress,
       menuModel: menuModel ?? this.menuModel,
-      currentTabIndex: currentTabIndex?? this.currentTabIndex,
+      orderCartModel: orderCartModel ?? this.orderCartModel,
+      currentTabIndex: currentTabIndex ?? this.currentTabIndex,
       errorMessage: errorMessage,
     );
   }

@@ -32,3 +32,10 @@ https://www.youtube.com/watch?v=opBwTxicw1k
 IOS TODO:
 1. setup phone auth
 2. Test phone auth, ensure time out sends back to enter phone page
+3. Confirm stripe setup, android version min was set to 19 and dex added
+
+
+
+https://flutter.dev/docs/development/packages-and-plugins/using-packages#conflict-resolution
+
+https://www.uxlibrary.org/more/free-resources/illustrations?fbclid=IwAR2_LbdRI34nhPEq0c3prCtPdoE4SEtNKi6QDAhbCzgLuhrOeaeg8oqgl8c

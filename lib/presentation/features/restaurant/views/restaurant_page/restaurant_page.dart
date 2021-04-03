@@ -9,6 +9,7 @@ import 'package:yummer/injection.dart';
 import 'package:yummer/presentation/core/core.dart';
 import 'package:yummer/presentation/core_widgets/core_widgets.dart';
 import 'package:yummer/presentation/features/restaurant/bloc/restaurant_bloc.dart';
+import 'package:yummer/presentation/features/restaurant/views/restaurant_page/restaurant_checkout_cart_bar.dart';
 
 import 'menu_item_list_tab.dart';
 import 'menu_item_list_tab_bar.dart';
@@ -25,7 +26,8 @@ class RestaurantPage extends StatelessWidget {
     return BlocProvider<RestaurantBloc>(
       create: (_) => getIt<RestaurantBloc>()
         ..add(RestaurantEventLoadRestaurant(restaurantId: restaurantId))
-        ..add(RestaurantEventLoadMenu(restaurantId: restaurantId)),
+        ..add(RestaurantEventLoadMenu(restaurantId: restaurantId))
+        ..add(RestaurantEventLoadCart(restaurantId: restaurantId)),
       child: const _RestaurantView(),
     );
   }
@@ -97,7 +99,9 @@ class _LoadedRestaurantView extends StatelessWidget {
                   actions: [
                     IconButton(
                       onPressed: () => {},
-                      icon: const Icon(Icons.share),
+                      icon: const Icon(
+                        Icons.share,
+                      ),
                     )
                   ],
                   flexibleSpace: LayoutBuilder(
@@ -361,16 +365,27 @@ class _RestaurantBody extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.isMenuFetchInProgress != current.isMenuFetchInProgress ||
           previous.menuModel != current.menuModel ||
+          previous.orderCartModel != current.orderCartModel ||
           previous.currentTabIndex != current.currentTabIndex,
       builder: (context, state) {
         if (state.isMenuFetchInProgress) {
           return LoadingScreen();
         } else if (state.menuModel != null) {
-          return _RestaurantTabBarView(
-            screenWidth: screenWidth,
-            screenHeight: screenHeight,
-            displayGroups: state.menuModel.displayGroups,
-            currentIndex: state.currentTabIndex,
+          return Stack(
+            children: [
+              _RestaurantTabBarView(
+                screenWidth: screenWidth,
+                screenHeight: screenHeight,
+                displayGroups: state.menuModel.displayGroups,
+                currentIndex: state.currentTabIndex,
+              ),
+              if (state.orderCartModel.cartItems.length > 0)
+                RestaurantCheckoutCartBar(
+                  height: screenHeight,
+                  width: screenWidth,
+                  orderCartModel: state.orderCartModel,
+                )
+            ],
           );
         } else {
           return Container();

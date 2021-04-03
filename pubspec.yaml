@@ -51,6 +51,10 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   animated_bottom_navigation_bar: ^0.2.1
   cached_network_image: ^2.3.3
+  
+
+  stripe_payment: ^1.0.11
+  awesome_card: ^1.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

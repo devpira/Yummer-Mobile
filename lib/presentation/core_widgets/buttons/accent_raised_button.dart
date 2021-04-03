@@ -32,6 +32,7 @@ class AccentRaisedButton extends StatelessWidget {
       width: width,
       child: RaisedButton(
         elevation: elevation,
+         splashColor: Colors.white30,
         color: AppConfig.of(context).theme.accentColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),

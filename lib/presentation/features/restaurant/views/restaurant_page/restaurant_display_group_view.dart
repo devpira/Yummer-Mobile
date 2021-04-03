@@ -40,7 +40,7 @@ class RestaurantDisplayGroupView extends StatelessWidget {
                 // add padding to end of list:
                 if (index == displayGroup.products.length + 1) {
                   return SizedBox(
-                    height: height * 0.01,
+                    height: height * 0.12,
                   );
                 }
                 if (index > displayGroup.products.length + 1) return null;

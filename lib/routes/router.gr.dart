@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import '../domain/menu/menu.dart';
 import '../presentation/core/core.dart';
 import '../presentation/features/feature.dart';
+import '../presentation/features/restaurant/bloc/restaurant_bloc.dart';
 
 class Routes {
   static const String splashPage = '/';
@@ -21,6 +22,9 @@ class Routes {
   static const String homePage = '/home-page';
   static const String restaurantPage = '/restaurant-page';
   static const String restaurantMenuItemPage = '/restaurant-menu-item-page';
+  static const String restaurantCheckoutPage = '/restaurant-checkout-page';
+  static const String myWalletPage = '/my-wallet-page';
+  static const String myWalletAddCardPage = '/my-wallet-add-card-page';
   static const String systemErrorPage = '/system-error-page';
   static const String loadingScreen = '/loading-screen';
   static const String noInternetPage = '/no-internet-page';
@@ -31,6 +35,9 @@ class Routes {
     homePage,
     restaurantPage,
     restaurantMenuItemPage,
+    restaurantCheckoutPage,
+    myWalletPage,
+    myWalletAddCardPage,
     systemErrorPage,
     loadingScreen,
     noInternetPage,
@@ -47,6 +54,9 @@ class MyRouter extends RouterBase {
     RouteDef(Routes.homePage, page: HomePage),
     RouteDef(Routes.restaurantPage, page: RestaurantPage),
     RouteDef(Routes.restaurantMenuItemPage, page: RestaurantMenuItemPage),
+    RouteDef(Routes.restaurantCheckoutPage, page: RestaurantCheckoutPage),
+    RouteDef(Routes.myWalletPage, page: MyWalletPage),
+    RouteDef(Routes.myWalletAddCardPage, page: MyWalletAddCardPage),
     RouteDef(Routes.systemErrorPage, page: SystemErrorPage),
     RouteDef(Routes.loadingScreen, page: LoadingScreen),
     RouteDef(Routes.noInternetPage, page: NoInternetPage),
@@ -95,7 +105,36 @@ class MyRouter extends RouterBase {
       final args = data.getArgs<RestaurantMenuItemPageArguments>(nullOk: false);
       return PageRouteBuilder<bool>(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            RestaurantMenuItemPage(productItem: args.productItem),
+            RestaurantMenuItemPage(
+          productItem: args.productItem,
+          restaurantBloc: args.restaurantBloc,
+        ),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
+    RestaurantCheckoutPage: (data) {
+      final args = data.getArgs<RestaurantCheckoutPageArguments>(nullOk: false);
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            RestaurantCheckoutPage(restaurantBloc: args.restaurantBloc),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
+    MyWalletPage: (data) {
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const MyWalletPage(),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
+    MyWalletAddCardPage: (data) {
+      final args = data.getArgs<MyWalletAddCardPageArguments>(nullOk: false);
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            MyWalletAddCardPage(myWalletBloc: args.myWalletBloc),
         settings: data,
         transitionsBuilder: TransitionsBuilders.fadeIn,
       );
@@ -151,7 +190,21 @@ class RestaurantPageArguments {
 /// RestaurantMenuItemPage arguments holder class
 class RestaurantMenuItemPageArguments {
   final MenuProductModel productItem;
-  RestaurantMenuItemPageArguments({@required this.productItem});
+  final RestaurantBloc restaurantBloc;
+  RestaurantMenuItemPageArguments(
+      {@required this.productItem, @required this.restaurantBloc});
+}
+
+/// RestaurantCheckoutPage arguments holder class
+class RestaurantCheckoutPageArguments {
+  final RestaurantBloc restaurantBloc;
+  RestaurantCheckoutPageArguments({@required this.restaurantBloc});
+}
+
+/// MyWalletAddCardPage arguments holder class
+class MyWalletAddCardPageArguments {
+  final MyWalletBloc myWalletBloc;
+  MyWalletAddCardPageArguments({@required this.myWalletBloc});
 }
 
 /// SystemErrorPage arguments holder class
