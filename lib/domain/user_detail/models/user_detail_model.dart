@@ -9,10 +9,18 @@ class UserDetailModel {
   String phoneNumber;
   String name;
   String email;
+  String posCustomerId;
 
-  UserDetailModel({this.id, this.phoneNumber, this.name, this.email});
+  UserDetailModel({
+    this.id,
+    this.phoneNumber,
+    this.name,
+    this.email,
+    this.posCustomerId,
+  });
 
-  factory UserDetailModel.fromJson(Map<String, dynamic> data) => _$UserDetailModelFromJson(data);
+  factory UserDetailModel.fromJson(Map<String, dynamic> data) =>
+      _$UserDetailModelFromJson(data);
 
   Map<String, dynamic> toJson() => _$UserDetailModelToJson(this);
 
@@ -22,17 +30,19 @@ class UserDetailModel {
       'phoneNumber': phoneNumber,
       'name': name,
       'email': email,
+      'posCustomerId': posCustomerId,
     };
   }
 
   factory UserDetailModel.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return UserDetailModel(
       id: map['id'] as String,
       phoneNumber: map['phoneNumber'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
+      posCustomerId: map['posCustomerId'] as String
     );
   }
 }

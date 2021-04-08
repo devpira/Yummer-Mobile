@@ -44,6 +44,7 @@ class UserDetailApi extends AbstractGraphQL {
               phoneNumber
               name
               email
+              posCustomerId
             }
           }
       """,

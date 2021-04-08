@@ -13,6 +13,8 @@ class MyWalletAddPaymentState extends Equatable {
   final String errorMessage;
   final bool formSubmitted;
 
+  final CardPaymentMethodModel addedCardPaymentMethod;
+
   const MyWalletAddPaymentState({
     this.cardNumber = const CardNumberValueObject.dirty(),
     this.cardExpiryDate = const CardExpiryDateValueObject.dirty(),
@@ -23,6 +25,7 @@ class MyWalletAddPaymentState extends Equatable {
     this.status = FormzStatus.pure,
     this.errorMessage,
     this.formSubmitted = false,
+    this.addedCardPaymentMethod,
   });
 
   @override
@@ -37,6 +40,7 @@ class MyWalletAddPaymentState extends Equatable {
       status,
       errorMessage,
       formSubmitted,
+      addedCardPaymentMethod,
     ];
   }
 
@@ -50,6 +54,7 @@ class MyWalletAddPaymentState extends Equatable {
     FormzStatus status,
     String errorMessage,
     bool formSubmitted,
+    CardPaymentMethodModel addedCardPaymentMethod,
   }) {
     return MyWalletAddPaymentState(
       cardNumber: cardNumber ?? this.cardNumber,
@@ -61,6 +66,7 @@ class MyWalletAddPaymentState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       formSubmitted: formSubmitted ?? this.formSubmitted,
+      addedCardPaymentMethod: addedCardPaymentMethod?? this.addedCardPaymentMethod
     );
   }
 }

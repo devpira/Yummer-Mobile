@@ -18,7 +18,6 @@ class MyWalletAddCardPage extends StatelessWidget {
       providers: [
         BlocProvider.value(
           value: myWalletBloc,
-          child: _MyWalletAddCardPage(),
         ),
         BlocProvider<MyWalletAddPaymentCubit>(
           create: (_) => getIt<MyWalletAddPaymentCubit>(),
@@ -72,18 +71,14 @@ class ___MyWalletAddCardPageeState extends State<_MyWalletAddCardPage> {
                   content: Text(state.errorMessage),
                 ),
               );
-          } 
-          else if (state.status.isSubmissionSuccess) {
-          //   final cardPaymentMethodModel = CardPaymentMethodModel(
-          //     id: "wait",
-
-          //   );
-          //   context
-          //       .read<MyWalletBloc>()
-          //       .add(UserDetailLoadRequested(user: user));
+          } else if (state.status.isSubmissionSuccess) {
+            context.read<MyWalletBloc>().add(
+                  MyWalletEventAddCardMethod(
+                      cardPaymentMethodModel: state.addedCardPaymentMethod),
+                );
+                Navigator.pop(context);
           }
         },
- 
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -362,9 +357,8 @@ class _CardNameInput extends StatelessWidget {
           labelText: 'Card Holder Name',
           helperText: '',
           maxLength: 50,
-          errorText: state.formSubmitted && state.cardName.invalid
-              ? 'Required'
-              : null,
+          errorText:
+              state.formSubmitted && state.cardName.invalid ? 'Required' : null,
         );
       },
     );

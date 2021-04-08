@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../domain/menu/menu.dart';
+import '../domain/my_wallet/models/card_payment_method_model.dart';
 import '../presentation/core/core.dart';
 import '../presentation/features/feature.dart';
 import '../presentation/features/restaurant/bloc/restaurant_bloc.dart';
@@ -25,6 +26,7 @@ class Routes {
   static const String restaurantCheckoutPage = '/restaurant-checkout-page';
   static const String myWalletPage = '/my-wallet-page';
   static const String myWalletAddCardPage = '/my-wallet-add-card-page';
+  static const String myWalletEditCardPage = '/my-wallet-edit-card-page';
   static const String systemErrorPage = '/system-error-page';
   static const String loadingScreen = '/loading-screen';
   static const String noInternetPage = '/no-internet-page';
@@ -38,6 +40,7 @@ class Routes {
     restaurantCheckoutPage,
     myWalletPage,
     myWalletAddCardPage,
+    myWalletEditCardPage,
     systemErrorPage,
     loadingScreen,
     noInternetPage,
@@ -57,6 +60,7 @@ class MyRouter extends RouterBase {
     RouteDef(Routes.restaurantCheckoutPage, page: RestaurantCheckoutPage),
     RouteDef(Routes.myWalletPage, page: MyWalletPage),
     RouteDef(Routes.myWalletAddCardPage, page: MyWalletAddCardPage),
+    RouteDef(Routes.myWalletEditCardPage, page: MyWalletEditCardPage),
     RouteDef(Routes.systemErrorPage, page: SystemErrorPage),
     RouteDef(Routes.loadingScreen, page: LoadingScreen),
     RouteDef(Routes.noInternetPage, page: NoInternetPage),
@@ -123,9 +127,12 @@ class MyRouter extends RouterBase {
       );
     },
     MyWalletPage: (data) {
+      final args = data.getArgs<MyWalletPageArguments>(
+        orElse: () => MyWalletPageArguments(),
+      );
       return PageRouteBuilder<bool>(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const MyWalletPage(),
+            MyWalletPage(myWalletBloc: args.myWalletBloc),
         settings: data,
         transitionsBuilder: TransitionsBuilders.fadeIn,
       );
@@ -135,6 +142,18 @@ class MyRouter extends RouterBase {
       return PageRouteBuilder<bool>(
         pageBuilder: (context, animation, secondaryAnimation) =>
             MyWalletAddCardPage(myWalletBloc: args.myWalletBloc),
+        settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+    },
+    MyWalletEditCardPage: (data) {
+      final args = data.getArgs<MyWalletEditCardPageArguments>(nullOk: false);
+      return PageRouteBuilder<bool>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            MyWalletEditCardPage(
+          myWalletBloc: args.myWalletBloc,
+          cardPaymentMethodModel: args.cardPaymentMethodModel,
+        ),
         settings: data,
         transitionsBuilder: TransitionsBuilders.fadeIn,
       );
@@ -201,10 +220,24 @@ class RestaurantCheckoutPageArguments {
   RestaurantCheckoutPageArguments({@required this.restaurantBloc});
 }
 
+/// MyWalletPage arguments holder class
+class MyWalletPageArguments {
+  final MyWalletBloc myWalletBloc;
+  MyWalletPageArguments({this.myWalletBloc});
+}
+
 /// MyWalletAddCardPage arguments holder class
 class MyWalletAddCardPageArguments {
   final MyWalletBloc myWalletBloc;
   MyWalletAddCardPageArguments({@required this.myWalletBloc});
+}
+
+/// MyWalletEditCardPage arguments holder class
+class MyWalletEditCardPageArguments {
+  final MyWalletBloc myWalletBloc;
+  final CardPaymentMethodModel cardPaymentMethodModel;
+  MyWalletEditCardPageArguments(
+      {@required this.myWalletBloc, @required this.cardPaymentMethodModel});
 }
 
 /// SystemErrorPage arguments holder class

@@ -10,6 +10,7 @@ class CardPaymentMethodModel extends Equatable {
   final int expMonth;
   final int expYear;
   final bool isExpired;
+  final bool isDefault;
 
   const CardPaymentMethodModel({
     @required this.id,
@@ -18,6 +19,7 @@ class CardPaymentMethodModel extends Equatable {
     @required this.expMonth,
     @required this.expYear,
     @required this.isExpired,
+    @required this.isDefault,
   });
 
   @override
@@ -29,6 +31,7 @@ class CardPaymentMethodModel extends Equatable {
       expMonth,
       expYear,
       isExpired,
+      isDefault,
     ];
   }
 
@@ -40,6 +43,7 @@ class CardPaymentMethodModel extends Equatable {
       'expMonth': expMonth,
       'expYear': expYear,
       'isExpired': isExpired,
+      'isDefault': isDefault,
     };
   }
 
@@ -51,10 +55,31 @@ class CardPaymentMethodModel extends Equatable {
       expMonth: map['expMonth'] as int,
       expYear: map['expYear'] as int,
       isExpired: map['isExpired'] as bool,
+      isDefault: map['isDefault'] as bool,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory CardPaymentMethodModel.fromJson(String source) => CardPaymentMethodModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  CardPaymentMethodModel copyWith({
+    String id,
+    String brand,
+    String last4,
+    int expMonth,
+    int expYear,
+    bool isExpired,
+    bool isDefault,
+  }) {
+    return CardPaymentMethodModel(
+      id: id ?? this.id,
+      brand: brand ?? this.brand,
+      last4: last4 ?? this.last4,
+      expMonth: expMonth ?? this.expMonth,
+      expYear: expYear ?? this.expYear,
+      isExpired: isExpired ?? this.isExpired,
+      isDefault: isDefault ?? this.isDefault,
+    );
+  }
 }

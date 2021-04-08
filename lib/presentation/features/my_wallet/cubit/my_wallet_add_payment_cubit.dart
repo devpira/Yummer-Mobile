@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:stripe_payment/stripe_payment.dart' as stripe;
 import 'package:yummer/config/config.dart';
+import 'package:yummer/domain/my_wallet/models/card_payment_method_model.dart';
 import 'package:yummer/domain/my_wallet/repository/my_wallet_repository.dart';
 import 'package:yummer/presentation/features/my_wallet/my_wallet.dart';
 
@@ -155,21 +156,28 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
       final stripe.BillingAddress address =
           stripe.BillingAddress(name: state.cardName.value);
 
-      stripe.StripePayment.createPaymentMethod(
+      await stripe.StripePayment.createPaymentMethod(
         stripe.PaymentMethodRequest(card: paymentCard, billingAddress: address),
       ).then((paymentMethod) async {
         print(paymentMethod.id);
         final result =
             await _myWalletRepository.attachPaymentMethod(paymentMethod.id);
 
-        if (!result) {
+        if (result == null || result.id == null || result.last4 == null) {
           emit(
             state.copyWith(
                 status: FormzStatus.submissionFailure,
                 errorMessage:
                     "Failed to create payment method. Please try again."),
           );
+          return;
         }
+
+        emit(
+          state.copyWith(
+              status: FormzStatus.submissionSuccess,
+              addedCardPaymentMethod: result),
+        );
       }).catchError((error) {
         print(error);
         emit(

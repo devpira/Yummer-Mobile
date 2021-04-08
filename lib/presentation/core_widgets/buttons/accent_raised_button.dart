@@ -7,6 +7,7 @@ class AccentRaisedButton extends StatelessWidget {
   final double height;
   final double width;
   final bool showProgressBar;
+  final bool disableButton;
   final double elevation;
   final TextStyle textStyle;
 
@@ -16,6 +17,7 @@ class AccentRaisedButton extends StatelessWidget {
     this.height = 0,
     this.width = 0,
     this.showProgressBar = false,
+    this.disableButton = false,
     this.elevation = 3,
     this.textStyle = const TextStyle(
         color: Colors.white,
@@ -32,12 +34,13 @@ class AccentRaisedButton extends StatelessWidget {
       width: width,
       child: RaisedButton(
         elevation: elevation,
+        disabledColor: Colors.grey[300],
          splashColor: Colors.white30,
         color: AppConfig.of(context).theme.accentColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        onPressed: showProgressBar ? () => {} : () => onClick(),
+        onPressed: disableButton? null: showProgressBar ? () => {} : () => onClick(),
         child: (!showProgressBar)
             ? Text(
                 text,

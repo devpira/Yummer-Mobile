@@ -12,6 +12,7 @@ UserDetailModel _$UserDetailModelFromJson(Map<String, dynamic> json) {
     phoneNumber: json['phoneNumber'] as String,
     name: json['name'] as String,
     email: json['email'] as String,
+    posCustomerId: json['posCustomerId'] as String,
   );
 }
 
@@ -21,4 +22,5 @@ Map<String, dynamic> _$UserDetailModelToJson(UserDetailModel instance) =>
       'phoneNumber': instance.phoneNumber,
       'name': instance.name,
       'email': instance.email,
+      'posCustomerId': instance.posCustomerId,
     };

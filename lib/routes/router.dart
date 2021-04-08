@@ -17,6 +17,7 @@ import 'package:yummer/presentation/features/feature.dart';
 
     CustomRoute<bool>(page: MyWalletPage, transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute<bool>(page: MyWalletAddCardPage, transitionsBuilder: TransitionsBuilders.fadeIn),
+    CustomRoute<bool>(page: MyWalletEditCardPage, transitionsBuilder: TransitionsBuilders.fadeIn),
 
     //Core routes:
     CustomRoute<bool>(page: SystemErrorPage),

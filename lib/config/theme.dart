@@ -18,6 +18,7 @@ class AppThemeData {
   );
 
   final Color primaryColor = const Color(0xffff8e45);
+  final Color primaryVeryLightColor =const Color(0xFFFFBF69);
   final Color accentColor = const Color(0xFF314B69);
   final Color offsetColor = const Color(0xffff8e45);
   final Color primaryButtonColor = const Color(0xffff8e45);
