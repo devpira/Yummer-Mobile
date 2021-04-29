@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:pedantic/pedantic.dart';
 
 part 'authentication_event.dart';
@@ -15,10 +15,10 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationRepository _authenticationRepository;
-  StreamSubscription<UserModel> _userSubscription;
+  StreamSubscription<UserModel>? _userSubscription;
 
   AuthenticationBloc({
-    @required AuthenticationRepository authenticationRepository,
+    required AuthenticationRepository authenticationRepository,
   })  : assert(authenticationRepository != null),
         _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {

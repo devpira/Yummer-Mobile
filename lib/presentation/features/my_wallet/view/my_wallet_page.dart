@@ -10,7 +10,7 @@ import 'package:yummer/presentation/features/feature.dart';
 import 'package:yummer/routes/router.gr.dart';
 
 class MyWalletPage extends StatelessWidget {
-  final MyWalletBloc myWalletBloc;
+  final MyWalletBloc? myWalletBloc;
   const MyWalletPage({this.myWalletBloc});
 
   @override
@@ -18,7 +18,7 @@ class MyWalletPage extends StatelessWidget {
     if (myWalletBloc != null) {
       print("CAME HERE");
       return BlocProvider.value(
-        value: myWalletBloc,
+        value: myWalletBloc!,
         child: _MyWalletPage(),
       );
     } else {
@@ -33,12 +33,9 @@ class MyWalletPage extends StatelessWidget {
 
 class _MyWalletPage extends StatelessWidget {
   void onAddCardClicked(BuildContext context) {
-    ExtendedNavigator.of(context).push(
-      Routes.myWalletAddCardPage,
-      arguments: MyWalletAddCardPageArguments(
-        myWalletBloc: context.read<MyWalletBloc>(),
-      ),
-    );
+    AutoRouter.of(context).push(MyWalletAddCardPageRoute(
+      myWalletBloc: context.read<MyWalletBloc>(),
+    ));
   }
 
   @override
@@ -52,7 +49,7 @@ class _MyWalletPage extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text(
           "My Wallet",
-          style: Theme.of(context).textTheme.headline5.copyWith(
+          style: Theme.of(context).textTheme.headline5!.copyWith(
                 fontWeight: FontWeight.w900,
               ),
         ),
@@ -65,7 +62,7 @@ class _MyWalletPage extends StatelessWidget {
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 SnackBar(
-                  content: Text(state.errorMessage),
+                  content: Text(state.errorMessage!),
                 ),
               );
           }
@@ -88,7 +85,7 @@ class _MyWalletPage extends StatelessWidget {
                       SizedBox(
                         height: screenHeight * 0.01,
                       ),
-                      if (state.cardPaymentMethods.isNotEmpty)
+                      if (state.cardPaymentMethods!.isNotEmpty)
                         _DefaultPaymentMethodSection(
                           screenWidth: screenWidth,
                           screenHeight: screenHeight,
@@ -106,7 +103,7 @@ class _MyWalletPage extends StatelessWidget {
                               "Payment Methods",
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1
+                                  .subtitle1!
                                   .copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -132,8 +129,8 @@ class _MyWalletPage extends StatelessWidget {
                                         width: screenWidth * 0.02,
                                       ),
                                       Icon(FontAwesomeIcons.plusCircle,
-                                          color: AppConfig.of(context)
-                                              .theme
+                                          color: AppConfig.of(context)!
+                                              .theme!
                                               .primaryColor),
                                       SizedBox(
                                         width: screenWidth * 0.03,
@@ -172,8 +169,8 @@ class _DefaultPaymentMethodSection extends StatelessWidget {
   final double screenWidth;
 
   const _DefaultPaymentMethodSection({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -191,7 +188,7 @@ class _DefaultPaymentMethodSection extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
               child: Text(
                 "Default Payment Method",
-                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
               ),
@@ -223,8 +220,8 @@ class _CardPaymentMethodList extends StatelessWidget {
   final double screenWidth;
 
   const _CardPaymentMethodList({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -234,7 +231,7 @@ class _CardPaymentMethodList extends StatelessWidget {
       builder: (context, state) {
         print("CARD PAYMENTS CHANGED!");
         return Column(
-            children: state.cardPaymentMethods
+            children: state.cardPaymentMethods!
                 .map(
                   (item) => _CardPaymentMethodRow(
                     screenHeight: screenHeight,
@@ -249,51 +246,48 @@ class _CardPaymentMethodList extends StatelessWidget {
 }
 
 class _CardPaymentMethodRow extends StatelessWidget {
-  final CardPaymentMethodModel cardPaymentMethodModel;
+  final CardPaymentMethodModel? cardPaymentMethodModel;
   final double screenHeight;
   final double screenWidth;
 
   const _CardPaymentMethodRow({
-    @required this.screenHeight,
-    @required this.screenWidth,
-    @required this.cardPaymentMethodModel,
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.cardPaymentMethodModel,
   });
 
   void onEditCardClicked(BuildContext context) {
-    ExtendedNavigator.of(context).push(
-      Routes.myWalletEditCardPage,
-      arguments: MyWalletEditCardPageArguments(
-        myWalletBloc: context.read<MyWalletBloc>(),
-        cardPaymentMethodModel: cardPaymentMethodModel,
-      ),
-    );
+    AutoRouter.of(context).push(MyWalletEditCardPageRoute(
+      myWalletBloc: context.read<MyWalletBloc>(),
+      cardPaymentMethodModel: cardPaymentMethodModel!,
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     Widget leading = const Icon(FontAwesomeIcons.creditCard);
 
-    if (cardPaymentMethodModel.brand == "visa") {
+    if (cardPaymentMethodModel!.brand == "visa") {
       leading = const Icon(FontAwesomeIcons.ccVisa);
     }
 
-    if (cardPaymentMethodModel.brand == "mastercard") {
+    if (cardPaymentMethodModel!.brand == "mastercard") {
       leading = const Icon(FontAwesomeIcons.ccMastercard);
     }
 
-    if (cardPaymentMethodModel.brand == "amex") {
+    if (cardPaymentMethodModel!.brand == "amex") {
       leading = const Icon(FontAwesomeIcons.ccAmex);
     }
 
-    if (cardPaymentMethodModel.brand == "diners_club") {
+    if (cardPaymentMethodModel!.brand == "diners_club") {
       leading = const Icon(FontAwesomeIcons.ccDinersClub);
     }
 
-    if (cardPaymentMethodModel.brand == "discover") {
+    if (cardPaymentMethodModel!.brand == "discover") {
       leading = const Icon(FontAwesomeIcons.ccDiscover);
     }
 
-    if (cardPaymentMethodModel.brand == "jcb") {
+    if (cardPaymentMethodModel!.brand == "jcb") {
       leading = const Icon(FontAwesomeIcons.ccJcb);
     }
 
@@ -304,11 +298,11 @@ class _CardPaymentMethodRow extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            "****${cardPaymentMethodModel.last4}",
+            "****${cardPaymentMethodModel!.last4}",
           ),
-          if (cardPaymentMethodModel.isDefault)
+          if (cardPaymentMethodModel!.isDefault!)
             SizedBox(width: screenWidth * 0.05),
-          if (cardPaymentMethodModel.isDefault)
+          if (cardPaymentMethodModel!.isDefault!)
             Container(
               padding: const EdgeInsets.all(5),
               color: Colors.lightBlue[200],

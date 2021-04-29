@@ -4,7 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:stripe_payment/stripe_payment.dart' as stripe;
 import 'package:yummer/config/config.dart';
 import 'package:yummer/domain/my_wallet/models/card_payment_method_model.dart';
@@ -19,8 +19,8 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
   final MyWalletRepository _myWalletRepository;
 
   MyWalletAddPaymentCubit({
-    @required AppValues appValues,
-    @required MyWalletRepository myWalletRepository,
+    required AppValues appValues,
+    required MyWalletRepository myWalletRepository,
   })  : assert(appValues != null),
         assert(myWalletRepository != null),
         _appValues = appValues,
@@ -184,7 +184,7 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
           state.copyWith(
               status: FormzStatus.submissionFailure,
               errorMessage: error != null && error.message != null
-                  ? error.message as String
+                  ? error.message as String?
                   : "Failed to create payment method. Please try again."),
         );
       });

@@ -9,12 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RestaurantCheckoutCartBar extends StatelessWidget {
   final double width;
   final double height;
-  final OrderCartModel orderCartModel;
+  final OrderCartModel? orderCartModel;
 
   const RestaurantCheckoutCartBar({
-    @required this.height,
-    @required this.width,
-    @required this.orderCartModel,
+    required this.height,
+    required this.width,
+    required this.orderCartModel,
   });
 
   @override
@@ -26,7 +26,7 @@ class RestaurantCheckoutCartBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Card(
-            color: AppConfig.of(context).theme.primaryColor,
+            color: AppConfig.of(context)!.theme!.primaryColor,
             margin: const EdgeInsets.only(
                 // top: height * 0.169951,
                 //  left: width * 0.05333,
@@ -42,7 +42,7 @@ class RestaurantCheckoutCartBar extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               child: FittedBox(
                 child: Text(
-                  orderCartModel.cartItems.length.toString(),
+                  orderCartModel!.cartItems.length.toString(),
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
@@ -53,7 +53,7 @@ class RestaurantCheckoutCartBar extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
           Text(
-            "\$${orderCartModel.totalPriceUnitAmount / 100}",
+            "\$${orderCartModel!.totalPriceUnitAmount / 100}",
             style: const TextStyle(color: Colors.white),
           )
         ],
@@ -68,14 +68,15 @@ class _RestaurantBottomButton extends StatelessWidget {
   final Widget child;
 
   const _RestaurantBottomButton({
-    @required this.height,
-    @required this.width,
-    @required this.child,
+    required this.height,
+    required this.width,
+    required this.child,
   });
 
   void onCheckoutClicked(BuildContext context) {
     print("CLICKED");
-    ExtendedNavigator.of(context).push(Routes.restaurantCheckoutPage, arguments: RestaurantCheckoutPageArguments(restaurantBloc: context.read<RestaurantBloc>()));
+    AutoRouter.of(context).push(RestaurantCheckoutPageRoute(
+        restaurantBloc: context.read<RestaurantBloc>()));
   }
 
   @override
@@ -89,7 +90,7 @@ class _RestaurantBottomButton extends StatelessWidget {
         width: double.infinity,
         height: height * 0.062807,
         decoration: BoxDecoration(
-          color: AppConfig.of(context).theme.accentColor,
+          color: AppConfig.of(context)!.theme!.accentColor,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(width * 0.025),
               topRight: Radius.circular(width * 0.025),

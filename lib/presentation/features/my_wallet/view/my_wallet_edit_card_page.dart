@@ -10,8 +10,8 @@ class MyWalletEditCardPage extends StatelessWidget {
   final CardPaymentMethodModel cardPaymentMethodModel;
 
   const MyWalletEditCardPage({
-    @required this.myWalletBloc,
-    @required this.cardPaymentMethodModel,
+    required this.myWalletBloc,
+    required this.cardPaymentMethodModel,
   });
 
   @override
@@ -29,7 +29,7 @@ class _MyWalletAddCardPage extends StatelessWidget {
   final CardPaymentMethodModel cardPaymentMethodModel;
 
   const _MyWalletAddCardPage({
-    @required this.cardPaymentMethodModel,
+    required this.cardPaymentMethodModel,
   });
 
   @override
@@ -48,12 +48,12 @@ class _MyWalletAddCardPage extends StatelessWidget {
 
         title: Text(
           "Edit Card",
-          style: Theme.of(context).textTheme.headline5.copyWith(
+          style: Theme.of(context).textTheme.headline5!.copyWith(
                 fontWeight: FontWeight.w900,
               ),
         ),
         actions: [
-          if (cardPaymentMethodModel.isDefault)
+          if (cardPaymentMethodModel.isDefault!)
             Container(
               margin: EdgeInsets.only(right: screenWidth * 0.05),
               child: const Chip(
@@ -83,8 +83,8 @@ class _MyWalletAddCardPage extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
                 child: Column(
                   children: [
-                    if (cardPaymentMethodModel.isDefault) const Divider(),
-                    if (!cardPaymentMethodModel.isDefault)
+                    if (cardPaymentMethodModel.isDefault!) const Divider(),
+                    if (!cardPaymentMethodModel.isDefault!)
                       ListTile(
                         onTap: () {
                           context.read<MyWalletBloc>().add(

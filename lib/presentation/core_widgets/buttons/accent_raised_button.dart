@@ -12,8 +12,8 @@ class AccentRaisedButton extends StatelessWidget {
   final TextStyle textStyle;
 
   const AccentRaisedButton({
-    @required this.onClick,
-    @required this.text,
+    required this.onClick,
+    required this.text,
     this.height = 0,
     this.width = 0,
     this.showProgressBar = false,
@@ -36,7 +36,7 @@ class AccentRaisedButton extends StatelessWidget {
         elevation: elevation,
         disabledColor: Colors.grey[300],
          splashColor: Colors.white30,
-        color: AppConfig.of(context).theme.accentColor,
+        color: AppConfig.of(context)!.theme!.accentColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

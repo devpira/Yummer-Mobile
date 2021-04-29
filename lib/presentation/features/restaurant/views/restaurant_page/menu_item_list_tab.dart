@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:yummer/config/config.dart';
 
 class MenuItemListTab extends StatelessWidget {
-  final String text;
-  final IconData iconData;
+  final String? text;
+  final IconData? iconData;
   final bool active;
 
   const MenuItemListTab({
-    @required this.text,
+    required this.text,
     this.iconData,
     this.active = false,
   });
@@ -23,12 +23,12 @@ class MenuItemListTab extends StatelessWidget {
             : null,
         decoration: BoxDecoration(
             color: (active)
-                ? AppConfig.of(context).theme.primaryColor
+                ? AppConfig.of(context)!.theme!.primaryColor
                 : Colors.grey[200],
             borderRadius: BorderRadius.circular(50),
             border: Border.all(color: Colors.transparent, width: 2)),
         child: Align(
-          child: (iconData == null) ? Text(text) : Icon(iconData),
+          child: (iconData == null) ? Text(text!) : Icon(iconData),
         ),
       ),
     );

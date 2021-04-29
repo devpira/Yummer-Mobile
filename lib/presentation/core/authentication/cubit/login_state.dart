@@ -1,15 +1,15 @@
 part of 'login_cubit.dart';
 
 class LoginState extends Equatable {
-  final LoginPageState currentPage;
+  final LoginPageState? currentPage;
   final PhoneNumberValueObject phoneNumber;
-  final String phoneVerificationId;
-  final int phoneResendToken;
+  final String? phoneVerificationId;
+  final int? phoneResendToken;
 
   final EmailModel email;
   final PasswordModel password;
   final FormzStatus status;
-  final String errorMessage;
+  final String? errorMessage;
   final bool formSubmitted;
   final bool showPassword;
 
@@ -27,7 +27,7 @@ class LoginState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         currentPage,
         phoneNumber,
         phoneVerificationId,
@@ -41,16 +41,16 @@ class LoginState extends Equatable {
       ];
 
   LoginState copyWith({
-    LoginPageState currentPage,
-    PhoneNumberValueObject phoneNumber,
-    String phoneVerificationId,
-    int phoneResendToken,
-    EmailModel email,
-    PasswordModel password,
-    FormzStatus status,
-    String errorMessage,
-    bool formSubmitted,
-    bool showPassword,
+    LoginPageState? currentPage,
+    PhoneNumberValueObject? phoneNumber,
+    String? phoneVerificationId,
+    int? phoneResendToken,
+    EmailModel? email,
+    PasswordModel? password,
+    FormzStatus? status,
+    String? errorMessage,
+    bool? formSubmitted,
+    bool? showPassword,
   }) {
     return LoginState(
       currentPage: currentPage ?? this.currentPage,

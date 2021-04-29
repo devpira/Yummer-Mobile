@@ -7,7 +7,7 @@ class CardNameValueObject extends FormzInput<String, CardNameValidationError> {
   const CardNameValueObject.dirty([String value = '']) : super.dirty(value);
 
   @override
-  CardNameValidationError validator(String value) {
+  CardNameValidationError? validator(String value) {
     return value == null || value.isEmpty ? CardNameValidationError.invalid : null;
   }
 }

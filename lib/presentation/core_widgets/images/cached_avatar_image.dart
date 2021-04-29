@@ -5,7 +5,7 @@ class CachedAvatarImage extends StatelessWidget {
   final String imageUrl;
   final double radius;
 
-  const CachedAvatarImage({@required this.imageUrl, @required this.radius});
+  const CachedAvatarImage({required this.imageUrl, required this.radius});
 
   @override
   Widget build(BuildContext context) {

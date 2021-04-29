@@ -9,7 +9,7 @@ abstract class UserDetailEvent extends Equatable {
 
 class UserDetailLoadRequested extends UserDetailEvent {
   final UserModel user;
-  const UserDetailLoadRequested({@required this.user});
+  const UserDetailLoadRequested({required this.user});
 
   @override
   List<Object> get props => [user];

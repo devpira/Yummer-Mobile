@@ -6,7 +6,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:yummer/domain/user_detail/user_detail.dart';
 
 part 'user_detail_event.dart';
@@ -17,7 +17,7 @@ class UserDetailBloc extends HydratedBloc<UserDetailEvent, UserDetailState> {
   final UserDetailRepository _userDetailRepository;
 
   UserDetailBloc({
-    @required UserDetailRepository userDetailRepository,
+    required UserDetailRepository userDetailRepository,
   })  : assert(userDetailRepository != null),
         _userDetailRepository = userDetailRepository,
         super(UserDetailNotLoaded());
@@ -71,7 +71,7 @@ class UserDetailBloc extends HydratedBloc<UserDetailEvent, UserDetailState> {
   }
 
   @override
-  UserDetailState fromJson(Map<String, dynamic> json) {
+  UserDetailState? fromJson(Map<String, dynamic> json) {
     print("FROM JSON");
     print(json);
     try {
@@ -82,7 +82,7 @@ class UserDetailBloc extends HydratedBloc<UserDetailEvent, UserDetailState> {
   }
 
   @override
-  Map<String, dynamic> toJson(UserDetailState state) {
+  Map<String, dynamic>? toJson(UserDetailState state) {
     print("TO JSON");
     print(state);
     if (state is UserDetailLoaded) {

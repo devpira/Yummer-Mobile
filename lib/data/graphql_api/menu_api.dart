@@ -1,15 +1,14 @@
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:yummer/config/config.dart';
 import 'package:yummer/data/core/graphql/graphql.dart';
 
 @lazySingleton
 class MenuApi extends AbstractGraphQL {
   MenuApi({
-    @required AppValues appValues,
+    required AppValues appValues,
   }) : super.instance(appValues: appValues);
 
-  Future<Map<String, dynamic>> getCurrentRestaurantMenyToDisplay(
+  Future<Map<String, dynamic>?> getCurrentRestaurantMenyToDisplay(
       String restaurantId) async {
     final Map<String, dynamic> result = await executeQuery(
       query: """
@@ -54,6 +53,6 @@ class MenuApi extends AbstractGraphQL {
       return null;
     }
 
-    return result['currentRestaurantMenuToDisplay'] as Map<String, dynamic>;
+    return result['currentRestaurantMenuToDisplay'] as Map<String, dynamic>?;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:yummer/presentation/core/authentication/authentication.dart';
 import 'package:yummer/domain/user_detail/user_detail.dart';
 import 'package:yummer/presentation/core/internet_connectivity/internet_connectivity.dart';
@@ -16,9 +16,9 @@ class CreateUserDetailCubit extends Cubit<CreateUserDetailState> {
   final InternetConnectivityCubit _internetConnectivityCubit;
 
   CreateUserDetailCubit({
-    @required UserDetailRepository userDetailRepository,
-    @required AuthenticationBloc authenticationBloc,
-    @required InternetConnectivityCubit internetConnectivityCubit,
+    required UserDetailRepository userDetailRepository,
+    required AuthenticationBloc authenticationBloc,
+    required InternetConnectivityCubit internetConnectivityCubit,
   })  : assert(userDetailRepository != null),
         assert(authenticationBloc != null),
         assert(internetConnectivityCubit != null),

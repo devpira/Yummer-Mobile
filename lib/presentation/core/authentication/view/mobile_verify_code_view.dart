@@ -12,9 +12,9 @@ class MobileVerifyCodeView extends StatelessWidget {
   final FocusNode _pinPutFocusNode = FocusNode();
   BoxDecoration _pinPutDecoration(BuildContext context) {
     return BoxDecoration(
-      border: Border.all(color: AppConfig.of(context).theme.primaryColor),
+      border: Border.all(color: AppConfig.of(context)!.theme!.primaryColor),
       borderRadius: BorderRadius.circular(15.0),
-      color: AppConfig.of(context).theme.textFieldOneBackgroundColor,
+      color: AppConfig.of(context)!.theme!.textFieldOneBackgroundColor,
     );
   }
 
@@ -28,7 +28,7 @@ class MobileVerifyCodeView extends StatelessWidget {
           Scaffold.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
+              SnackBar(content: Text(state.errorMessage!)),
             );
         }
       },
@@ -79,8 +79,8 @@ class MobileVerifyCodeView extends StatelessWidget {
                         _pinPutDecoration(context).copyWith(
                       borderRadius: BorderRadius.circular(5.0),
                       border: Border.all(
-                        color: AppConfig.of(context)
-                            .theme
+                        color: AppConfig.of(context)!
+                            .theme!
                             .accentColor
                             .withOpacity(.5),
                       ),
@@ -93,8 +93,8 @@ class MobileVerifyCodeView extends StatelessWidget {
                     seconds: 60,
                     build: (BuildContext context, double time) => Text(
                       "Resend code in: ${time.toStringAsFixed(0).toString()}",
-                      style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: AppConfig.of(context).theme.captionTextColor),
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: AppConfig.of(context)!.theme!.captionTextColor),
                     ),
                     interval: const Duration(milliseconds: 100),
                     onFinished: () {
@@ -106,13 +106,13 @@ class MobileVerifyCodeView extends StatelessWidget {
                   ),
                   Text(
                     "Didn't receive a verification code?",
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                        color: AppConfig.of(context).theme.captionTextColor),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        color: AppConfig.of(context)!.theme!.captionTextColor),
                   ),
                     Text(
                     "Please wait for time out to resend.",
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                        color: AppConfig.of(context).theme.captionTextColor),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        color: AppConfig.of(context)!.theme!.captionTextColor),
                   ),
                   SizedBox(
                     height: height * 0.02,
@@ -138,7 +138,7 @@ Widget _buildTitle(BuildContext context, double width, String title) {
     child: Text(
       title,
       style: TextStyle(
-        color: AppConfig.of(context).theme.accentColor,
+        color: AppConfig.of(context)!.theme!.accentColor,
         fontFamily: 'Quicksand',
         fontWeight: FontWeight.w900,
         fontSize: MediaQuery.of(context).size.height * 0.025,
@@ -153,9 +153,9 @@ class _NextButton extends StatelessWidget {
   final TextEditingController pinPutController;
 
   const _NextButton({
-    @required this.screenHeight,
-    @required this.screenWidth,
-    @required this.pinPutController,
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.pinPutController,
   });
 
   @override

@@ -1,15 +1,11 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
 
-part 'user_detail_model.g.dart';
-
-@JsonSerializable()
 class UserDetailModel {
-  @JsonKey(name: '_id')
-  String id;
-  String phoneNumber;
-  String name;
-  String email;
-  String posCustomerId;
+  String? id;
+  String? phoneNumber;
+  String? name;
+  String? email;
+  String? posCustomerId;
 
   UserDetailModel({
     this.id,
@@ -19,14 +15,9 @@ class UserDetailModel {
     this.posCustomerId,
   });
 
-  factory UserDetailModel.fromJson(Map<String, dynamic> data) =>
-      _$UserDetailModelFromJson(data);
-
-  Map<String, dynamic> toJson() => _$UserDetailModelToJson(this);
-
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      '_id': id,
       'phoneNumber': phoneNumber,
       'name': name,
       'email': email,
@@ -35,14 +26,17 @@ class UserDetailModel {
   }
 
   factory UserDetailModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return UserDetailModel(
-      id: map['id'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      name: map['name'] as String,
-      email: map['email'] as String,
-      posCustomerId: map['posCustomerId'] as String
+      id: map['_id'] as String?,
+      phoneNumber: map['phoneNumber'] as String?,
+      name: map['name'] as String?,
+      email: map['email'] as String?,
+      posCustomerId: map['posCustomerId'] as String?,
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserDetailModel.fromJson(String source) =>
+      UserDetailModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

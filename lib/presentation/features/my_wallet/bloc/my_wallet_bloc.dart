@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:yummer/domain/my_wallet/models/card_payment_method_model.dart';
 import 'package:yummer/domain/my_wallet/repository/my_wallet_repository.dart';
 
@@ -16,7 +16,7 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
   final MyWalletRepository _myWalletRepository;
 
   MyWalletBloc({
-    @required MyWalletRepository myWalletRepository,
+    required MyWalletRepository myWalletRepository,
   })  : assert(myWalletRepository != null),
         _myWalletRepository = myWalletRepository,
         super(const MyWalletState());
@@ -36,11 +36,11 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
       }
 
       final cardPaymentMethods =
-          await _myWalletRepository.getAllCardPaymentMethods();
+          await (_myWalletRepository.getAllCardPaymentMethods() as FutureOr<List<CardPaymentMethodModel>>);
 
-      CardPaymentMethodModel defaultPaymentMethod;
+      CardPaymentMethodModel? defaultPaymentMethod;
       cardPaymentMethods.forEach((item) {
-        if (item.isDefault) {
+        if (item.isDefault!) {
           defaultPaymentMethod = item;
         }
       });
@@ -51,9 +51,9 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
       );
     } else if (event is MyWalletEventAddCardMethod) {
       print("ADDING A CARD");
-      print(state.cardPaymentMethods.length);
-      final copiedCardPaymentMethods = state.cardPaymentMethods.map((item) {
-        return item.copyWith(isDefault: false);
+      print(state.cardPaymentMethods!.length);
+      final List<CardPaymentMethodModel?> copiedCardPaymentMethods = state.cardPaymentMethods!.map((item) {
+        return item!.copyWith(isDefault: false);
       }).toList();
       copiedCardPaymentMethods.insert(0, event.cardPaymentMethodModel);
 
@@ -73,8 +73,8 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
       }
 
       print("REMOVING A CARD");
-      final result = await _myWalletRepository.deletePaymentMethod(
-          event.posCustomerId, event.cardPaymentMethodModel.id);
+      final result = await (_myWalletRepository.deletePaymentMethod(
+          event.posCustomerId, event.cardPaymentMethodModel.id) as FutureOr<bool>);
 
       if (!result) {
         yield state.copyWith(
@@ -83,14 +83,14 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
         return;
       }
 
-      final copiedCardPaymentMethods = state.cardPaymentMethods
-          .where((item) => item.id != event.cardPaymentMethodModel.id)
+      final copiedCardPaymentMethods = state.cardPaymentMethods!
+          .where((item) => item!.id != event.cardPaymentMethodModel.id)
           .toList();
 
       yield state.copyWith(
         defaultPaymentMethodCanBeNull: true,
         defaultPaymentMethod: state.defaultPaymentMethod != null &&
-                state.defaultPaymentMethod.id == event.cardPaymentMethodModel.id
+                state.defaultPaymentMethod!.id == event.cardPaymentMethodModel.id
             ? null
             : state.defaultPaymentMethod,
         cardPaymentMethods: copiedCardPaymentMethods,
@@ -105,8 +105,8 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
         return;
       }
 
-      final result = await _myWalletRepository
-          .changeDefaultPaymentMethod(event.cardPaymentMethodModel.id);
+      final result = await (_myWalletRepository
+          .changeDefaultPaymentMethod(event.cardPaymentMethodModel.id) as FutureOr<bool>);
 
       if (!result) {
         yield state.copyWith(
@@ -115,8 +115,8 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
         return;
       }
 
-    final copiedCardPaymentMethods = state.cardPaymentMethods.map((item) {
-        if (item.id == event.cardPaymentMethodModel.id) {
+    final copiedCardPaymentMethods = state.cardPaymentMethods!.map((item) {
+        if (item!.id == event.cardPaymentMethodModel.id) {
           return item.copyWith(isDefault: true);
         }
         return item.copyWith(isDefault: false);

@@ -11,7 +11,7 @@ class PhoneNumberValueObject extends FormzInput<String, PhoneNumberError> {
   );
 
   @override
-  PhoneNumberError validator(String value) {
+  PhoneNumberError? validator(String value) {
     return value == null || value.isEmpty ||  !_phoneRegExp.hasMatch(value) ? PhoneNumberError.invalid : null;
   }
 }

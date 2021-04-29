@@ -15,6 +15,8 @@ import 'package:yummer/presentation/features/feature.dart';
     CustomRoute<bool>(page: RestaurantMenuItemPage, transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute<bool>(page: RestaurantCheckoutPage, transitionsBuilder: TransitionsBuilders.fadeIn),
 
+    CustomRoute<bool>(page: RestaurantOrderSessionPage, transitionsBuilder: TransitionsBuilders.fadeIn),
+
     CustomRoute<bool>(page: MyWalletPage, transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute<bool>(page: MyWalletAddCardPage, transitionsBuilder: TransitionsBuilders.fadeIn),
     CustomRoute<bool>(page: MyWalletEditCardPage, transitionsBuilder: TransitionsBuilders.fadeIn),

@@ -1,6 +1,7 @@
 include: package:lint/analysis_options.yaml
 
 analyzer:
+  exclude: ['lib/routes/**', 'packages/**']
   errors:
     missing_return: error
     prefer_const_constructors: error
@@ -14,4 +15,6 @@ analyzer:
     duplicate_import: error
     unnecessary_new: error
     unnecessary_await_in_return: error
+    deprecated_member_use: warning
+    unnecessary_null_comparison: warning
 

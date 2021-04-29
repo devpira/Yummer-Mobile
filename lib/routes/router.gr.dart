@@ -4,260 +4,374 @@
 // AutoRouteGenerator
 // **************************************************************************
 
-// ignore_for_file: public_member_api_docs
+import 'package:auto_route/auto_route.dart' as _i1;
+import 'package:flutter/widgets.dart' as _i7;
+import 'package:yummer/domain/menu/menu.dart' as _i4;
+import 'package:yummer/domain/my_wallet/models/card_payment_method_model.dart'
+    as _i6;
+import 'package:yummer/presentation/core/core.dart' as _i2;
+import 'package:yummer/presentation/features/feature.dart' as _i3;
+import 'package:yummer/presentation/features/restaurant/bloc/restaurant_bloc.dart'
+    as _i5;
 
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+class MyRouter extends _i1.RootStackRouter {
+  MyRouter();
 
-import '../domain/menu/menu.dart';
-import '../domain/my_wallet/models/card_payment_method_model.dart';
-import '../presentation/core/core.dart';
-import '../presentation/features/feature.dart';
-import '../presentation/features/restaurant/bloc/restaurant_bloc.dart';
-
-class Routes {
-  static const String splashPage = '/';
-  static const String loginPage = '/login-page';
-  static const String createUserDetailsPage = '/create-user-details-page';
-  static const String homePage = '/home-page';
-  static const String restaurantPage = '/restaurant-page';
-  static const String restaurantMenuItemPage = '/restaurant-menu-item-page';
-  static const String restaurantCheckoutPage = '/restaurant-checkout-page';
-  static const String myWalletPage = '/my-wallet-page';
-  static const String myWalletAddCardPage = '/my-wallet-add-card-page';
-  static const String myWalletEditCardPage = '/my-wallet-edit-card-page';
-  static const String systemErrorPage = '/system-error-page';
-  static const String loadingScreen = '/loading-screen';
-  static const String noInternetPage = '/no-internet-page';
-  static const all = <String>{
-    splashPage,
-    loginPage,
-    createUserDetailsPage,
-    homePage,
-    restaurantPage,
-    restaurantMenuItemPage,
-    restaurantCheckoutPage,
-    myWalletPage,
-    myWalletAddCardPage,
-    myWalletEditCardPage,
-    systemErrorPage,
-    loadingScreen,
-    noInternetPage,
+  @override
+  final Map<String, _i1.PageFactory> pagesMap = {
+    SplashPageRoute.name: (entry) {
+      return _i1.AdaptivePage(entry: entry, child: _i2.SplashPage());
+    },
+    LoginPageRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i2.LoginPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    CreateUserDetailsPageRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: const _i3.CreateUserDetailsPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    HomePageRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.HomePage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    RestaurantPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<RestaurantPageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.RestaurantPage(restaurantId: args.restaurantId),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    RestaurantMenuItemPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<RestaurantMenuItemPageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.RestaurantMenuItemPage(
+              productItem: args.productItem,
+              restaurantBloc: args.restaurantBloc),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    RestaurantCheckoutPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<RestaurantCheckoutPageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child:
+              _i3.RestaurantCheckoutPage(restaurantBloc: args.restaurantBloc),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    RestaurantOrderSessionPageRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.RestaurantOrderSessionPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    MyWalletPageRoute.name: (entry) {
+      var args = entry.routeData
+          .argsAs<MyWalletPageRouteArgs>(orElse: () => MyWalletPageRouteArgs());
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.MyWalletPage(myWalletBloc: args.myWalletBloc),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    MyWalletAddCardPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<MyWalletAddCardPageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.MyWalletAddCardPage(myWalletBloc: args.myWalletBloc),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    MyWalletEditCardPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<MyWalletEditCardPageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.MyWalletEditCardPage(
+              myWalletBloc: args.myWalletBloc,
+              cardPaymentMethodModel: args.cardPaymentMethodModel),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    SystemErrorPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<SystemErrorPageRouteArgs>(
+          orElse: () => SystemErrorPageRouteArgs());
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i2.SystemErrorPage(
+              key: args.key,
+              errorMessage: args.errorMessage,
+              tryAgainFunction: args.tryAgainFunction,
+              showLogOut: args.showLogOut),
+          opaque: true,
+          barrierDismissible: false);
+    },
+    LoadingScreenRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i2.LoadingScreen(),
+          opaque: true,
+          barrierDismissible: false);
+    },
+    NoInternetPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<NoInternetPageRouteArgs>(
+          orElse: () => NoInternetPageRouteArgs());
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i2.NoInternetPage(
+              key: args.key,
+              tryAgainFunction: args.tryAgainFunction,
+              showLogOut: args.showLogOut),
+          opaque: true,
+          barrierDismissible: false);
+    }
   };
+
+  @override
+  List<_i1.RouteConfig> get routes => [
+        _i1.RouteConfig(SplashPageRoute.name, path: '/'),
+        _i1.RouteConfig(LoginPageRoute.name, path: '/login-page'),
+        _i1.RouteConfig(CreateUserDetailsPageRoute.name,
+            path: '/create-user-details-page'),
+        _i1.RouteConfig(HomePageRoute.name, path: '/home-page'),
+        _i1.RouteConfig(RestaurantPageRoute.name, path: '/restaurant-page'),
+        _i1.RouteConfig(RestaurantMenuItemPageRoute.name,
+            path: '/restaurant-menu-item-page'),
+        _i1.RouteConfig(RestaurantCheckoutPageRoute.name,
+            path: '/restaurant-checkout-page'),
+        _i1.RouteConfig(RestaurantOrderSessionPageRoute.name,
+            path: '/restaurant-order-session-page'),
+        _i1.RouteConfig(MyWalletPageRoute.name, path: '/my-wallet-page'),
+        _i1.RouteConfig(MyWalletAddCardPageRoute.name,
+            path: '/my-wallet-add-card-page'),
+        _i1.RouteConfig(MyWalletEditCardPageRoute.name,
+            path: '/my-wallet-edit-card-page'),
+        _i1.RouteConfig(SystemErrorPageRoute.name, path: '/system-error-page'),
+        _i1.RouteConfig(LoadingScreenRoute.name, path: '/loading-screen'),
+        _i1.RouteConfig(NoInternetPageRoute.name, path: '/no-internet-page')
+      ];
 }
 
-class MyRouter extends RouterBase {
-  @override
-  List<RouteDef> get routes => _routes;
-  final _routes = <RouteDef>[
-    RouteDef(Routes.splashPage, page: SplashPage),
-    RouteDef(Routes.loginPage, page: LoginPage),
-    RouteDef(Routes.createUserDetailsPage, page: CreateUserDetailsPage),
-    RouteDef(Routes.homePage, page: HomePage),
-    RouteDef(Routes.restaurantPage, page: RestaurantPage),
-    RouteDef(Routes.restaurantMenuItemPage, page: RestaurantMenuItemPage),
-    RouteDef(Routes.restaurantCheckoutPage, page: RestaurantCheckoutPage),
-    RouteDef(Routes.myWalletPage, page: MyWalletPage),
-    RouteDef(Routes.myWalletAddCardPage, page: MyWalletAddCardPage),
-    RouteDef(Routes.myWalletEditCardPage, page: MyWalletEditCardPage),
-    RouteDef(Routes.systemErrorPage, page: SystemErrorPage),
-    RouteDef(Routes.loadingScreen, page: LoadingScreen),
-    RouteDef(Routes.noInternetPage, page: NoInternetPage),
-  ];
-  @override
-  Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
-  final _pagesMap = <Type, AutoRouteFactory>{
-    SplashPage: (data) {
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => SplashPage(),
-        settings: data,
-      );
-    },
-    LoginPage: (data) {
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    CreateUserDetailsPage: (data) {
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const CreateUserDetailsPage(),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    HomePage: (data) {
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    RestaurantPage: (data) {
-      final args = data.getArgs<RestaurantPageArguments>(nullOk: false);
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            RestaurantPage(restaurantId: args.restaurantId),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    RestaurantMenuItemPage: (data) {
-      final args = data.getArgs<RestaurantMenuItemPageArguments>(nullOk: false);
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            RestaurantMenuItemPage(
-          productItem: args.productItem,
-          restaurantBloc: args.restaurantBloc,
-        ),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    RestaurantCheckoutPage: (data) {
-      final args = data.getArgs<RestaurantCheckoutPageArguments>(nullOk: false);
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            RestaurantCheckoutPage(restaurantBloc: args.restaurantBloc),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    MyWalletPage: (data) {
-      final args = data.getArgs<MyWalletPageArguments>(
-        orElse: () => MyWalletPageArguments(),
-      );
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            MyWalletPage(myWalletBloc: args.myWalletBloc),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    MyWalletAddCardPage: (data) {
-      final args = data.getArgs<MyWalletAddCardPageArguments>(nullOk: false);
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            MyWalletAddCardPage(myWalletBloc: args.myWalletBloc),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    MyWalletEditCardPage: (data) {
-      final args = data.getArgs<MyWalletEditCardPageArguments>(nullOk: false);
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            MyWalletEditCardPage(
-          myWalletBloc: args.myWalletBloc,
-          cardPaymentMethodModel: args.cardPaymentMethodModel,
-        ),
-        settings: data,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
-    },
-    SystemErrorPage: (data) {
-      final args = data.getArgs<SystemErrorPageArguments>(
-        orElse: () => SystemErrorPageArguments(),
-      );
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            SystemErrorPage(
-          key: args.key,
-          errorMessage: args.errorMessage,
-          tryAgainFunction: args.tryAgainFunction,
-          showLogOut: args.showLogOut,
-        ),
-        settings: data,
-      );
-    },
-    LoadingScreen: (data) {
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            LoadingScreen(),
-        settings: data,
-      );
-    },
-    NoInternetPage: (data) {
-      final args = data.getArgs<NoInternetPageArguments>(
-        orElse: () => NoInternetPageArguments(),
-      );
-      return PageRouteBuilder<bool>(
-        pageBuilder: (context, animation, secondaryAnimation) => NoInternetPage(
-          key: args.key,
-          tryAgainFunction: args.tryAgainFunction,
-          showLogOut: args.showLogOut,
-        ),
-        settings: data,
-      );
-    },
-  };
+class SplashPageRoute extends _i1.PageRouteInfo {
+  const SplashPageRoute() : super(name, path: '/');
+
+  static const String name = 'SplashPageRoute';
 }
 
-/// ************************************************************************
-/// Arguments holder classes
-/// *************************************************************************
+class LoginPageRoute extends _i1.PageRouteInfo {
+  const LoginPageRoute() : super(name, path: '/login-page');
 
-/// RestaurantPage arguments holder class
-class RestaurantPageArguments {
+  static const String name = 'LoginPageRoute';
+}
+
+class CreateUserDetailsPageRoute extends _i1.PageRouteInfo {
+  const CreateUserDetailsPageRoute()
+      : super(name, path: '/create-user-details-page');
+
+  static const String name = 'CreateUserDetailsPageRoute';
+}
+
+class HomePageRoute extends _i1.PageRouteInfo {
+  const HomePageRoute() : super(name, path: '/home-page');
+
+  static const String name = 'HomePageRoute';
+}
+
+class RestaurantPageRoute extends _i1.PageRouteInfo<RestaurantPageRouteArgs> {
+  RestaurantPageRoute({required String restaurantId})
+      : super(name,
+            path: '/restaurant-page',
+            args: RestaurantPageRouteArgs(restaurantId: restaurantId));
+
+  static const String name = 'RestaurantPageRoute';
+}
+
+class RestaurantPageRouteArgs {
+  const RestaurantPageRouteArgs({required this.restaurantId});
+
   final String restaurantId;
-  RestaurantPageArguments({@required this.restaurantId});
 }
 
-/// RestaurantMenuItemPage arguments holder class
-class RestaurantMenuItemPageArguments {
-  final MenuProductModel productItem;
-  final RestaurantBloc restaurantBloc;
-  RestaurantMenuItemPageArguments(
-      {@required this.productItem, @required this.restaurantBloc});
+class RestaurantMenuItemPageRoute
+    extends _i1.PageRouteInfo<RestaurantMenuItemPageRouteArgs> {
+  RestaurantMenuItemPageRoute(
+      {required _i4.MenuProductModel productItem,
+      required _i5.RestaurantBloc restaurantBloc})
+      : super(name,
+            path: '/restaurant-menu-item-page',
+            args: RestaurantMenuItemPageRouteArgs(
+                productItem: productItem, restaurantBloc: restaurantBloc));
+
+  static const String name = 'RestaurantMenuItemPageRoute';
 }
 
-/// RestaurantCheckoutPage arguments holder class
-class RestaurantCheckoutPageArguments {
-  final RestaurantBloc restaurantBloc;
-  RestaurantCheckoutPageArguments({@required this.restaurantBloc});
+class RestaurantMenuItemPageRouteArgs {
+  const RestaurantMenuItemPageRouteArgs(
+      {required this.productItem, required this.restaurantBloc});
+
+  final _i4.MenuProductModel productItem;
+
+  final _i5.RestaurantBloc restaurantBloc;
 }
 
-/// MyWalletPage arguments holder class
-class MyWalletPageArguments {
-  final MyWalletBloc myWalletBloc;
-  MyWalletPageArguments({this.myWalletBloc});
+class RestaurantCheckoutPageRoute
+    extends _i1.PageRouteInfo<RestaurantCheckoutPageRouteArgs> {
+  RestaurantCheckoutPageRoute({required _i5.RestaurantBloc restaurantBloc})
+      : super(name,
+            path: '/restaurant-checkout-page',
+            args: RestaurantCheckoutPageRouteArgs(
+                restaurantBloc: restaurantBloc));
+
+  static const String name = 'RestaurantCheckoutPageRoute';
 }
 
-/// MyWalletAddCardPage arguments holder class
-class MyWalletAddCardPageArguments {
-  final MyWalletBloc myWalletBloc;
-  MyWalletAddCardPageArguments({@required this.myWalletBloc});
+class RestaurantCheckoutPageRouteArgs {
+  const RestaurantCheckoutPageRouteArgs({required this.restaurantBloc});
+
+  final _i5.RestaurantBloc restaurantBloc;
 }
 
-/// MyWalletEditCardPage arguments holder class
-class MyWalletEditCardPageArguments {
-  final MyWalletBloc myWalletBloc;
-  final CardPaymentMethodModel cardPaymentMethodModel;
-  MyWalletEditCardPageArguments(
-      {@required this.myWalletBloc, @required this.cardPaymentMethodModel});
+class RestaurantOrderSessionPageRoute extends _i1.PageRouteInfo {
+  const RestaurantOrderSessionPageRoute()
+      : super(name, path: '/restaurant-order-session-page');
+
+  static const String name = 'RestaurantOrderSessionPageRoute';
 }
 
-/// SystemErrorPage arguments holder class
-class SystemErrorPageArguments {
-  final Key key;
-  final String errorMessage;
-  final Function tryAgainFunction;
-  final bool showLogOut;
-  SystemErrorPageArguments(
+class MyWalletPageRoute extends _i1.PageRouteInfo<MyWalletPageRouteArgs> {
+  MyWalletPageRoute({_i3.MyWalletBloc? myWalletBloc})
+      : super(name,
+            path: '/my-wallet-page',
+            args: MyWalletPageRouteArgs(myWalletBloc: myWalletBloc));
+
+  static const String name = 'MyWalletPageRoute';
+}
+
+class MyWalletPageRouteArgs {
+  const MyWalletPageRouteArgs({this.myWalletBloc});
+
+  final _i3.MyWalletBloc? myWalletBloc;
+}
+
+class MyWalletAddCardPageRoute
+    extends _i1.PageRouteInfo<MyWalletAddCardPageRouteArgs> {
+  MyWalletAddCardPageRoute({required _i3.MyWalletBloc myWalletBloc})
+      : super(name,
+            path: '/my-wallet-add-card-page',
+            args: MyWalletAddCardPageRouteArgs(myWalletBloc: myWalletBloc));
+
+  static const String name = 'MyWalletAddCardPageRoute';
+}
+
+class MyWalletAddCardPageRouteArgs {
+  const MyWalletAddCardPageRouteArgs({required this.myWalletBloc});
+
+  final _i3.MyWalletBloc myWalletBloc;
+}
+
+class MyWalletEditCardPageRoute
+    extends _i1.PageRouteInfo<MyWalletEditCardPageRouteArgs> {
+  MyWalletEditCardPageRoute(
+      {required _i3.MyWalletBloc myWalletBloc,
+      required _i6.CardPaymentMethodModel cardPaymentMethodModel})
+      : super(name,
+            path: '/my-wallet-edit-card-page',
+            args: MyWalletEditCardPageRouteArgs(
+                myWalletBloc: myWalletBloc,
+                cardPaymentMethodModel: cardPaymentMethodModel));
+
+  static const String name = 'MyWalletEditCardPageRoute';
+}
+
+class MyWalletEditCardPageRouteArgs {
+  const MyWalletEditCardPageRouteArgs(
+      {required this.myWalletBloc, required this.cardPaymentMethodModel});
+
+  final _i3.MyWalletBloc myWalletBloc;
+
+  final _i6.CardPaymentMethodModel cardPaymentMethodModel;
+}
+
+class SystemErrorPageRoute extends _i1.PageRouteInfo<SystemErrorPageRouteArgs> {
+  SystemErrorPageRoute(
+      {_i7.Key? key,
+      String? errorMessage,
+      Function? tryAgainFunction,
+      bool showLogOut = false})
+      : super(name,
+            path: '/system-error-page',
+            args: SystemErrorPageRouteArgs(
+                key: key,
+                errorMessage: errorMessage,
+                tryAgainFunction: tryAgainFunction,
+                showLogOut: showLogOut));
+
+  static const String name = 'SystemErrorPageRoute';
+}
+
+class SystemErrorPageRouteArgs {
+  const SystemErrorPageRouteArgs(
       {this.key,
       this.errorMessage,
       this.tryAgainFunction,
       this.showLogOut = false});
+
+  final _i7.Key? key;
+
+  final String? errorMessage;
+
+  final Function? tryAgainFunction;
+
+  final bool showLogOut;
 }
 
-/// NoInternetPage arguments holder class
-class NoInternetPageArguments {
-  final Key key;
-  final Function tryAgainFunction;
-  final bool showLogOut;
-  NoInternetPageArguments(
+class LoadingScreenRoute extends _i1.PageRouteInfo {
+  const LoadingScreenRoute() : super(name, path: '/loading-screen');
+
+  static const String name = 'LoadingScreenRoute';
+}
+
+class NoInternetPageRoute extends _i1.PageRouteInfo<NoInternetPageRouteArgs> {
+  NoInternetPageRoute(
+      {_i7.Key? key, Function? tryAgainFunction, bool showLogOut = false})
+      : super(name,
+            path: '/no-internet-page',
+            args: NoInternetPageRouteArgs(
+                key: key,
+                tryAgainFunction: tryAgainFunction,
+                showLogOut: showLogOut));
+
+  static const String name = 'NoInternetPageRoute';
+}
+
+class NoInternetPageRouteArgs {
+  const NoInternetPageRouteArgs(
       {this.key, this.tryAgainFunction, this.showLogOut = false});
+
+  final _i7.Key? key;
+
+  final Function? tryAgainFunction;
+
+  final bool showLogOut;
 }

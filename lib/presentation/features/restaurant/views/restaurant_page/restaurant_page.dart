@@ -18,7 +18,7 @@ import 'restaurant_display_group_view.dart';
 class RestaurantPage extends StatelessWidget {
   final String restaurantId;
   const RestaurantPage({
-    @required this.restaurantId,
+    required this.restaurantId,
   });
 
   @override
@@ -35,7 +35,7 @@ class RestaurantPage extends StatelessWidget {
 
 class _RestaurantView extends StatelessWidget {
   const _RestaurantView({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -69,8 +69,8 @@ class _LoadedRestaurantView extends StatelessWidget {
   final double screenWidth;
 
   const _LoadedRestaurantView({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class _LoadedRestaurantView extends StatelessWidget {
                           duration: const Duration(milliseconds: 50),
                           opacity: top < 85.0 ? 1.0 : 0.0,
                           // opacity: 1.0,
-                          child: Text(state.restaurantModel.name),
+                          child: Text(state.restaurantModel!.name!),
                         ),
                         centerTitle: true,
                         background: SizedBox(
@@ -154,11 +154,12 @@ class _LoadedRestaurantView extends StatelessWidget {
                                             "Menu",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline5
+                                                .headline5!
                                                 .copyWith(
                                                     fontWeight: FontWeight.bold,
-                                                    color: AppConfig.of(context)
-                                                        .theme
+                                                    color: AppConfig.of(
+                                                            context)!
+                                                        .theme!
                                                         .offsetHeadingColor),
                                           ),
                                         ),
@@ -191,7 +192,7 @@ class _LoadedRestaurantView extends StatelessWidget {
                         screenHeight: screenHeight,
                         screenWidth: screenWidth,
                         currentIndex: state.currentTabIndex,
-                        displayGroups: state.menuModel.displayGroups
+                        displayGroups: state.menuModel!.displayGroups
                             .map((group) => group.name)
                             .toList(),
                       );
@@ -214,9 +215,9 @@ class _CardInfo extends StatelessWidget {
   final double screenWidth;
 
   const _CardInfo({
-    @required this.top,
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.top,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -261,23 +262,24 @@ class _CardInfo extends StatelessWidget {
               children: [
                 Text(
                   //"BRUNCH HEAVEN",
-                  state.restaurantModel.name,
-                  style: Theme.of(context).textTheme.headline5.copyWith(
+                  state.restaurantModel!.name!,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: AppConfig.of(context).theme.offsetHeadingColor),
+                      color: AppConfig.of(context)!.theme!.offsetHeadingColor),
                 ),
                 if (top > 200)
                   Text(
                     // "AMERICAN - PANCAKES",
-                    state.restaurantModel.description,
+                    state.restaurantModel!.description!,
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                 if (top > 200)
                   Text(
                     //"Leslieville's favourite comfort-brunch spot",
-                    "${state.restaurantModel.addressLine1}, ${state.restaurantModel.city}, ${state.restaurantModel.stateProvince}, ${state.restaurantModel.country}",
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                        color: AppConfig.of(context).theme.offsetHeadingColor),
+                    "${state.restaurantModel!.addressLine1}, ${state.restaurantModel!.city}, ${state.restaurantModel!.stateProvince}, ${state.restaurantModel!.country}",
+                    style: Theme.of(context).textTheme.caption!.copyWith(
+                        color:
+                            AppConfig.of(context)!.theme!.offsetHeadingColor),
                   )
               ],
             ),
@@ -291,14 +293,14 @@ class _CardInfo extends StatelessWidget {
 class _MenuTabs extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
-  final List<String> displayGroups;
+  final List<String?> displayGroups;
   final int currentIndex;
 
   const _MenuTabs({
-    @required this.screenHeight,
-    @required this.screenWidth,
-    @required this.displayGroups,
-    @required this.currentIndex,
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.displayGroups,
+    required this.currentIndex,
   });
 
   @override
@@ -307,7 +309,7 @@ class _MenuTabs extends StatefulWidget {
 
 class __MenuTabsState extends State<_MenuTabs>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -315,9 +317,9 @@ class __MenuTabsState extends State<_MenuTabs>
     _controller =
         TabController(length: widget.displayGroups.length, vsync: this);
 
-    _controller.animation.addListener(() {
+    _controller!.animation!.addListener(() {
       context.read<RestaurantBloc>().add(RestaurantEventChangeCurrentMenuTab(
-          index: (_controller.animation.value).round()));
+          index: (_controller!.animation!.value).round()));
       // setState(() {
       //   _currentIndex = (_controller.animation.value).round();
       // });
@@ -326,7 +328,7 @@ class __MenuTabsState extends State<_MenuTabs>
 
   @override
   Widget build(BuildContext context) {
-    _controller.index = widget.currentIndex;
+    _controller!.index = widget.currentIndex;
     return SliverPersistentHeader(
       delegate: _SliverAppBarDelegate(
         minHeight: widget.screenHeight * 0.05,
@@ -334,6 +336,7 @@ class __MenuTabsState extends State<_MenuTabs>
         child: MenuItemListTabBar(
           tighten: true,
           tabController: _controller,
+          preferredSize: const Size(2, 2),
           tabList: widget.displayGroups
               .map(
                 (name) => MenuItemListTab(
@@ -343,6 +346,7 @@ class __MenuTabsState extends State<_MenuTabs>
                 ),
               )
               .toList(),
+          child: const SizedBox(),
         ),
       ),
       pinned: true,
@@ -355,8 +359,8 @@ class _RestaurantBody extends StatelessWidget {
   final double screenWidth;
 
   const _RestaurantBody({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
 
   @override
@@ -376,10 +380,10 @@ class _RestaurantBody extends StatelessWidget {
               _RestaurantTabBarView(
                 screenWidth: screenWidth,
                 screenHeight: screenHeight,
-                displayGroups: state.menuModel.displayGroups,
+                displayGroups: state.menuModel!.displayGroups,
                 currentIndex: state.currentTabIndex,
               ),
-              if (state.orderCartModel.cartItems.length > 0)
+              if (state.orderCartModel!.cartItems.length > 0)
                 RestaurantCheckoutCartBar(
                   height: screenHeight,
                   width: screenWidth,
@@ -402,10 +406,10 @@ class _RestaurantTabBarView extends StatefulWidget {
   final int currentIndex;
 
   const _RestaurantTabBarView({
-    @required this.screenHeight,
-    @required this.screenWidth,
-    @required this.displayGroups,
-    @required this.currentIndex,
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.displayGroups,
+    required this.currentIndex,
   });
 
   @override
@@ -414,7 +418,7 @@ class _RestaurantTabBarView extends StatefulWidget {
 
 class __RestaurantTabBarViewState extends State<_RestaurantTabBarView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -422,9 +426,9 @@ class __RestaurantTabBarViewState extends State<_RestaurantTabBarView>
     _controller =
         TabController(length: widget.displayGroups.length, vsync: this);
 
-    _controller.animation.addListener(() {
+    _controller!.animation!.addListener(() {
       context.read<RestaurantBloc>().add(RestaurantEventChangeCurrentMenuTab(
-          index: (_controller.animation.value).round()));
+          index: (_controller!.animation!.value).round()));
       // setState(() {
       //   _currentIndex = (_controller.animation.value).round();
       // });
@@ -433,7 +437,7 @@ class __RestaurantTabBarViewState extends State<_RestaurantTabBarView>
 
   @override
   Widget build(BuildContext context) {
-    _controller.index = widget.currentIndex;
+    _controller!.index = widget.currentIndex;
     return Container(
       margin: EdgeInsets.only(top: widget.screenHeight * 0.12),
       child: TabBarView(
@@ -453,9 +457,9 @@ class __RestaurantTabBarViewState extends State<_RestaurantTabBarView>
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
-    @required this.minHeight,
-    @required this.maxHeight,
-    @required this.child,
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
   });
 
   final double minHeight;

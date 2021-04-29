@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
 
 class _HomePageView extends StatelessWidget {
   const _HomePageView({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -44,10 +44,10 @@ class _HomePageView extends StatelessWidget {
               activeIndex: state.bottomNavIndex,
               //iconSize: screenWidth * 0.07,
               inactiveColor: Colors.white60,
-              backgroundColor: AppConfig.of(context).theme.primaryColor,
+              backgroundColor: AppConfig.of(context)!.theme!.primaryColor,
               activeColor: Colors.white,
               gapLocation: GapLocation.none,
-              splashColor: AppConfig.of(context).theme.primaryColor,
+              splashColor: AppConfig.of(context)!.theme!.primaryColor,
               elevation: 5,
               leftCornerRadius: 15,
               rightCornerRadius: 15,
@@ -65,7 +65,7 @@ class _HomePageView extends StatelessWidget {
 
 class _HomePageBody extends StatelessWidget {
   const _HomePageBody({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

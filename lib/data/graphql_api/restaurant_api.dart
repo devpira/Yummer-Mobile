@@ -1,15 +1,14 @@
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:yummer/config/config.dart';
 import 'package:yummer/data/core/graphql/graphql.dart';
 
 @lazySingleton
 class RestaurantApi extends AbstractGraphQL {
   RestaurantApi({
-    @required AppValues appValues,
+    required AppValues appValues,
   }) : super.instance(appValues: appValues);
 
-  Future<List<Object>> getAllBasicEnabledRestaurants() async {
+  Future<List<Object>?> getAllBasicEnabledRestaurants() async {
     final Map<String, dynamic> result = await executeQuery(
       query: """
           query GetAllBasicEnabledRestaurants() {
@@ -21,6 +20,7 @@ class RestaurantApi extends AbstractGraphQL {
             }
           }
       """,
+      variables: {},
     ) as Map<String, dynamic>;
 
     if (result['basicEnabledRestaurantInfos'] == null) {
@@ -29,10 +29,10 @@ class RestaurantApi extends AbstractGraphQL {
       );
     }
 
-    return result['basicEnabledRestaurantInfos'] as List<Object>;
+    return result['basicEnabledRestaurantInfos'] as List<Object>?;
   }
 
-  Future<Map<String, dynamic>> getFullRestaurantInfo(
+  Future<Map<String, dynamic>?> getFullRestaurantInfo(
       String restaurantId) async {
     final Map<String, dynamic> result = await executeQuery(
       query: """
@@ -51,6 +51,7 @@ class RestaurantApi extends AbstractGraphQL {
               phoneNumber
               email
               website
+              posAccountId
             }
           }
       """,
@@ -63,6 +64,6 @@ class RestaurantApi extends AbstractGraphQL {
       return null;
     }
 
-    return result['fullRestaurantInfo'] as Map<String, dynamic>;
+    return result['fullRestaurantInfo'] as Map<String, dynamic>?;
   }
 }

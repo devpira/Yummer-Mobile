@@ -1,27 +1,27 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+
 
 import 'package:yummer/domain/menu/models/product_modifier_model.dart';
 
 class ProductModifierGroupModel extends Equatable {
-  final String id;
-  final String name;
-  final int minSelection;
-  final int maxSelection;
+  final String? id;
+  final String? name;
+  final int? minSelection;
+  final int? maxSelection;
   final List<ProductModifierModel> modifiers;
 
   const ProductModifierGroupModel({
-    @required this.id,
-    @required this.name,
-    @required this.minSelection,
-    @required this.maxSelection,
-    @required this.modifiers,
+    required this.id,
+    required this.name,
+    required this.minSelection,
+    required this.maxSelection,
+    required this.modifiers,
   });
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       id,
       name,
@@ -43,10 +43,10 @@ class ProductModifierGroupModel extends Equatable {
 
   factory ProductModifierGroupModel.fromMap(Map<String, dynamic> map) {
     return ProductModifierGroupModel(
-      id: map['_id'] as String,
-      name: map['name'] as String,
-      minSelection: map['minSelection'] as int,
-      maxSelection: map['maxSelection'] as int,
+      id: map['_id'] as String?,
+      name: map['name'] as String?,
+      minSelection: map['minSelection'] as int?,
+      maxSelection: map['maxSelection'] as int?,
       modifiers: List<ProductModifierModel>.from(
         map['modifiers']?.map(
           (x) => ProductModifierModel.fromMap(

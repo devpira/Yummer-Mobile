@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+
 
 class UserModel extends Equatable {
   /// The current user's email address.
@@ -21,12 +21,12 @@ class UserModel extends Equatable {
   final bool emailVerifed;
 
   const UserModel({
-    @required this.phoneNumber,
-    @required this.email,
-    @required this.id,
-    @required this.name,
-    @required this.photo,
-    @required this.emailVerifed,
+    required this.phoneNumber,
+    required this.email,
+    required this.id,
+    required this.name,
+    required this.photo,
+    required this.emailVerifed,
   })  : assert(phoneNumber != null),
         assert(id != null);
 
@@ -48,7 +48,7 @@ class UserModel extends Equatable {
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
+
   
     return UserModel(
       phoneNumber: map['phoneNumber'],

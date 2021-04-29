@@ -21,12 +21,11 @@ class HomeRestaurantPage extends StatelessWidget {
 
 class _HomeRestaurantView extends StatelessWidget {
   const _HomeRestaurantView({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //backgroundColor: AppConfig.of(context).theme.greyBackground,
       backgroundColor: Colors.white,
@@ -146,12 +145,12 @@ class _HomeRestaurantView extends StatelessWidget {
   }
 
   Widget _buildIconButton({
-    BuildContext context,
-    double screenHeight,
-    double screenWidth,
-    double width,
-    String label,
-    IconData iconData,
+    required BuildContext context,
+    double? screenHeight,
+    required double screenWidth,
+    double? width,
+    required String label,
+    IconData? iconData,
   }) {
     return SizedBox(
       width: width,
@@ -185,18 +184,18 @@ class _HomeRestaurantView extends StatelessWidget {
                 if (iconData != null)
                   Icon(
                     iconData,
-                    color: AppConfig.of(context).theme.greyTextColor,
-                    size: width * 0.16,
+                    color: AppConfig.of(context)!.theme!.greyTextColor,
+                    size: width! * 0.16,
                   ),
                 if (iconData != null)
                   SizedBox(
-                    width: width * 0.15,
+                    width: width! * 0.15,
                   ),
                 Text(
                   label,
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: AppConfig.of(context).theme.greyTextColor),
+                      color: AppConfig.of(context)!.theme!.greyTextColor),
                 ),
               ],
             ),
@@ -212,8 +211,8 @@ class _Body extends StatelessWidget {
   final double screenWidth;
 
   const _Body({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -257,8 +256,8 @@ class _SearchRestuarantInput extends StatelessWidget {
   final double screenWidth;
 
   const _SearchRestuarantInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -289,19 +288,16 @@ class _RestuarantRow extends StatelessWidget {
   final String imageUrl;
 
   const _RestuarantRow({
-    @required this.screenHeight,
-    @required this.screenWidth,
-    @required this.restaurantModel,
-    @required this.imageUrl,
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.restaurantModel,
+    required this.imageUrl,
   });
 
   void onRestaurantClicked(BuildContext context) {
-    ExtendedNavigator.of(context).push(
-      Routes.restaurantPage,
-      arguments: RestaurantPageArguments(
-        restaurantId: restaurantModel.id,
-      ),
-    );
+    AutoRouter.of(context).push(RestaurantPageRoute(
+      restaurantId: restaurantModel.id!,
+    ));
   }
 
   @override
@@ -355,16 +351,16 @@ class _RestuarantRow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          restaurantModel.name,
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              color: AppConfig.of(context).theme.accentColor,
+                          restaurantModel.name!,
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                              color: AppConfig.of(context)!.theme!.accentColor,
                               fontWeight: FontWeight.w800),
                         ),
                         Text(
                           "2 min away (95 m)",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyText1!
                               .copyWith(fontWeight: FontWeight.w400),
                         ),
                       ],

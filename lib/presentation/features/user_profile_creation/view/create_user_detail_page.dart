@@ -13,7 +13,7 @@ import 'package:yummer/presentation/features/user_profile_creation/user_profile_
 import 'package:formz/formz.dart';
 
 class CreateUserDetailsPage extends StatelessWidget {
-  const CreateUserDetailsPage({Key key}) : super(key: key);
+  const CreateUserDetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _CreateUserDetailsPageForm extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage),
+                content: Text(state.errorMessage!),
               ),
             );
         } else if (state.status.isSubmissionSuccess) {
@@ -115,7 +115,7 @@ class _CreateUserDetailsPageForm extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         fontSize: width * 0.035,
                         fontFamily: 'Quicksand',
-                        color: AppConfig.of(context).theme.primaryColor,
+                        color: AppConfig.of(context)!.theme!.primaryColor,
                       ),
                     ),
                   ),
@@ -134,7 +134,7 @@ class _CreateUserDetailsPageForm extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: AppConfig.of(context).theme.accentColor,
+          color: AppConfig.of(context)!.theme!.accentColor,
           fontFamily: 'Quicksand',
           fontWeight: FontWeight.w900,
           fontSize: MediaQuery.of(context).size.height * 0.025,
@@ -150,13 +150,13 @@ class _NameInput extends StatelessWidget {
   final double screenWidth;
 
   const _NameInput({
-    @required this.user,
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.user,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
-    String name;
+    String? name;
     if (user != null && user.name != null) {
       name = user.name;
     }
@@ -190,8 +190,8 @@ class _EmailInput extends StatelessWidget {
   final double screenWidth;
 
   const _EmailInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {

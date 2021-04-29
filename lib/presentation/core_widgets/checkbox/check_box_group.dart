@@ -7,24 +7,24 @@ enum CheckboxGroupOrientation {
 
 class CheckboxGroup extends StatefulWidget {
   /// A list of strings that describes each Checkbox. Each label must be distinct.
-  final List<String> labels;
+  final List<String?> labels;
 
   /// Specifies which boxes to be automatically check.
   /// Every element must match a label.
   /// This is useful for clearing all selections (set it to []).
   /// If this is non-null, then the user must handle updating this list; otherwise, the state of the CheckboxGroup won't change.
-  final List<String> checked;
+  final List<String>? checked;
 
   /// Specifies which boxes should be disabled.
   /// If this is non-null, no boxes will be disabled.
   /// The strings passed to this must match the labels.
-  final List<String> disabled;
+  final List<String>? disabled;
 
   /// Called when the value of the CheckboxGroup changes.
-  final void Function(bool isChecked, String label, int index) onChange;
+  final void Function(bool? isChecked, String? label, int index)? onChange;
 
   /// Called when the user makes a selection.
-  final void Function(List<String> selected) onSelected;
+  final void Function(List<String?> selected)? onSelected;
 
   /// The style to use for the labels.
   final TextStyle labelStyle;
@@ -33,12 +33,12 @@ class CheckboxGroup extends StatefulWidget {
   final CheckboxGroupOrientation orientation;
 
   /// Called when needed to build a CheckboxGroup element.
-  final Widget Function(Checkbox checkBox, Text label, int index) itemBuilder;
+  final Widget Function(Checkbox checkBox, Text label, int index)? itemBuilder;
 
   //THESE FIELDS ARE FOR THE CHECKBOX
 
   /// The color to use when a Checkbox is checked.
-  final Color activeColor;
+  final Color? activeColor;
 
   /// The color to use for the check icon when a Checkbox is checked.
   final Color checkColor;
@@ -55,8 +55,8 @@ class CheckboxGroup extends StatefulWidget {
   final EdgeInsetsGeometry margin;
 
   const CheckboxGroup({
-    Key key,
-    @required this.labels,
+    Key? key,
+    required this.labels,
     this.checked,
     this.disabled,
     this.onChange,
@@ -76,7 +76,7 @@ class CheckboxGroup extends StatefulWidget {
 }
 
 class _CheckboxGroupState extends State<CheckboxGroup> {
-  List<String> _selected = [];
+  List<String?> _selected = [];
 
   @override
   void initState() {
@@ -91,7 +91,7 @@ class _CheckboxGroupState extends State<CheckboxGroup> {
     //set the selected to the checked (if not null)
     if (widget.checked != null) {
       _selected = [];
-      _selected.addAll(widget.checked); //use add all to prevent a shallow copy
+      _selected.addAll(widget.checked!); //use add all to prevent a shallow copy
     }
 
     final List<Widget> content = [];
@@ -100,24 +100,24 @@ class _CheckboxGroupState extends State<CheckboxGroup> {
       final Checkbox cb = Checkbox(
         value: _selected.contains(widget.labels.elementAt(i)),
         onChanged: (widget.disabled != null &&
-                widget.disabled.contains(widget.labels.elementAt(i)))
+                widget.disabled!.contains(widget.labels.elementAt(i)))
             ? null
-            : (bool isChecked) => onChanged(isChecked, i),
+            : (bool? isChecked) => onChanged(isChecked, i),
         checkColor: widget.checkColor,
         activeColor:
             widget.activeColor ?? Theme.of(context).toggleableActiveColor,
         tristate: widget.tristate,
       );
 
-      final Text t = Text(widget.labels.elementAt(i),
+      final Text t = Text(widget.labels.elementAt(i)!,
           style: (widget.disabled != null &&
-                  widget.disabled.contains(widget.labels.elementAt(i)))
+                  widget.disabled!.contains(widget.labels.elementAt(i)))
               ? widget.labelStyle.apply(color: Theme.of(context).disabledColor)
               : widget.labelStyle);
 
       //use user defined method to build
       if (widget.itemBuilder != null)
-        content.add(widget.itemBuilder(cb, t, i));
+        content.add(widget.itemBuilder!(cb, t, i));
       else {
         //otherwise, use predefined method of building
 
@@ -125,7 +125,7 @@ class _CheckboxGroupState extends State<CheckboxGroup> {
         if (widget.orientation == CheckboxGroupOrientation.VERTICAL) {
           content.add(InkWell(
             onTap: (widget.disabled != null &&
-                    widget.disabled.contains(widget.labels.elementAt(i)))
+                    widget.disabled!.contains(widget.labels.elementAt(i)))
                 ? null
                 : () => onChanged(
                     !_selected.contains(widget.labels.elementAt(i)), i),
@@ -141,7 +141,7 @@ class _CheckboxGroupState extends State<CheckboxGroup> {
 
           content.add(InkWell(
             onTap: (widget.disabled != null &&
-                    widget.disabled.contains(widget.labels.elementAt(i)))
+                    widget.disabled!.contains(widget.labels.elementAt(i)))
                 ? null
                 : () => onChanged(
                     !_selected.contains(widget.labels.elementAt(i)), i),
@@ -164,21 +164,21 @@ class _CheckboxGroupState extends State<CheckboxGroup> {
     );
   }
 
-  void onChanged(bool isChecked, int i) {
+  void onChanged(bool? isChecked, int i) {
     final bool isAlreadyContained =
         _selected.contains(widget.labels.elementAt(i));
 
     if (mounted) {
       setState(() {
-        if (!isChecked && isAlreadyContained) {
+        if (!isChecked! && isAlreadyContained) {
           _selected.remove(widget.labels.elementAt(i));
         } else if (isChecked && !isAlreadyContained) {
           _selected.add(widget.labels.elementAt(i));
         }
 
         if (widget.onChange != null)
-          widget.onChange(isChecked, widget.labels.elementAt(i), i);
-        if (widget.onSelected != null) widget.onSelected(_selected);
+          widget.onChange!(isChecked, widget.labels.elementAt(i), i);
+        if (widget.onSelected != null) widget.onSelected!(_selected);
       });
     }
   }

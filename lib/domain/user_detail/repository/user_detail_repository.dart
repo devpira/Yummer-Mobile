@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:yummer/data/core/graphql/graphql.dart';
 import 'package:yummer/data/data.dart';
 import 'package:yummer/domain/user_detail/user_detail.dart';
@@ -9,12 +9,11 @@ class UserDetailRepository {
   final UserDetailApi _userDetailApi;
 
   const UserDetailRepository({
-    @required UserDetailApi userDetailApi,
-  })  : assert(userDetailApi != null),
-        _userDetailApi = userDetailApi;
+    required UserDetailApi userDetailApi,
+  }) : _userDetailApi = userDetailApi;
 
   Future<void> createUserDetail(
-      {@required UserDetailModel userDetailModel}) async {
+      {required UserDetailModel userDetailModel}) async {
     try {
       await _userDetailApi.createUserDetail(
         userDetailModel.phoneNumber,
@@ -31,9 +30,13 @@ class UserDetailRepository {
     }
   }
 
-  Future<UserDetailModel> getUserDetail() async {
+  Future<UserDetailModel?> getUserDetail() async {
     try {
-      return UserDetailModel.fromMap(await _userDetailApi.getUserDetail());
+     final result = await _userDetailApi.getUserDetail();
+      if (result == null) {
+        return null;
+      }
+      return UserDetailModel.fromMap(result);
     } on GraphQLException catch (e) {
       print(e.toString());
       throw UserDetailFailure(errorMessage: e.toString());

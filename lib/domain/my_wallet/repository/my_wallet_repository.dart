@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:yummer/data/data.dart';
 import 'package:yummer/domain/my_wallet/models/card_payment_method_model.dart';
 
@@ -8,14 +8,14 @@ class MyWalletRepository {
   final MyWalletApi _myWalletApi;
 
   const MyWalletRepository({
-    @required MyWalletApi myWalletApi,
+    required MyWalletApi myWalletApi,
   })  : assert(myWalletApi != null),
         _myWalletApi = myWalletApi;
 
-  Future<List<CardPaymentMethodModel>> getAllCardPaymentMethods() async {
+  Future<List<CardPaymentMethodModel>?> getAllCardPaymentMethods() async {
     try {
       final List<CardPaymentMethodModel> resultList = [];
-      final result = await _myWalletApi.getAllCardPaymentMethods();
+      final result = await (_myWalletApi.getAllCardPaymentMethods() as FutureOr<List<Object>>);
 
       for (final Object item in result) {
         resultList
@@ -29,19 +29,19 @@ class MyWalletRepository {
     }
   }
 
-  Future<CardPaymentMethodModel> attachPaymentMethod(
-      String paymentMethodId) async {
+  Future<CardPaymentMethodModel?> attachPaymentMethod(
+      String? paymentMethodId) async {
     try {
       return CardPaymentMethodModel.fromMap(
-          await _myWalletApi.attachPaymentMethod(paymentMethodId));
+          await (_myWalletApi.attachPaymentMethod(paymentMethodId) as FutureOr<Map<String, dynamic>>));
     } catch (e) {
       print(e);
       return null;
     }
   }
 
-  Future<bool> deletePaymentMethod(
-      String posCustomerId, String paymentMethodId) async {
+  Future<bool?> deletePaymentMethod(
+      String? posCustomerId, String? paymentMethodId) async {
     try {
       return await _myWalletApi.deletePaymentMethod(
           posCustomerId, paymentMethodId);
@@ -51,7 +51,7 @@ class MyWalletRepository {
     }
   }
 
-  Future<bool> changeDefaultPaymentMethod(String paymentMethodId) async {
+  Future<bool?> changeDefaultPaymentMethod(String? paymentMethodId) async {
     try {
       return await _myWalletApi.changeDefaultPaymentMethod(paymentMethodId);
     } catch (e) {

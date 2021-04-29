@@ -8,7 +8,7 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: SpinKitFadingCircle(
-          color: AppConfig.of(context).theme.primaryColor,
+          color: AppConfig.of(context)!.theme!.primaryColor,
         ),
       ),
     );

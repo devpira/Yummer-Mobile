@@ -9,7 +9,7 @@ import 'package:formz/formz.dart';
 class MyWalletAddCardPage extends StatelessWidget {
   final MyWalletBloc myWalletBloc;
   const MyWalletAddCardPage({
-    @required this.myWalletBloc,
+    required this.myWalletBloc,
   });
 
   @override
@@ -52,7 +52,7 @@ class ___MyWalletAddCardPageeState extends State<_MyWalletAddCardPage> {
 
         title: Text(
           "Add Card",
-          style: Theme.of(context).textTheme.headline5.copyWith(
+          style: Theme.of(context).textTheme.headline5!.copyWith(
                 fontWeight: FontWeight.w900,
               ),
         ),
@@ -68,7 +68,7 @@ class ___MyWalletAddCardPageeState extends State<_MyWalletAddCardPage> {
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 SnackBar(
-                  content: Text(state.errorMessage),
+                  content: Text(state.errorMessage!),
                 ),
               );
           } else if (state.status.isSubmissionSuccess) {
@@ -188,8 +188,8 @@ class _CreditCardPreview extends StatelessWidget {
   final double screenWidth;
 
   const _CreditCardPreview({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -234,8 +234,8 @@ class _CardNumberInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardNumberInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -268,8 +268,8 @@ class _CardExpiryDateInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardExpiryDateInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -303,8 +303,8 @@ class _CardCvvInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardCvvInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -337,8 +337,8 @@ class _CardNameInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardNameInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
 
   @override

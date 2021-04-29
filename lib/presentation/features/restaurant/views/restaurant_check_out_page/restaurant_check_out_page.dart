@@ -14,7 +14,7 @@ class RestaurantCheckoutPage extends StatelessWidget {
   final RestaurantBloc restaurantBloc;
 
   const RestaurantCheckoutPage({
-    @required this.restaurantBloc,
+    required this.restaurantBloc,
   });
 
   @override
@@ -44,14 +44,14 @@ class _RestaurantCheckoutPage extends StatelessWidget {
         children: [
           Text(
             leftText,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontWeight: (bold) ? FontWeight.w700 : FontWeight.w300,
                   // color: AppConfig.of(context).theme.offsetHeadingColor,
                 ),
           ),
           Text(
             rightText,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontWeight: (bold) ? FontWeight.w700 : FontWeight.w300,
                   // color: AppConfig.of(context).theme.offsetHeadingColor,
                 ),
@@ -74,205 +74,240 @@ class _RestaurantCheckoutPage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "Place Your Order",
-          style: Theme.of(context).textTheme.headline5.copyWith(
+          style: Theme.of(context).textTheme.headline5!.copyWith(
               fontWeight: FontWeight.w900,
-              color: AppConfig.of(context).theme.offsetHeadingColor),
+              color: AppConfig.of(context)!.theme!.offsetHeadingColor),
         ),
         leading: Padding(
           padding: EdgeInsets.all(screenWidth * 0.012),
           child: const WhiteBackButton(shadow: 0),
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, size) {
-          final double height = size.maxHeight;
-          final double width = size.maxWidth;
+      body: BlocListener<RestaurantBloc, RestaurantState>(
+        listener: (context, state) {
+          if (state.errorMessage != null) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage!),
+                ),
+              );
+          } else if (state.orderSessionModel != null) {
+            Navigator.pop(context);
+            AutoRouter.of(context)
+                .replace(const RestaurantOrderSessionPageRoute());
+          }
+        },
+        child: LayoutBuilder(
+          builder: (context, size) {
+            final double height = size.maxHeight;
+            final double width = size.maxWidth;
 
-          return SizedBox(
-            height: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Container(
-                  //   color: AppConfig.of(context).theme.primaryColor,
-                  //   height: MediaQuery.of(context).padding.top,
-                  // ),
-                  // SizedBox(height: height * 0.035),
-                  // Center(
-                  //   child: Text(
-                  //     "We Are Hungry Too!",
-                  //     style: Theme.of(context).textTheme.headline5.copyWith(
-                  //         fontWeight: FontWeight.w900,
-                  //         color:
-                  //             AppConfig.of(context).theme.offsetHeadingColor),
-                  //   ),
-                  // ),
-                  SizedBox(height: height * 0.015),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: AppConfig.of(context).theme.pageLeftMarginP1 *
-                            width),
-                    child: Text(
-                      "Your order",
-                      style: Theme.of(context).textTheme.headline5.copyWith(
-                            fontWeight: FontWeight.w400,
-                            // color:
-                            //     AppConfig.of(context).theme.offsetHeadingColor,
-                          ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  RestaurantCartItemsSection(
-                    height: height,
-                    width: width,
-                  ),
-                  // SizedBox(
-                  //   height: height * 0.01,
-                  // ),
-                  const Divider(),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
-                    ),
-                    child: Text(
-                      "Summary",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
-                      right:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppConfig.of(context).theme.primaryVeryLightColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(screenWidth * 0.03),
+            return SizedBox(
+              height: double.infinity,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Container(
+                    //   color: AppConfig.of(context).theme.primaryColor,
+                    //   height: MediaQuery.of(context).padding.top,
+                    // ),
+                    // SizedBox(height: height * 0.035),
+                    // Center(
+                    //   child: Text(
+                    //     "We Are Hungry Too!",
+                    //     style: Theme.of(context).textTheme.headline5.copyWith(
+                    //         fontWeight: FontWeight.w900,
+                    //         color:
+                    //             AppConfig.of(context).theme.offsetHeadingColor),
+                    //   ),
+                    // ),
+                    SizedBox(height: height * 0.015),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                              width),
+                      child: Text(
+                        "Your order",
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              fontWeight: FontWeight.w400,
+                              // color:
+                              //     AppConfig.of(context).theme.offsetHeadingColor,
+                            ),
                       ),
                     ),
-                    padding: EdgeInsets.all(screenWidth * 0.05),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Text(
-                        //   "Summary",
-                        //   style: Theme.of(context).textTheme.headline5.copyWith(
-                        //         fontWeight: FontWeight.w400,
-                        //         // color: AppConfig.of(context)
-                        //         //     .theme
-                        //         //     .offsetHeadingColor,
-                        //       ),
-                        // ),
-                        // SizedBox(height: height * 0.02),
-                        BlocBuilder<RestaurantBloc, RestaurantState>(
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    RestaurantCartItemsSection(
+                      height: height,
+                      width: width,
+                    ),
+                    // SizedBox(
+                    //   height: height * 0.01,
+                    // ),
+                    const Divider(),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal:
+                            AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                                width,
+                      ),
+                      child: Text(
+                        "Summary",
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.01),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                            width,
+                        right: AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                            width,
+                      ),
+                      decoration: BoxDecoration(
+                        color:
+                            AppConfig.of(context)!.theme!.primaryVeryLightColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(screenWidth * 0.03),
+                        ),
+                      ),
+                      padding: EdgeInsets.all(screenWidth * 0.05),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Text(
+                          //   "Summary",
+                          //   style: Theme.of(context).textTheme.headline5.copyWith(
+                          //         fontWeight: FontWeight.w400,
+                          //         // color: AppConfig.of(context)
+                          //         //     .theme
+                          //         //     .offsetHeadingColor,
+                          //       ),
+                          // ),
+                          // SizedBox(height: height * 0.02),
+                          BlocBuilder<RestaurantBloc, RestaurantState>(
+                              buildWhen: (previous, current) =>
+                                  previous
+                                      .orderCartModel!.totalPriceUnitAmount !=
+                                  current.orderCartModel!.totalPriceUnitAmount,
+                              builder: (context, state) {
+                                return _buildSummaryRow(
+                                    context,
+                                    "Subtotal",
+                                    "\$${state.orderCartModel!.totalPriceUnitAmount / 100}",
+                                    false);
+                              }),
+                          _buildSummaryRow(context, "Tax", "\$0.00", false),
+                          _buildSummaryRow(context, "Tip", "\$0.00", false),
+                          BlocBuilder<RestaurantBloc, RestaurantState>(
                             buildWhen: (previous, current) =>
-                                previous.orderCartModel.totalPriceUnitAmount !=
-                                current.orderCartModel.totalPriceUnitAmount,
+                                previous.orderCartModel!.totalPriceUnitAmount !=
+                                current.orderCartModel!.totalPriceUnitAmount,
                             builder: (context, state) {
                               return _buildSummaryRow(
                                   context,
-                                  "Subtotal",
-                                  "\$${state.orderCartModel.totalPriceUnitAmount / 100}",
-                                  false);
-                            }),
-                        _buildSummaryRow(context, "Tax", "\$0.00", false),
-                        _buildSummaryRow(context, "Tip", "\$0.00", false),
-                        BlocBuilder<RestaurantBloc, RestaurantState>(
-                          buildWhen: (previous, current) =>
-                              previous.orderCartModel.totalPriceUnitAmount !=
-                              current.orderCartModel.totalPriceUnitAmount,
-                          builder: (context, state) {
-                            return _buildSummaryRow(
-                                context,
-                                "Total",
-                                "\$${state.orderCartModel.totalPriceUnitAmount / 100}",
-                                true);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: height * 0.02),
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
-                    ),
-                    child: Text(
-                      "Payment Information",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            fontWeight: FontWeight.w600,
+                                  "Total",
+                                  "\$${state.orderCartModel!.totalPriceUnitAmount / 100}",
+                                  true);
+                            },
                           ),
+                        ],
+                      ),
                     ),
-                  ),
-                  // SizedBox(height: height * 0.01),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
-                      right:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
+                    SizedBox(height: height * 0.02),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal:
+                            AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                                width,
+                      ),
+                      child: Text(
+                        "Payment Information",
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
                     ),
-                    // decoration: BoxDecoration(
-                    //   // color: AppConfig.of(context).theme.primaryVeryLightColor,
-                    //   color: Colors.white,
-                    //   borderRadius: BorderRadius.all(
-                    //     Radius.circular(screenWidth * 0.03),
-                    //   ),
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       color: Colors.grey.withOpacity(0.2),
-                    //       spreadRadius: 2,
-                    //       blurRadius: 8,
-                    //       offset: const Offset(0, 3),
-                    //     ),
-                    //   ],
-                    // ),
-                    width: double.infinity,
-                    padding: EdgeInsets.all(screenWidth * 0.03),
-                    child: _PaymentInformationSection(
-                      screenHeight: screenHeight,
-                      screenWidth: screenWidth,
+                    // SizedBox(height: height * 0.01),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                            width,
+                        right: AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                            width,
+                      ),
+                      // decoration: BoxDecoration(
+                      //   // color: AppConfig.of(context).theme.primaryVeryLightColor,
+                      //   color: Colors.white,
+                      //   borderRadius: BorderRadius.all(
+                      //     Radius.circular(screenWidth * 0.03),
+                      //   ),
+                      //   boxShadow: [
+                      //     BoxShadow(
+                      //       color: Colors.grey.withOpacity(0.2),
+                      //       spreadRadius: 2,
+                      //       blurRadius: 8,
+                      //       offset: const Offset(0, 3),
+                      //     ),
+                      //   ],
+                      // ),
+                      width: double.infinity,
+                      padding: EdgeInsets.all(screenWidth * 0.03),
+                      child: _PaymentInformationSection(
+                        screenHeight: screenHeight,
+                        screenWidth: screenWidth,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
-                      right:
-                          AppConfig.of(context).theme.pageLeftMarginP1 * width,
+                    SizedBox(height: height * 0.01),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                            width,
+                        right: AppConfig.of(context)!.theme!.pageLeftMarginP1 *
+                            width,
+                      ),
+                      child: BlocBuilder<MyWalletBloc, MyWalletState>(
+                          buildWhen: (previous, current) =>
+                              previous.defaultPaymentMethod !=
+                              current.defaultPaymentMethod,
+                          builder: (context, state) {
+                            return BlocBuilder<RestaurantBloc, RestaurantState>(
+                                buildWhen: (previous, current) =>
+                                    previous != current,
+                                builder: (context, restaurantState) {
+                                  return AccentRaisedButton(
+                                    onClick: () =>
+                                        context.read<RestaurantBloc>().add(
+                                              RestaurantEventPlaceOrder(
+                                                paymentMethodId: state
+                                                    .defaultPaymentMethod!.id,
+                                              ),
+                                            ),
+                                    showProgressBar: restaurantState
+                                        .isOrderPlaceRequestInProgress,
+                                    disableButton:
+                                        state.defaultPaymentMethod == null,
+                                    text: "ORDER NOW",
+                                  );
+                                });
+                          }),
                     ),
-                    child: BlocBuilder<MyWalletBloc, MyWalletState>(
-                        buildWhen: (previous, current) =>
-                            previous.defaultPaymentMethod !=
-                            current.defaultPaymentMethod,
-                        builder: (context, state) {
-                          return AccentRaisedButton(
-                            onClick: () {},
-                            disableButton: state.defaultPaymentMethod == null,
-                            text: "ORDER NOW",
-                          );
-                        }),
-                  ),
-                  SizedBox(height: height * 0.02),
-                ],
+                    SizedBox(height: height * 0.02),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -283,14 +318,14 @@ class _PaymentInformationSection extends StatelessWidget {
   final double screenWidth;
 
   const _PaymentInformationSection({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
 
   void onChangePaymentClicked(BuildContext context) {
-    ExtendedNavigator.of(context).push(Routes.myWalletPage,
-        arguments:
-            MyWalletPageArguments(myWalletBloc: context.read<MyWalletBloc>()));
+        AutoRouter.of(context)
+                .push(MyWalletPageRoute(myWalletBloc: context.read<MyWalletBloc>()));
+
   }
 
   @override
@@ -305,7 +340,7 @@ class _PaymentInformationSection extends StatelessWidget {
               onTap: () => onChangePaymentClicked(context),
               leading: Icon(
                 FontAwesomeIcons.creditCard,
-                color: AppConfig.of(context).theme.accentColor,
+                color: AppConfig.of(context)!.theme!.accentColor,
               ),
               dense: true,
               title: Row(
@@ -322,7 +357,7 @@ class _PaymentInformationSection extends StatelessWidget {
 
           Widget leading = Icon(
             FontAwesomeIcons.creditCard,
-            color: AppConfig.of(context).theme.accentColor,
+            color: AppConfig.of(context)!.theme!.accentColor,
           );
 
           String cardTypeText = "End With";
@@ -330,7 +365,7 @@ class _PaymentInformationSection extends StatelessWidget {
           if (cardPaymentMethodModel.brand == "visa") {
             leading = Icon(
               FontAwesomeIcons.ccVisa,
-              color: AppConfig.of(context).theme.accentColor,
+              color: AppConfig.of(context)!.theme!.accentColor,
             );
             cardTypeText = "Visa";
           }
@@ -338,7 +373,7 @@ class _PaymentInformationSection extends StatelessWidget {
           if (cardPaymentMethodModel.brand == "mastercard") {
             leading = Icon(
               FontAwesomeIcons.ccMastercard,
-              color: AppConfig.of(context).theme.accentColor,
+              color: AppConfig.of(context)!.theme!.accentColor,
             );
             cardTypeText = "Mastercard";
           }
@@ -346,7 +381,7 @@ class _PaymentInformationSection extends StatelessWidget {
           if (cardPaymentMethodModel.brand == "amex") {
             leading = Icon(
               FontAwesomeIcons.ccAmex,
-              color: AppConfig.of(context).theme.accentColor,
+              color: AppConfig.of(context)!.theme!.accentColor,
             );
 
             cardTypeText = "Amex";
@@ -355,7 +390,7 @@ class _PaymentInformationSection extends StatelessWidget {
           if (cardPaymentMethodModel.brand == "diners_club") {
             leading = Icon(
               FontAwesomeIcons.ccDinersClub,
-              color: AppConfig.of(context).theme.accentColor,
+              color: AppConfig.of(context)!.theme!.accentColor,
             );
             cardTypeText = "Diners Club";
           }
@@ -363,7 +398,7 @@ class _PaymentInformationSection extends StatelessWidget {
           if (cardPaymentMethodModel.brand == "discover") {
             leading = Icon(
               FontAwesomeIcons.ccDiscover,
-              color: AppConfig.of(context).theme.accentColor,
+              color: AppConfig.of(context)!.theme!.accentColor,
             );
             cardTypeText = "Discover";
           }
@@ -371,7 +406,7 @@ class _PaymentInformationSection extends StatelessWidget {
           if (cardPaymentMethodModel.brand == "jcb") {
             leading = Icon(
               FontAwesomeIcons.ccJcb,
-              color: AppConfig.of(context).theme.accentColor,
+              color: AppConfig.of(context)!.theme!.accentColor,
             );
             cardTypeText = "JCB";
           }

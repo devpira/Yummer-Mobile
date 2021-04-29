@@ -2,14 +2,17 @@ part of 'restaurant_bloc.dart';
 
 class RestaurantState extends Equatable {
   final bool isRestaurantFetchInProgress;
-  final DetailedRestaurantModel restaurantModel;
+  final DetailedRestaurantModel? restaurantModel;
 
   final bool isMenuFetchInProgress;
-  final MenuModel menuModel;
-  final OrderCartModel orderCartModel;
+  final MenuModel? menuModel;
+  final OrderCartModel? orderCartModel;
 
   final int currentTabIndex;
-  final String errorMessage;
+  final String? errorMessage;
+
+  final bool isOrderPlaceRequestInProgress;
+  final OrderSessionModel? orderSessionModel;
 
   const RestaurantState({
     this.restaurantModel,
@@ -19,10 +22,12 @@ class RestaurantState extends Equatable {
     this.isMenuFetchInProgress = false,
     this.currentTabIndex = 0,
     this.errorMessage,
+    this.isOrderPlaceRequestInProgress = false,
+    this.orderSessionModel,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         isRestaurantFetchInProgress,
         restaurantModel,
         menuModel,
@@ -30,16 +35,20 @@ class RestaurantState extends Equatable {
         isMenuFetchInProgress,
         currentTabIndex,
         errorMessage,
+        isOrderPlaceRequestInProgress,
+        orderSessionModel,
       ];
 
   RestaurantState copyWith({
-    bool isRestaurantFetchInProgress,
-    DetailedRestaurantModel restaurantModel,
-    bool isMenuFetchInProgress,
-    MenuModel menuModel,
-    OrderCartModel orderCartModel,
-    int currentTabIndex,
-    String errorMessage,
+    bool? isRestaurantFetchInProgress,
+    DetailedRestaurantModel? restaurantModel,
+    bool? isMenuFetchInProgress,
+    MenuModel? menuModel,
+    OrderCartModel? orderCartModel,
+    int? currentTabIndex,
+    String? errorMessage,
+    bool? isOrderPlaceRequestInProgress,
+    OrderSessionModel? orderSessionModel,
   }) {
     return RestaurantState(
       isRestaurantFetchInProgress:
@@ -51,6 +60,8 @@ class RestaurantState extends Equatable {
       orderCartModel: orderCartModel ?? this.orderCartModel,
       currentTabIndex: currentTabIndex ?? this.currentTabIndex,
       errorMessage: errorMessage,
+      isOrderPlaceRequestInProgress: isOrderPlaceRequestInProgress?? false,
+      orderSessionModel: orderSessionModel?? this.orderSessionModel,
     );
   }
 }

@@ -1,23 +1,23 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+
 
 import 'package:yummer/domain/menu/models/menu_product_model.dart';
 
 class MenuDisplayGroupModel extends Equatable {
-  final String id;
-  final String name;
+  final String? id;
+  final String? name;
   final List<MenuProductModel> products;
 
   const MenuDisplayGroupModel({
-    @required this.id,
-    @required this.name,
-    @required this.products,
+    required this.id,
+    required this.name,
+    required this.products,
   });
 
   @override
-  List<Object> get props => [id, name, products];
+  List<Object?> get props => [id, name, products];
 
   Map<String, dynamic> toMap() {
     return {
@@ -29,8 +29,8 @@ class MenuDisplayGroupModel extends Equatable {
 
   factory MenuDisplayGroupModel.fromMap(Map<String, dynamic> map) {
     return MenuDisplayGroupModel(
-      id: map['_id'] as String,
-      name: map['name'] as String,
+      id: map['_id'] as String?,
+      name: map['name'] as String?,
       products: List<MenuProductModel>.from(map['products']?.map((x) => MenuProductModel.fromMap(x as Map<String, dynamic>))),
     );
   }

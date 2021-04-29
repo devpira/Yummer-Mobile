@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:yummer/data/data.dart';
 import 'package:yummer/domain/menu/menu.dart';
 
@@ -8,15 +9,15 @@ class MenuRepository {
   final MenuApi _menuApi;
 
   const MenuRepository({
-    @required MenuApi menuApi,
+    required MenuApi menuApi,
   })  : assert(menuApi != null),
         _menuApi = menuApi;
 
-  Future<MenuModel> getCurrentRestaurantMenyToDisplay(
+  Future<MenuModel?> getCurrentRestaurantMenyToDisplay(
       String restaurantId) async {
     try {
       final result =
-          await _menuApi.getCurrentRestaurantMenyToDisplay(restaurantId);
+          await (_menuApi.getCurrentRestaurantMenyToDisplay(restaurantId) as FutureOr<Map<String, dynamic>>);
       return MenuModel.fromMap(result);
     } catch (e) {
       print(e);

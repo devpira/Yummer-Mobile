@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yummer/config/app_config.dart';
@@ -13,9 +12,9 @@ class RestaurantCheckoutItemRow extends StatelessWidget {
   final OrderCartItemModel orderCartItemModel;
 
   const RestaurantCheckoutItemRow({
-    @required this.height,
-    @required this.width,
-    @required this.orderCartItemModel,
+    required this.height,
+    required this.width,
+    required this.orderCartItemModel,
   });
 
   @override
@@ -54,10 +53,10 @@ class RestaurantCheckoutItemRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        orderCartItemModel.name,
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        orderCartItemModel.name!,
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             color:
-                                AppConfig.of(context).theme.offsetHeadingColor),
+                                AppConfig.of(context)!.theme!.offsetHeadingColor),
                       ),
                       SizedBox(
                         height: height * 0.02,
@@ -70,10 +69,10 @@ class RestaurantCheckoutItemRow extends StatelessWidget {
                         height: height * 0.02,
                       ),
                       Text(
-                          "\$ ${(orderCartItemModel.priceUnitAmount / 100).toStringAsFixed(2)}",
+                          "\$ ${(orderCartItemModel.priceUnitAmount! / 100).toStringAsFixed(2)}",
                           style: TextStyle(
                               color:
-                                  AppConfig.of(context).theme.offsetTextColor))
+                                  AppConfig.of(context)!.theme!.offsetTextColor))
                     ],
                   ),
                 ),

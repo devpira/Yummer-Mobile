@@ -5,11 +5,11 @@ import 'package:yummer/presentation/core/authentication/authentication.dart';
 import 'package:yummer/presentation/core_widgets/core_widgets.dart';
 
 class NoInternetPage extends StatelessWidget {
-  final Function tryAgainFunction;
+  final Function? tryAgainFunction;
   final bool showLogOut;
 
   const NoInternetPage({
-    Key key,
+    Key? key,
     this.tryAgainFunction,
     this.showLogOut = false,
   }) : super(key: key);
@@ -78,7 +78,7 @@ class NoInternetPage extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.035,
                       fontFamily: 'Quicksand',
-                      color: AppConfig.of(context).theme.primaryColor,
+                      color: AppConfig.of(context)!.theme!.primaryColor,
                     ),
                   ),
                 ),

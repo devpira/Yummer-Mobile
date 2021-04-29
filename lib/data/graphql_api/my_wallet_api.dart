@@ -1,23 +1,21 @@
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:yummer/config/config.dart';
 import 'package:yummer/data/core/graphql/graphql.dart';
 
 @lazySingleton
 class MyWalletApi extends AbstractGraphQL {
   MyWalletApi({
-    @required AppValues appValues,
+    required AppValues appValues,
   }) : super.instance(appValues: appValues);
 
-  Future<Map<String, dynamic>> attachPaymentMethod(
+  Future<Map<String, dynamic>?> attachPaymentMethod(
     String paymentMethodId,
   ) async {
-   const bool isDefault = true;
-   
-    final Map<String, dynamic> result = await executeMutation(
-      mutation: """
-          mutation{
-            attachPaymentMethod(paymentMethodId: "$paymentMethodId", isDefault: $isDefault){
+    const bool isDefault = true;
+
+    final Map<String, dynamic> result = await executeMutation(mutation: """
+          mutation(\$paymentMethodId: String, \$isDefault:Boolean){
+            attachPaymentMethod(paymentMethodId: \$paymentMethodId, isDefault: \$isDefault){
               id
               brand
               last4
@@ -27,8 +25,10 @@ class MyWalletApi extends AbstractGraphQL {
               isDefault
             }
           }
-         """,
-    ) as Map<String, dynamic>;
+         """, variables: {
+      "paymentMethodId": paymentMethodId,
+      "isDefault": isDefault,
+    }) as Map<String, dynamic>;
 
     if (result['attachPaymentMethod']['id'].isEmpty == true) {
       throw const GraphQLException(
@@ -36,21 +36,25 @@ class MyWalletApi extends AbstractGraphQL {
       );
     }
 
-    return result['attachPaymentMethod'] as Map<String, dynamic>;
+    return result['attachPaymentMethod'] as Map<String, dynamic>?;
   }
 
-  Future<bool> deletePaymentMethod(
-    String posCustomerId,
-    String paymentMethodId
+  Future<bool?> deletePaymentMethod(
+    String? posCustomerId,
+    String? paymentMethodId,
   ) async {
     final Map<String, dynamic> result = await executeMutation(
       mutation: """
-          mutation{
-            deletePaymentMethod(posCustomerId: "$posCustomerId",paymentMethodId: "$paymentMethodId"){
+          mutation(\$posCustomerId:String!, \$paymentMethodId: String){
+            deletePaymentMethod(posCustomerId: \$posCustomerId,paymentMethodId: \$paymentMethodId){
               status
             }
           }
          """,
+      variables: {
+        "posCustomerId": posCustomerId,
+        "paymentMethodId": paymentMethodId,
+      },
     ) as Map<String, dynamic>;
 
     if (result['deletePaymentMethod']['status'] == false) {
@@ -59,18 +63,21 @@ class MyWalletApi extends AbstractGraphQL {
       );
     }
 
-    return result['deletePaymentMethod']['status'] as bool;
+    return result['deletePaymentMethod']['status'] as bool?;
   }
 
-  Future<bool> changeDefaultPaymentMethod(String paymentMethodId) async {
+  Future<bool?> changeDefaultPaymentMethod(String? paymentMethodId) async {
     final Map<String, dynamic> result = await executeMutation(
       mutation: """
-          mutation{
-            changeDefaultPaymentMethod(paymentMethodId: "$paymentMethodId"){
+          mutation(\$paymentMethodId: String!){
+            changeDefaultPaymentMethod(paymentMethodId: \$paymentMethodId){
               status
             }
           }
          """,
+      variables: {
+        "paymentMethodId": paymentMethodId,
+      },
     ) as Map<String, dynamic>;
 
     if (result['changeDefaultPaymentMethod']['status'] == false) {
@@ -79,10 +86,10 @@ class MyWalletApi extends AbstractGraphQL {
       );
     }
 
-    return result['changeDefaultPaymentMethod']['status'] as bool;
+    return result['changeDefaultPaymentMethod']['status'] as bool?;
   }
 
-  Future<List<Object>> getAllCardPaymentMethods() async {
+  Future<List<Object>?> getAllCardPaymentMethods() async {
     final Map<String, dynamic> result = await executeQuery(
       query: """
           query cardPaymentMethods() {
@@ -97,6 +104,7 @@ class MyWalletApi extends AbstractGraphQL {
             }
           }
       """,
+      variables: {}
     ) as Map<String, dynamic>;
 
     if (result['cardPaymentMethods'] == null) {
@@ -106,6 +114,6 @@ class MyWalletApi extends AbstractGraphQL {
       );
     }
 
-    return result['cardPaymentMethods'] as List<Object>;
+    return result['cardPaymentMethods'] as List<Object>?;
   }
 }

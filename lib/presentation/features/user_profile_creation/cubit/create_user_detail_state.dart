@@ -5,7 +5,7 @@ class CreateUserDetailState extends Equatable {
   final EmailModel email;
 
   final FormzStatus status;
-  final String errorMessage;
+  final String? errorMessage;
   final bool formSubmitted;
 
   const CreateUserDetailState({
@@ -17,7 +17,7 @@ class CreateUserDetailState extends Equatable {
   });
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       name,
       email,
@@ -28,11 +28,11 @@ class CreateUserDetailState extends Equatable {
   }
 
   CreateUserDetailState copyWith({
-    NameValueObject name,
-    EmailModel email,
-    FormzStatus status,
-    String errorMessage,
-    bool formSubmitted,
+    NameValueObject? name,
+    EmailModel? email,
+    FormzStatus? status,
+    String? errorMessage,
+    bool? formSubmitted,
   }) {
     return CreateUserDetailState(
       name: name ?? this.name,

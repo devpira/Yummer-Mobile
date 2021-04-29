@@ -29,7 +29,7 @@ class AppThemeData {
   final Color greyTextColor = const Color(0xFF929292);
 
   final Color whiteBackgroundColor = const Color(0xffFAFAFA);
-  final Color unselectedNavBottomItemColor = Colors.blueGrey[300];
+  final Color? unselectedNavBottomItemColor = Colors.blueGrey[300];
 
   final Color offsetTextColor = const Color(0xFF314B69);
 

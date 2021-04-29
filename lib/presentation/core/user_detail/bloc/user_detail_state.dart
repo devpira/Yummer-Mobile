@@ -15,7 +15,7 @@ class UserDetailLoadFailed extends UserDetailState {
   final UserModel user;
   final String errorMessage;
   const UserDetailLoadFailed(
-      {@required this.errorMessage, @required this.user});
+      {required this.errorMessage, required this.user});
   @override
   List<Object> get props => [errorMessage, user];
 }
@@ -25,7 +25,7 @@ class UserDetailNotCreated extends UserDetailState {}
 class UserDetailLoadLostInternet extends UserDetailState {
   final UserModel user;
 
-  const UserDetailLoadLostInternet({@required this.user});
+  const UserDetailLoadLostInternet({required this.user});
   @override
   List<Object> get props => [user];
 }
@@ -35,22 +35,21 @@ class UserDetailLoaded extends UserDetailState {
   final UserDetailModel userDetails;
 
   const UserDetailLoaded({
-    @required this.user,
-    @required this.userDetails,
-  }) : assert(user != null);
+    required this.user,
+    required this.userDetails,
+  });
 
   @override
   List<Object> get props => [user, userDetails];
 
   Map<String, dynamic> toMap() {
     return {
-      'user': user?.toMap(),
-      'userDetails': userDetails?.toMap(),
+      'user': user.toMap(),
+      'userDetails': userDetails.toMap(),
     };
   }
 
   factory UserDetailLoaded.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
 
     return UserDetailLoaded(
       user: UserModel.fromMap(map['user'] as Map<String, dynamic>),

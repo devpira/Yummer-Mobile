@@ -7,9 +7,7 @@ import 'package:yummer/routes/router.gr.dart';
 
 class HomeProfilePage extends StatelessWidget {
   void onMyWalletClicked(BuildContext context) {
-    ExtendedNavigator.of(context).push(
-      Routes.myWalletPage,
-    );
+    AutoRouter.of(context).push(MyWalletPageRoute());
   }
 
   @override

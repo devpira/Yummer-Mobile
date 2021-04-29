@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:meta/meta.dart';
 import 'models/models.dart';
 
 /// Thrown if during the sign up process if a failure occurs.
@@ -93,11 +92,11 @@ class SendVerifyEmailConfig {
   final String dynamicLinkDomain;
   final bool androidInstallApp;
   final String androidMinimumVersion;
-  final String iOSBundleId;
+  final String? iOSBundleId;
 
   SendVerifyEmailConfig({
-    @required this.url,
-    @required this.androidPackageName,
+    required this.url,
+    required this.androidPackageName,
     this.handleCodeInApp = true,
     this.dynamicLinkDomain = "",
     this.androidInstallApp = true,
@@ -109,11 +108,11 @@ class SendVerifyEmailConfig {
 class AuthenticationRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
-  final SendVerifyEmailConfig sendVerifyEmailConfig;
+  final SendVerifyEmailConfig? sendVerifyEmailConfig;
 
   AuthenticationRepository({
-    firebase_auth.FirebaseAuth firebaseAuth,
-    GoogleSignIn googleSignIn,
+    firebase_auth.FirebaseAuth? firebaseAuth,
+    GoogleSignIn? googleSignIn,
     this.sendVerifyEmailConfig,
   })  : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
@@ -125,17 +124,16 @@ class AuthenticationRepository {
   }
 
   Future<void> signUp({
-    @required String email,
-    @required String password,
+    required String email,
+    required String password,
   }) async {
-    assert(email != null && password != null);
     firebase_auth.UserCredential userCredential;
     try {
       userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print(e);
       switch (e.code) {
         case 'email-already-in-use':
@@ -176,17 +174,17 @@ class AuthenticationRepository {
       if (sendVerifyEmailConfig != null) {
         var actionCodeSettings = ActionCodeSettings(
           url:
-              '${sendVerifyEmailConfig.url}?email=${userCredential.user.email}',
-          handleCodeInApp: sendVerifyEmailConfig.handleCodeInApp,
-          dynamicLinkDomain: sendVerifyEmailConfig.dynamicLinkDomain,
-          androidInstallApp: sendVerifyEmailConfig.androidInstallApp,
-          androidPackageName: sendVerifyEmailConfig.androidPackageName,
-          androidMinimumVersion: sendVerifyEmailConfig.androidMinimumVersion,
-          iOSBundleId: sendVerifyEmailConfig.iOSBundleId,
+              '${sendVerifyEmailConfig?.url}?email=${userCredential.user?.email}',
+          handleCodeInApp: sendVerifyEmailConfig?.handleCodeInApp,
+          dynamicLinkDomain: sendVerifyEmailConfig?.dynamicLinkDomain,
+          androidInstallApp: sendVerifyEmailConfig?.androidInstallApp,
+          androidPackageName: sendVerifyEmailConfig?.androidPackageName,
+          androidMinimumVersion: sendVerifyEmailConfig?.androidMinimumVersion,
+          iOSBundleId: sendVerifyEmailConfig?.iOSBundleId,
         );
-        await userCredential.user.sendEmailVerification(actionCodeSettings);
+        await userCredential.user?.sendEmailVerification(actionCodeSettings);
       } else {
-        await userCredential.user.sendEmailVerification();
+        await userCredential.user?.sendEmailVerification();
       }
     } catch (e) {
       print(e);
@@ -197,10 +195,10 @@ class AuthenticationRepository {
   Future<void> logInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = await googleUser?.authentication;
       final credential = firebase_auth.GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
       );
       await _firebaseAuth.signInWithCredential(credential);
     } on Exception {
@@ -208,10 +206,10 @@ class AuthenticationRepository {
     }
   }
 
-  Future<void> sentForgotPasswordEmail({@required String email}) async {
+  Future<void> sentForgotPasswordEmail({required String email}) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print(e.code);
       switch (e.code) {
         case 'too-many-requests':
@@ -245,23 +243,23 @@ class AuthenticationRepository {
 
   Future<void> resendEmailVerification() async {
     try {
-      firebase_auth.User user = firebase_auth.FirebaseAuth.instance.currentUser;
+      final user = firebase_auth.FirebaseAuth.instance.currentUser;
 
       if (sendVerifyEmailConfig != null) {
         var actionCodeSettings = ActionCodeSettings(
-          url: '${sendVerifyEmailConfig.url}?email=${user.email}',
-          handleCodeInApp: sendVerifyEmailConfig.handleCodeInApp,
-          dynamicLinkDomain: sendVerifyEmailConfig.dynamicLinkDomain,
-          androidInstallApp: sendVerifyEmailConfig.androidInstallApp,
-          androidPackageName: sendVerifyEmailConfig.androidPackageName,
-          androidMinimumVersion: sendVerifyEmailConfig.androidMinimumVersion,
-          iOSBundleId: sendVerifyEmailConfig.iOSBundleId,
+          url: '${sendVerifyEmailConfig?.url}?email=${user?.email}',
+          handleCodeInApp: sendVerifyEmailConfig?.handleCodeInApp,
+          dynamicLinkDomain: sendVerifyEmailConfig?.dynamicLinkDomain,
+          androidInstallApp: sendVerifyEmailConfig?.androidInstallApp,
+          androidPackageName: sendVerifyEmailConfig?.androidPackageName,
+          androidMinimumVersion: sendVerifyEmailConfig?.androidMinimumVersion,
+          iOSBundleId: sendVerifyEmailConfig?.iOSBundleId,
         );
-        await user.sendEmailVerification(actionCodeSettings);
+        await user?.sendEmailVerification(actionCodeSettings);
       } else {
-        await user.sendEmailVerification();
+        await user?.sendEmailVerification();
       }
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print(e);
       switch (e.code) {
         case 'too-many-requests':
@@ -280,40 +278,44 @@ class AuthenticationRepository {
   }
 
   Future<void> initVerifyEmailDynamicLinks(
-      {@required Function onSuccess, @required Function onError}) async {
+      {required Function onSuccess, required Function onError}) async {
     try {
       FirebaseDynamicLinks.instance.onLink(
           onSuccess: (PendingDynamicLinkData dynamicLink) async {
-        final Uri deepLink = dynamicLink?.link;
-        print("YOOO");
-        if (deepLink != null) {
-          print("YOOO2");
-          await firebase_auth.FirebaseAuth.instance.currentUser.reload();
-          onSuccess(firebase_auth.FirebaseAuth.instance.currentUser.toUser);
-          return;
+        if (dynamicLink != null) {
+          final Uri deepLink = dynamicLink.link;
+          print("YOOO");
+          if (deepLink != null) {
+            print("YOOO2");
+            await firebase_auth.FirebaseAuth.instance.currentUser?.reload();
+            onSuccess(firebase_auth.FirebaseAuth.instance.currentUser?.toUser);
+            return;
+          }
         }
       }, onError: (OnLinkErrorException e) async {
         print(e.message);
         onError(e);
       });
 
-      final PendingDynamicLinkData data =
+      final PendingDynamicLinkData? data =
           await FirebaseDynamicLinks.instance.getInitialLink();
-      final Uri deepLink = data?.link;
+      if (data != null) {
+        final Uri deepLink = data.link;
 
-      if (deepLink != null) {
-        await firebase_auth.FirebaseAuth.instance.currentUser.reload();
-        onSuccess(firebase_auth.FirebaseAuth.instance.currentUser.toUser);
+        if (deepLink != null) {
+          await firebase_auth.FirebaseAuth.instance.currentUser?.reload();
+          onSuccess(firebase_auth.FirebaseAuth.instance.currentUser?.toUser);
+        }
       }
-    } catch (e) {
+    } on FirebaseAuthException  catch (e) {
       print(e.message);
       onError(e);
     }
   }
 
   Future<void> logInWithEmailAndPassword({
-    @required String email,
-    @required String password,
+    required String email,
+    required String password,
   }) async {
     assert(email != null && password != null);
     try {
@@ -321,7 +323,7 @@ class AuthenticationRepository {
         email: email,
         password: password,
       );
-    } catch (e) {
+    } on FirebaseAuthException  catch (e) {
       switch (e.code) {
         case 'user-not-found':
         case 'auth/user-not-found':
@@ -376,11 +378,11 @@ class AuthenticationRepository {
   }
 
   Future<void> loginWithPhone({
-    @required String phoneNumber,
-    @required Function onCodeSent,
-    @required Function onVerificationCompleted,
-    @required Function onVerificationFailed,
-    @required Function codeAutoRetrievalTimeout,
+    required String phoneNumber,
+    required Function onCodeSent,
+    required Function onVerificationCompleted,
+    required Function onVerificationFailed,
+    required Function codeAutoRetrievalTimeout,
   }) async {
     await _firebaseAuth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
@@ -411,8 +413,8 @@ class AuthenticationRepository {
   }
 
   Future<void> logInWithSMSCredential({
-    @required String verificationId,
-    @required String smsCode,
+    required String verificationId,
+    required String smsCode,
   }) async {
     assert(smsCode != null && verificationId != null);
     try {
@@ -422,14 +424,13 @@ class AuthenticationRepository {
           smsCode: smsCode,
         ),
       );
-    } catch (e) {
+    }  on FirebaseAuthException  catch (e) {
       print(e);
       switch (e.code) {
         case 'firebase_auth/invalid-verification-code':
           throw LogInWithPhoneFailure(
               errorCode: e.code,
-              errorMessage:
-                  "Invalid SMS Code. Please try again.");
+              errorMessage: "Invalid SMS Code. Please try again.");
           break;
         default:
           throw LogInWithEmailAndPasswordFailure(

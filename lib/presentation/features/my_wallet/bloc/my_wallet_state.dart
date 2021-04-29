@@ -1,11 +1,11 @@
 part of 'my_wallet_bloc.dart';
 
 class MyWalletState extends Equatable {
-  final List<CardPaymentMethodModel> cardPaymentMethods;
-  final CardPaymentMethodModel defaultPaymentMethod;
+  final List<CardPaymentMethodModel?>? cardPaymentMethods;
+  final CardPaymentMethodModel? defaultPaymentMethod;
 
   final bool isFetchInProgress;
-  final String errorMessage;
+  final String? errorMessage;
   final bool showLoading;
   final bool showNoInternetError;
   final bool showSystemError;
@@ -21,7 +21,7 @@ class MyWalletState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         cardPaymentMethods,
         defaultPaymentMethod,
         isFetchInProgress,
@@ -32,14 +32,14 @@ class MyWalletState extends Equatable {
       ];
 
   MyWalletState copyWith({
-    List<CardPaymentMethodModel> cardPaymentMethods,
-    CardPaymentMethodModel defaultPaymentMethod,
+    List<CardPaymentMethodModel?>? cardPaymentMethods,
+    CardPaymentMethodModel? defaultPaymentMethod,
     bool defaultPaymentMethodCanBeNull = false,
-    bool isFetchInProgress,
-    bool showLoading,
-    bool showNoInternetError,
-    bool showSystemError,
-    String errorMessage,
+    bool? isFetchInProgress,
+    bool? showLoading,
+    bool? showNoInternetError,
+    bool? showSystemError,
+    String? errorMessage,
   }) {
     return MyWalletState(
       cardPaymentMethods: cardPaymentMethods ?? this.cardPaymentMethods,

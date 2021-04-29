@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yummer/config/config.dart';
 
 class PrimaryRaisedButton extends StatelessWidget {
-  final Function onClick;
+  final Function? onClick;
   final String text;
   final double height;
   final double width;
@@ -11,8 +11,8 @@ class PrimaryRaisedButton extends StatelessWidget {
   final TextStyle textStyle;
 
   const PrimaryRaisedButton({
-    @required this.onClick,
-    @required this.text,
+    required this.onClick,
+    required this.text,
     this.height = 0,
     this.width = 0,
     this.showProgressBar = false,
@@ -32,11 +32,11 @@ class PrimaryRaisedButton extends StatelessWidget {
       width: width,
       child: RaisedButton(
         elevation: elevation,
-        color: AppConfig.of(context).theme.primaryButtonColor,
+        color: AppConfig.of(context)!.theme!.primaryButtonColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        onPressed: () => onClick(),
+        onPressed: () => onClick!(),
         child: (!showProgressBar)
             ? Text(
                 text,
