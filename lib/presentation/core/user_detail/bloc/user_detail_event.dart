@@ -9,11 +9,36 @@ abstract class UserDetailEvent extends Equatable {
 
 class UserDetailLoadRequested extends UserDetailEvent {
   final UserModel user;
-  const UserDetailLoadRequested({@required this.user});
+  const UserDetailLoadRequested({required this.user});
 
   @override
   List<Object> get props => [user];
 }
 
-class UserDetailRemoveRequested extends UserDetailEvent {}
+class UserDetailEventUpdateUserDetailsState extends UserDetailEvent {
+  final UserDetailModel userDetailModel;
 
+  const UserDetailEventUpdateUserDetailsState({
+    required this.userDetailModel,
+  });
+}
+
+class UserDetailEventRefreshFollowCount extends UserDetailEvent {}
+
+class UserFollowEventFollowUser extends UserDetailEvent {
+  final String followerUid;
+
+  const UserFollowEventFollowUser({
+    required this.followerUid,
+  });
+}
+
+class UserFollowEventUnFollowUser extends UserDetailEvent {
+  final String unFollowerUid;
+
+  const UserFollowEventUnFollowUser({
+    required this.unFollowerUid,
+  });
+}
+
+class UserDetailRemoveRequested extends UserDetailEvent {}

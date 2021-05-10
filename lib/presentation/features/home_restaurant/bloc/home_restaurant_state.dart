@@ -5,7 +5,7 @@ class HomeRestaurantState extends Equatable {
   final List<BasicRestaurantModel> restuarantList;
 
   const HomeRestaurantState({
-    @required this.restuarantList,
+    required this.restuarantList,
     this.isFetchingInProgress = false,
   });
 
@@ -13,8 +13,8 @@ class HomeRestaurantState extends Equatable {
   List<Object> get props => [isFetchingInProgress, restuarantList];
 
   HomeRestaurantState copyWith({
-    bool isFetchingInProgress,
-    List<BasicRestaurantModel> restuarantList,
+    bool? isFetchingInProgress,
+    List<BasicRestaurantModel>? restuarantList,
   }) {
     return HomeRestaurantState(
       isFetchingInProgress: isFetchingInProgress ??false,

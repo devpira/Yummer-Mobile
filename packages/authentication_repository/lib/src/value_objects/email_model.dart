@@ -11,7 +11,7 @@ class EmailModel extends FormzInput<String, EmailValidationError> {
   );
 
   @override
-  EmailValidationError validator(String value) {
+  EmailValidationError? validator(String? value) {
     return value == null || value.isEmpty ||  !_emailRegExp.hasMatch(value) ? EmailValidationError.invalid : null;
   }
 }

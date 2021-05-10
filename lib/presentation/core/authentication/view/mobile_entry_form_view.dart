@@ -13,10 +13,10 @@ class MobileEntryFormView extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
+              SnackBar(content: Text(state.errorMessage!)),
             );
         }
       },
@@ -49,8 +49,8 @@ class MobileEntryFormView extends StatelessWidget {
                   ),
                   Text(
                     "By continuing you may receive an SMS for verification. Message and data rates may apply.",
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                        color: AppConfig.of(context).theme.captionTextColor),
+                    style: Theme.of(context).textTheme.caption!.copyWith(
+                        color: AppConfig.of(context)!.theme!.captionTextColor),
                   ),
                   SizedBox(
                     height: height * 0.02,
@@ -75,7 +75,7 @@ Widget _buildTitle(BuildContext context, double width, String title) {
     child: Text(
       title,
       style: TextStyle(
-        color: AppConfig.of(context).theme.accentColor,
+        color: AppConfig.of(context)!.theme!.accentColor,
         fontFamily: 'Quicksand',
         fontWeight: FontWeight.w900,
         fontSize: MediaQuery.of(context).size.height * 0.025,
@@ -89,8 +89,8 @@ class _PhoneNumberInput extends StatelessWidget {
   final double screenWidth;
 
   const _PhoneNumberInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
 
   @override
@@ -124,7 +124,7 @@ class _NextButton extends StatelessWidget {
   final double screenHeight;
   final double screenWidth;
 
-  const _NextButton({@required this.screenHeight, @required this.screenWidth});
+  const _NextButton({required this.screenHeight, required this.screenWidth});
 
   @override
   Widget build(BuildContext context) {

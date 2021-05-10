@@ -5,19 +5,19 @@ class BaseForm extends StatelessWidget {
   final Widget child;
   final double height;
   final double width;
-  final Function onBackClicked;
+  final Function? onBackClicked;
 
   const BaseForm({
-    @required this.child,
-    @required this.height,
-    @required this.width,
+    required this.child,
+    required this.height,
+    required this.width,
     this.onBackClicked,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppConfig.of(context).theme.primaryColor,
+      color: AppConfig.of(context)!.theme!.primaryColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,7 +51,7 @@ class BaseForm extends StatelessWidget {
                             horizontal: width * 0.041, vertical: height * 0.01),
                         child: IconButton(
                           icon: const Icon(Icons.arrow_back_sharp),
-                          onPressed: () => onBackClicked(),
+                          onPressed: () => onBackClicked!(),
                           iconSize: width * 0.09,
                         ),
                       ),

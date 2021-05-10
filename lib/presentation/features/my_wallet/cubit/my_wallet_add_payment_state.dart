@@ -10,8 +10,10 @@ class MyWalletAddPaymentState extends Equatable {
   final bool showBackOfCard;
 
   final FormzStatus status;
-  final String errorMessage;
+  final String? errorMessage;
   final bool formSubmitted;
+
+  final CardPaymentMethodModel? addedCardPaymentMethod;
 
   const MyWalletAddPaymentState({
     this.cardNumber = const CardNumberValueObject.dirty(),
@@ -23,10 +25,11 @@ class MyWalletAddPaymentState extends Equatable {
     this.status = FormzStatus.pure,
     this.errorMessage,
     this.formSubmitted = false,
+    this.addedCardPaymentMethod,
   });
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       cardNumber,
       cardExpiryDate,
@@ -37,19 +40,21 @@ class MyWalletAddPaymentState extends Equatable {
       status,
       errorMessage,
       formSubmitted,
+      addedCardPaymentMethod,
     ];
   }
 
   MyWalletAddPaymentState copyWith({
-    CardNumberValueObject cardNumber,
-    CardExpiryDateValueObject cardExpiryDate,
-    CardCvvValueObject cardCvv,
-    CardNameValueObject cardName,
-    CardType cardType,
-    bool showBackOfCard,
-    FormzStatus status,
-    String errorMessage,
-    bool formSubmitted,
+    CardNumberValueObject? cardNumber,
+    CardExpiryDateValueObject? cardExpiryDate,
+    CardCvvValueObject? cardCvv,
+    CardNameValueObject? cardName,
+    CardType? cardType,
+    bool? showBackOfCard,
+    FormzStatus? status,
+    String? errorMessage,
+    bool? formSubmitted,
+    CardPaymentMethodModel? addedCardPaymentMethod,
   }) {
     return MyWalletAddPaymentState(
       cardNumber: cardNumber ?? this.cardNumber,
@@ -61,6 +66,7 @@ class MyWalletAddPaymentState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       formSubmitted: formSubmitted ?? this.formSubmitted,
+      addedCardPaymentMethod: addedCardPaymentMethod?? this.addedCardPaymentMethod
     );
   }
 }

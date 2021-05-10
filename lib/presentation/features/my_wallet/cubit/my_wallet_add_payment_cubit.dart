@@ -4,9 +4,10 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:stripe_payment/stripe_payment.dart' as stripe;
 import 'package:yummer/config/config.dart';
+import 'package:yummer/domain/my_wallet/models/card_payment_method_model.dart';
 import 'package:yummer/domain/my_wallet/repository/my_wallet_repository.dart';
 import 'package:yummer/presentation/features/my_wallet/my_wallet.dart';
 
@@ -18,16 +19,14 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
   final MyWalletRepository _myWalletRepository;
 
   MyWalletAddPaymentCubit({
-    @required AppValues appValues,
-    @required MyWalletRepository myWalletRepository,
-  })  : assert(appValues != null),
-        assert(myWalletRepository != null),
-        _appValues = appValues,
+    required AppValues appValues,
+    required MyWalletRepository myWalletRepository,
+  })   : _appValues = appValues,
         _myWalletRepository = myWalletRepository,
         super(const MyWalletAddPaymentState());
 
-  void cardNumberChanged(String value) {
-    final number = CardNumberValueObject.dirty(value);
+  void cardNumberChanged(String? value) {
+    final number = CardNumberValueObject.dirty(value ?? "");
     CardType cardType = state.cardType;
 
     if (value != null && value.length == 1) {
@@ -155,28 +154,35 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
       final stripe.BillingAddress address =
           stripe.BillingAddress(name: state.cardName.value);
 
-      stripe.StripePayment.createPaymentMethod(
+      await stripe.StripePayment.createPaymentMethod(
         stripe.PaymentMethodRequest(card: paymentCard, billingAddress: address),
       ).then((paymentMethod) async {
         print(paymentMethod.id);
         final result =
-            await _myWalletRepository.attachPaymentMethod(paymentMethod.id);
+            await _myWalletRepository.attachPaymentMethod(paymentMethod.id!);
 
-        if (!result) {
+        if (result == null || result.id == null || result.last4 == null) {
           emit(
             state.copyWith(
                 status: FormzStatus.submissionFailure,
                 errorMessage:
                     "Failed to create payment method. Please try again."),
           );
+          return;
         }
+
+        emit(
+          state.copyWith(
+              status: FormzStatus.submissionSuccess,
+              addedCardPaymentMethod: result),
+        );
       }).catchError((error) {
         print(error);
         emit(
           state.copyWith(
               status: FormzStatus.submissionFailure,
               errorMessage: error != null && error.message != null
-                  ? error.message as String
+                  ? error.message as String?
                   : "Failed to create payment method. Please try again."),
         );
       });
@@ -184,7 +190,7 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
       emit(
         state.copyWith(
             status: FormzStatus.submissionFailure,
-            errorMessage: e != null && e.toString().isNotEmpty
+            errorMessage: e.toString().isNotEmpty
                 ? e.toString()
                 : "Failed to create payment method. Please try again."),
       );

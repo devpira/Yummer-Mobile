@@ -20,7 +20,7 @@ class ErrorHandlingBloc extends Bloc<ErrorHandlingEvent, ErrorHandlingState> {
     }
   }
 
-  void emitSystemError({String errorMessage, Function tryAgainFunction}){
+  void emitSystemError({String? errorMessage, Function? tryAgainFunction}){
     add(ErrorHandlingShowErrorRequested(errorMessage: errorMessage, tryAgainFunction: tryAgainFunction));
   }
 

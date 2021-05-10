@@ -8,10 +8,28 @@ abstract class MyWalletEvent extends Equatable {
 }
 
 class MyWalletEventAddCardMethod extends MyWalletEvent {
-  final CardPaymentMethodModel cardPaymentMethodModel;
+  final CardPaymentMethodModel? cardPaymentMethodModel;
 
   const MyWalletEventAddCardMethod({
-    @required this.cardPaymentMethodModel,
+    required this.cardPaymentMethodModel,
+  });
+}
+
+class MyWalletEventChangeDefaultMethod extends MyWalletEvent {
+  final CardPaymentMethodModel cardPaymentMethodModel;
+
+  const MyWalletEventChangeDefaultMethod({
+    required this.cardPaymentMethodModel,
+  });
+}
+
+class MyWalletEventRemoveCardMethod extends MyWalletEvent {
+  final CardPaymentMethodModel cardPaymentMethodModel;
+  final String? posCustomerId;
+
+  const MyWalletEventRemoveCardMethod({
+    required this.cardPaymentMethodModel,
+    required this.posCustomerId,
   });
 }
 

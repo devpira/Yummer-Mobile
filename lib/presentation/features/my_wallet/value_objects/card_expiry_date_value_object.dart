@@ -7,7 +7,7 @@ class CardExpiryDateValueObject extends FormzInput<String, CardExpiryDateValidat
   const CardExpiryDateValueObject.dirty([String value = '']) : super.dirty(value);
 
   @override
-  CardExpiryDateValidationError validator(String value) {
+  CardExpiryDateValidationError? validator(String? value) {
     return value == null || value.isEmpty || value.length != 4 ? CardExpiryDateValidationError.invalid : null;
   }
 }

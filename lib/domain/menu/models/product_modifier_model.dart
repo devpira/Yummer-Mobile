@@ -1,21 +1,21 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+
 
 class ProductModifierModel extends Equatable {
-  final String id;
-  final String name;
-  final int priceUnitAmount;
+  final String? id;
+  final String? name;
+  final int? priceUnitAmount;
 
   const ProductModifierModel({
-    @required this.id,
-    @required this.name,
-    @required this.priceUnitAmount,
+    required this.id,
+    required this.name,
+    required this.priceUnitAmount,
   });
 
   @override
-  List<Object> get props => [id, name, priceUnitAmount];
+  List<Object?> get props => [id, name, priceUnitAmount];
 
   Map<String, dynamic> toMap() {
     return {
@@ -25,18 +25,21 @@ class ProductModifierModel extends Equatable {
     };
   }
 
-  factory ProductModifierModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
+  static const empty =
+      ProductModifierModel(id: '', name: '', priceUnitAmount: -1);
+
+  factory ProductModifierModel.fromMap(Map<String, dynamic>? map) {
+    if (map == null) return ProductModifierModel.empty;
 
     return ProductModifierModel(
-      id: map['_id'] as String,
-      name: map['name'] as String,
-      priceUnitAmount: map['priceUnitAmount'] as int,
+      id: map['_id'] as String?,
+      name: map['name'] as String?,
+      priceUnitAmount: map['priceUnitAmount'] as int?,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory ProductModifierModel.fromJson(String source) =>
-      ProductModifierModel.fromMap(json.decode(source) as Map<String, dynamic>);
+      ProductModifierModel.fromMap(json.decode(source) as Map<String, dynamic>?);
 }

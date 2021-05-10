@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 
 part 'home_page_state.dart';
 
@@ -11,8 +11,8 @@ class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit()
       : super(HomePageState(currentView: HomePageRestaurantsView()));
 
-  void changeHomePageView({@required int index}) {
-    HomePageViewType viewType;
+  void changeHomePageView({required int index}) {
+    HomePageViewType? viewType;
     print(index);
     switch (index) {
       case 0:

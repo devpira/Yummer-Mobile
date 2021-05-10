@@ -9,7 +9,7 @@ import 'package:formz/formz.dart';
 class MyWalletAddCardPage extends StatelessWidget {
   final MyWalletBloc myWalletBloc;
   const MyWalletAddCardPage({
-    @required this.myWalletBloc,
+    required this.myWalletBloc,
   });
 
   @override
@@ -18,7 +18,6 @@ class MyWalletAddCardPage extends StatelessWidget {
       providers: [
         BlocProvider.value(
           value: myWalletBloc,
-          child: _MyWalletAddCardPage(),
         ),
         BlocProvider<MyWalletAddPaymentCubit>(
           create: (_) => getIt<MyWalletAddPaymentCubit>(),
@@ -53,7 +52,7 @@ class ___MyWalletAddCardPageeState extends State<_MyWalletAddCardPage> {
 
         title: Text(
           "Add Card",
-          style: Theme.of(context).textTheme.headline5.copyWith(
+          style: Theme.of(context).textTheme.headline5!.copyWith(
                 fontWeight: FontWeight.w900,
               ),
         ),
@@ -65,25 +64,21 @@ class ___MyWalletAddCardPageeState extends State<_MyWalletAddCardPage> {
       body: BlocListener<MyWalletAddPaymentCubit, MyWalletAddPaymentState>(
         listener: (context, state) {
           if (state.status.isSubmissionFailure) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 SnackBar(
-                  content: Text(state.errorMessage),
+                  content: Text(state.errorMessage!),
                 ),
               );
-          } 
-          else if (state.status.isSubmissionSuccess) {
-          //   final cardPaymentMethodModel = CardPaymentMethodModel(
-          //     id: "wait",
-
-          //   );
-          //   context
-          //       .read<MyWalletBloc>()
-          //       .add(UserDetailLoadRequested(user: user));
+          } else if (state.status.isSubmissionSuccess) {
+            context.read<MyWalletBloc>().add(
+                  MyWalletEventAddCardMethod(
+                      cardPaymentMethodModel: state.addedCardPaymentMethod),
+                );
+                Navigator.pop(context);
           }
         },
- 
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,8 +188,8 @@ class _CreditCardPreview extends StatelessWidget {
   final double screenWidth;
 
   const _CreditCardPreview({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -239,8 +234,8 @@ class _CardNumberInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardNumberInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -273,8 +268,8 @@ class _CardExpiryDateInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardExpiryDateInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -308,8 +303,8 @@ class _CardCvvInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardCvvInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   @override
   Widget build(BuildContext context) {
@@ -342,8 +337,8 @@ class _CardNameInput extends StatelessWidget {
   final double screenWidth;
 
   const _CardNameInput({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
 
   @override
@@ -362,9 +357,8 @@ class _CardNameInput extends StatelessWidget {
           labelText: 'Card Holder Name',
           helperText: '',
           maxLength: 50,
-          errorText: state.formSubmitted && state.cardName.invalid
-              ? 'Required'
-              : null,
+          errorText:
+              state.formSubmitted && state.cardName.invalid ? 'Required' : null,
         );
       },
     );

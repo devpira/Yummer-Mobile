@@ -10,8 +10,8 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   final AuthenticationRepository _authenticationRepository;
   final InternetConnectivityCubit _internetConnectivityCubit;
-  StreamSubscription _internetConnectivityCubitSubscription;
-  bool _hasInternet;
+  late StreamSubscription _internetConnectivityCubitSubscription;
+  late bool _hasInternet;
 
   LoginCubit(
     this._authenticationRepository,
@@ -110,7 +110,7 @@ class LoginCubit extends Cubit<LoginState> {
       }
       print("STARTING AUTH");
       await _authenticationRepository.logInWithSMSCredential(
-        verificationId: state.phoneVerificationId,
+        verificationId: state.phoneVerificationId!,
         smsCode: smsCode,
       );
       print("SUCCESS");

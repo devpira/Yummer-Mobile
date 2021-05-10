@@ -2,7 +2,7 @@ part of 'home_page_cubit.dart';
 
 class HomePageState extends Equatable {
   final int bottomNavIndex;
-  final HomePageViewType currentView;
+  final HomePageViewType? currentView;
 
   const HomePageState({
     this.bottomNavIndex = 0,
@@ -10,11 +10,11 @@ class HomePageState extends Equatable {
   });
 
   @override
-  List<Object> get props => [bottomNavIndex, currentView];
+  List<Object?> get props => [bottomNavIndex, currentView];
 
   HomePageState copyWith({
-    int bottomNavIndex,
-    HomePageViewType currentView,
+    int? bottomNavIndex,
+    HomePageViewType? currentView,
   }) {
     return HomePageState(
       bottomNavIndex: bottomNavIndex ?? this.bottomNavIndex,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WhiteBackButton extends StatelessWidget {
-  final double shadow;
+  final double? shadow;
   const WhiteBackButton({
     this.shadow,
   });
@@ -17,7 +17,7 @@ class WhiteBackButton extends StatelessWidget {
             bottomRight: Radius.circular(100)),
         boxShadow: [
           BoxShadow(
-            color: shadow != null? Colors.black.withOpacity(shadow):  Colors.black.withOpacity(0.25),
+            color: shadow != null? Colors.black.withOpacity(shadow!):  Colors.black.withOpacity(0.25),
             spreadRadius: 5,
             blurRadius: 8,
             offset: const Offset(0, 3),

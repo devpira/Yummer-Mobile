@@ -5,16 +5,18 @@ import 'menu_item_list_tab.dart';
 
 class MenuItemListTabBar extends PreferredSize {
   final List<MenuItemListTab> tabList;
-  final TabController tabController;
+  final TabController? tabController;
   final bool isScrollable;
   final bool tighten;
 
-  const MenuItemListTabBar({
-    @required this.tabList,
+  MenuItemListTabBar({
+    required this.tabList,
     this.tabController,
     this.isScrollable = true,
     this.tighten = false,
-  });
+    required Widget child,
+    required Size preferredSize,
+  }) : super(child: child, preferredSize: preferredSize);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class MenuItemListTabBar extends PreferredSize {
         controller: tabController,
         labelPadding:
             tighten ? EdgeInsets.only(left: screenWidth * 0.03) : null,
-        unselectedLabelColor: AppConfig.of(context).theme.greyTextColor,
+        unselectedLabelColor: AppConfig.of(context)!.theme!.greyTextColor,
         labelColor: Colors.white,
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         labelStyle: const TextStyle(fontWeight: FontWeight.bold),

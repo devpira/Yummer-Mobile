@@ -4,15 +4,15 @@ abstract class ErrorHandlingEvent extends Equatable {
   const ErrorHandlingEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class ErrorHandlingShowErrorRequested extends ErrorHandlingEvent {
-  final String errorMessage;
-  final Function tryAgainFunction;
+  final String? errorMessage;
+  final Function? tryAgainFunction;
 
   const ErrorHandlingShowErrorRequested({this.errorMessage, this.tryAgainFunction});
 
   @override
-  List<Object> get props => [errorMessage, tryAgainFunction];
+  List<Object?> get props => [errorMessage, tryAgainFunction];
 }

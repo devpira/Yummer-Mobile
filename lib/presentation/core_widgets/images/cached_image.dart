@@ -6,7 +6,7 @@ class CachedImage extends StatelessWidget {
   final BoxFit boxFit;
   final double borderRadius;
   const CachedImage({
-    @required this.imageUrl,
+    required this.imageUrl,
     this.boxFit = BoxFit.cover,
     this.borderRadius = 0
   });

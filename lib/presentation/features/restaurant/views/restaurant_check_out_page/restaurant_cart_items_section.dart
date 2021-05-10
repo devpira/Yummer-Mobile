@@ -9,8 +9,8 @@ class RestaurantCartItemsSection extends StatelessWidget {
   final double width;
 
   const RestaurantCartItemsSection({
-    @required this.height,
-    @required this.width,
+    required this.height,
+    required this.width,
   });
 
   @override
@@ -19,7 +19,7 @@ class RestaurantCartItemsSection extends StatelessWidget {
         buildWhen: (previous, current) =>
             previous.orderCartModel != current.orderCartModel,
         builder: (context, state) {
-          final cartItems = state.orderCartModel.cartItems;
+          final cartItems = state.orderCartModel!.cartItems;
           return Column(
             children: cartItems
                 .map((orderCartItemModel) => RestaurantCheckoutItemRow(

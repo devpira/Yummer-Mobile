@@ -10,9 +10,9 @@ class RestaurantDisplayGroupView extends StatelessWidget {
   final MenuDisplayGroupModel displayGroup;
 
   const RestaurantDisplayGroupView({
-    @required this.height,
-    @required this.width,
-    @required this.displayGroup,
+    required this.height,
+    required this.width,
+    required this.displayGroup,
   });
 
   @override
@@ -28,11 +28,11 @@ class RestaurantDisplayGroupView extends StatelessWidget {
                     margin: EdgeInsets.only(
                         left: width * 0.0533, bottom: height * 0.01),
                     child: Text(
-                      displayGroup.name,
-                      style: Theme.of(context).textTheme.headline6.copyWith(
+                      displayGroup.name!,
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: AppConfig.of(context)
-                              .theme
+                          color: AppConfig.of(context)!
+                              .theme!
                               .offsetHeadingColor),
                     ),
                   );

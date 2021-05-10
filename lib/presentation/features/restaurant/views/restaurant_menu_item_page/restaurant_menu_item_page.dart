@@ -12,8 +12,8 @@ class RestaurantMenuItemPage extends StatelessWidget {
   final MenuProductModel productItem;
 
   const RestaurantMenuItemPage({
-    @required this.productItem,
-    @required this.restaurantBloc,
+    required this.productItem,
+    required this.restaurantBloc,
   });
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _RestaurantMenuItemView extends StatelessWidget {
   final MenuProductModel productItem;
 
   const _RestaurantMenuItemView({
-    @required this.productItem,
+    required this.productItem,
   });
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class _RestaurantMenuItemView extends StatelessWidget {
                         child: Stack(
                           children: [
                             Hero(
-                              tag: productItem.id,
+                              tag: productItem.id!,
                               child: SizedBox(
                                 width: double.infinity,
                                 height: screenWidth,
@@ -101,9 +101,9 @@ class _RestaurantMenuItemView extends StatelessWidget {
                     height: screenHeight * 0.12,
                   ),
                   Text(
-                    productItem.name,
-                    style: Theme.of(context).textTheme.headline4.copyWith(
-                        color: AppConfig.of(context).theme.offsetHeadingColor,
+                    productItem.name!,
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                        color: AppConfig.of(context)!.theme!.offsetHeadingColor,
                         fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
@@ -117,10 +117,10 @@ class _RestaurantMenuItemView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          productItem.description,
+                          productItem.description!,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyText1!
                               .copyWith(fontWeight: FontWeight.w400),
                         ),
                         SizedBox(
@@ -137,8 +137,8 @@ class _RestaurantMenuItemView extends StatelessWidget {
                                 .copyWith(dividerColor: Colors.transparent),
                             child: ListTileTheme(
                               dense: true,
-                              tileColor: AppConfig.of(context)
-                                  .theme
+                              tileColor: AppConfig.of(context)!
+                                  .theme!
                                   .lightGreyBackground,
                               child: ExpansionTile(
                                 maintainState: true,
@@ -146,11 +146,11 @@ class _RestaurantMenuItemView extends StatelessWidget {
                                 title: Text("Choice of ${item.name}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1
+                                        .subtitle1!
                                         .copyWith(
                                           fontWeight: FontWeight.w700,
-                                          color: AppConfig.of(context)
-                                              .theme
+                                          color: AppConfig.of(context)!
+                                              .theme!
                                               .offsetHeadingColor,
                                         )),
                                 subtitle: Text(
@@ -159,31 +159,31 @@ class _RestaurantMenuItemView extends StatelessWidget {
                                         : "Required - Min (${item.minSelection}) Max (${item.maxSelection})",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .caption
+                                        .caption!
                                         .copyWith(fontWeight: FontWeight.w400)),
                                 children: [
                                   if (item.minSelection == 1 &&
                                       item.maxSelection == 1)
                                     RadioButtonGroup(
-                                        activeColor: AppConfig.of(context)
-                                            .theme
+                                        activeColor: AppConfig.of(context)!
+                                            .theme!
                                             .primaryColor,
                                         labels: item.modifiers
                                             .map((ProductModifierModel item) =>
                                                 item.name)
                                             .toList(),
-                                        onSelected: (String selected) =>
+                                        onSelected: (String? selected) =>
                                             print(selected))
                                   else
                                     CheckboxGroup(
-                                      activeColor: AppConfig.of(context)
-                                          .theme
+                                      activeColor: AppConfig.of(context)!
+                                          .theme!
                                           .primaryColor,
                                       labels: item.modifiers
                                           .map((ProductModifierModel item) =>
                                               item.name)
                                           .toList(),
-                                      onSelected: (List<String> checked) =>
+                                      onSelected: (List<String?> checked) =>
                                           print(
                                         checked.toString(),
                                       ),
@@ -201,16 +201,16 @@ class _RestaurantMenuItemView extends StatelessWidget {
                     child: ListTileTheme(
                       dense: true,
                       tileColor:
-                          AppConfig.of(context).theme.lightGreyBackground,
+                          AppConfig.of(context)!.theme!.lightGreyBackground,
                       child: ExpansionTile(
                         maintainState: true,
                         initiallyExpanded: true,
                         title: Text(
                           "Leave a Note",
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                                 fontWeight: FontWeight.w700,
-                                color: AppConfig.of(context)
-                                    .theme
+                                color: AppConfig.of(context)!
+                                    .theme!
                                     .offsetHeadingColor,
                               ),
                         ),
@@ -229,13 +229,13 @@ class _RestaurantMenuItemView extends StatelessWidget {
                                     bottom: screenHeight * 0.022),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: Colors.grey[300]),
+                                      BorderSide(color: Colors.grey[300]!),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: AppConfig.of(context)
-                                          .theme
+                                      color: AppConfig.of(context)!
+                                          .theme!
                                           .primaryColor),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -271,7 +271,7 @@ class _RestaurantMenuItemView extends StatelessWidget {
                         Navigator.pop(context);
                   },
                   elevation: 7,
-                  text: "ADD TO CART (\$${productItem.priceUnitAmount / 100})",
+                  text: "ADD TO CART (\$${productItem.priceUnitAmount! / 100})",
                 ),
               ),
             )

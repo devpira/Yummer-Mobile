@@ -10,7 +10,7 @@ class GetStartedView extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: AppConfig.of(context).theme.primaryColor,
+      backgroundColor: AppConfig.of(context)!.theme!.primaryColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -47,7 +47,7 @@ class _GetStartedButton extends StatelessWidget {
   final double screenWidth;
 
   const _GetStartedButton(
-      {@required this.screenHeight, @required this.screenWidth});
+      {required this.screenHeight, required this.screenWidth});
 
   @override
   Widget build(BuildContext context) {

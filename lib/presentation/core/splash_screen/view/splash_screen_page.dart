@@ -17,7 +17,7 @@ class _SplashView extends StatelessWidget {
         backgroundColor: Colors.transparent, // status bar color
         brightness: Brightness.light, // status bar brightness
       ),
-      backgroundColor: AppConfig.of(context).theme.primaryColor,
+      backgroundColor: AppConfig.of(context)!.theme!.primaryColor,
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,

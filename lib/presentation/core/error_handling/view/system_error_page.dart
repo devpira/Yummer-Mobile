@@ -5,12 +5,12 @@ import 'package:yummer/config/config.dart';
 import 'package:yummer/presentation/core_widgets/core_widgets.dart';
 
 class SystemErrorPage extends StatelessWidget {
-  final String errorMessage;
-  final Function tryAgainFunction;
+  final String? errorMessage;
+  final Function? tryAgainFunction;
   final bool showLogOut;
 
   const SystemErrorPage({
-    Key key,
+    Key? key,
     this.errorMessage,
     this.tryAgainFunction,
     this.showLogOut = false,
@@ -38,7 +38,7 @@ class SystemErrorPage extends StatelessWidget {
                   fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: screenHeight * 0.05),
-            if (errorMessage != null && errorMessage.isNotEmpty) Text(errorMessage, textAlign: TextAlign.center) else const Text("Something went wrong....."),
+            if (errorMessage != null && errorMessage!.isNotEmpty) Text(errorMessage!, textAlign: TextAlign.center) else const Text("Something went wrong....."),
             SizedBox(
               height: screenHeight * 0.03,
             ),
@@ -78,7 +78,7 @@ class SystemErrorPage extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.035,
                       fontFamily: 'Quicksand',
-                      color: AppConfig.of(context).theme.primaryColor,
+                      color: AppConfig.of(context)!.theme!.primaryColor,
                     ),
                   ),
                 ),

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+
 import 'package:yummer/domain/restaurant/restaurant.dart';
 part 'home_restaurant_event.dart';
 part 'home_restaurant_state.dart';
@@ -14,9 +14,8 @@ class HomeRestaurantBloc
   final RestaurantRepository _restaurantRepository;
 
   HomeRestaurantBloc({
-    @required RestaurantRepository restaurantRepository,
-  })  : assert(restaurantRepository != null),
-        _restaurantRepository = restaurantRepository,
+    required RestaurantRepository restaurantRepository,
+  })   : _restaurantRepository = restaurantRepository,
         super(const HomeRestaurantState(restuarantList: [])) {
     add(HomeRestaurantEventLoadAllBasicRestaurants());
   }
@@ -28,9 +27,14 @@ class HomeRestaurantBloc
     if (event is HomeRestaurantEventLoadAllBasicRestaurants) {
       print("LOAD RESTAURANTS");
       yield state.copyWith(isFetchingInProgress: true);
-      final List<BasicRestaurantModel> restaurantList = await _restaurantRepository.getAllBasicEnabledRestaurants();
+      final restaurantList =
+          await _restaurantRepository.getAllBasicEnabledRestaurants();
+      if (restaurantList == null) {
+        yield state.copyWith(restuarantList: []);
+        return;
+      }
       print(restaurantList.length);
-      yield state.copyWith(restuarantList: restaurantList?? []);
+      yield state.copyWith(restuarantList: restaurantList);
     }
   }
 }
