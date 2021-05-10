@@ -64,7 +64,7 @@ class ___MyWalletAddCardPageeState extends State<_MyWalletAddCardPage> {
       body: BlocListener<MyWalletAddPaymentCubit, MyWalletAddPaymentState>(
         listener: (context, state) {
           if (state.status.isSubmissionFailure) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 SnackBar(

@@ -6,6 +6,7 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: SpinKitFadingCircle(
           color: AppConfig.of(context)!.theme!.primaryColor,

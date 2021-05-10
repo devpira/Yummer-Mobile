@@ -9,10 +9,10 @@ class OrderSessoionApi extends AbstractGraphQL {
   }) : super.instance(appValues: appValues);
 
   Future<Map<String, dynamic>?> createOrderSession({
-    required String? restaurantId,
-    required String? restaurantPosAccountId,
-    required String? paymentMethodId,
-    required List<String?> productIds,
+    required String restaurantId,
+    required String restaurantPosAccountId,
+    required String paymentMethodId,
+    required List<Map<String, dynamic>> orderItems,
     required int totalCostUnitAmount,
   }) async {
     print("Start createOrderSession2");
@@ -22,14 +22,14 @@ class OrderSessoionApi extends AbstractGraphQL {
             \$restaurantId: String!, 
             \$restaurantPosAccountId: String!, 
             \$paymentMethodId: String!, 
-            \$productIds: [String]!, 
+            \$orderItems: [OrderItemInfoInput]!, 
             \$totalCostUnitAmount: Int!, 
             ){
             createOrderSession(
               restaurantId: \$restaurantId, 
               restaurantPosAccountId: \$restaurantPosAccountId, 
               paymentMethodId: \$paymentMethodId, 
-              productIds: \$productIds, 
+              orderItems: \$orderItems, 
               totalCostUnitAmount: \$totalCostUnitAmount
               ){
                 success
@@ -42,7 +42,7 @@ class OrderSessoionApi extends AbstractGraphQL {
                     invoiceId
                     totalCostUnitAmount
                     orderStatus
-                    cart {
+                    orderItems {
                       product {
                           _id
                           name
@@ -51,6 +51,8 @@ class OrderSessoionApi extends AbstractGraphQL {
                           priceUnitAmount
                           currencyCode
                       }
+                      quantity
+                      originalPriceUnitAmount
                       status
                     }
                 }
@@ -61,12 +63,12 @@ class OrderSessoionApi extends AbstractGraphQL {
         'restaurantId': restaurantId,
         'restaurantPosAccountId': restaurantPosAccountId,
         'paymentMethodId': paymentMethodId,
-        'productIds': productIds,
+        'orderItems': orderItems,
         'totalCostUnitAmount': totalCostUnitAmount,
       },
     ) as Map<String, dynamic>;
 
-    if (!result.containsKey('createOrderSession') == null || !(result['createOrderSession'] as Map<String, dynamic>).containsKey('success')) {
+    if (!result.containsKey('createOrderSession') || !(result['createOrderSession'] as Map<String, dynamic>).containsKey('success')) {
       throw const GraphQLException(
         errorMessage: "Failed to create order. Please try again.",
       );

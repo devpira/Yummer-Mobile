@@ -23,7 +23,7 @@ class MenuDisplayGroupModel extends Equatable {
     return {
       '_id': id,
       'name': name,
-      'products': products?.map((x) => x.toMap())?.toList(),
+      'products': products.map((x) => x.toMap()).toList(),
     };
   }
 

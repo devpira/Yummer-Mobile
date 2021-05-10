@@ -19,8 +19,7 @@ class AuthenticationBloc
 
   AuthenticationBloc({
     required AuthenticationRepository authenticationRepository,
-  })  : assert(authenticationRepository != null),
-        _authenticationRepository = authenticationRepository,
+  })   : _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
     _userSubscription = _authenticationRepository.user.listen(
       (user) => add(AuthenticationUserChanged(user)),

@@ -26,10 +26,7 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
     required RestaurantRepository restaurantRepository,
     required MenuRepository menuRepository,
     required OrderSessionRepository orderSessionRepository,
-  })  : assert(restaurantRepository != null),
-        assert(menuRepository != null),
-        assert(orderSessionRepository != null),
-        _restaurantRepository = restaurantRepository,
+  })   : _restaurantRepository = restaurantRepository,
         _menuRepository = menuRepository,
         _orderSessionRepository = orderSessionRepository,
         super(const RestaurantState());
@@ -116,32 +113,36 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
           errorMessage: "No internet connection. Please try again.");
     }
 
-    final List<String?> productIds = [];
+    final List<Map<String, dynamic>> orderItems = [];
 
     state.orderCartModel!.cartItems.forEach((item) {
-      productIds.add(item.productId);
+      orderItems.add({
+        "productId": item.productId,
+        "quantity": item.quantity,
+      });
     });
 
-    if (productIds.isEmpty) {
+    if (orderItems.isEmpty) {
       return state.copyWith(
           errorMessage: "Cart cannot be empty. Please try again.");
     }
 
-    print(productIds.length);
+    print(orderItems.length);
 
     try {
       final orderSessionModel =
           await _orderSessionRepository.createOrderSession(
-        restaurantId: state.restaurantModel!.id,
-        restaurantPosAccountId: state.restaurantModel!.posAccountId,
-        paymentMethodId: paymentMethodId,
-        productIds: productIds,
+        restaurantId: state.restaurantModel!.id!,
+        restaurantPosAccountId: state.restaurantModel!.posAccountId!,
+        paymentMethodId: paymentMethodId!,
+        orderItems: orderItems,
         totalCostUnitAmount: state.orderCartModel!.totalPriceUnitAmount,
       );
 
-      if (orderSessionModel == null || orderSessionModel.id == null) throw Exception();
+      if (orderSessionModel == null || orderSessionModel.id == null)
+        throw Exception();
 
-       return state.copyWith(orderSessionModel: orderSessionModel);
+      return state.copyWith(orderSessionModel: orderSessionModel);
     } on OrderSessionException catch (e) {
       return state.copyWith(errorMessage: e.toString());
     } catch (e) {

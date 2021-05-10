@@ -172,7 +172,7 @@ class _RestaurantMenuItemView extends StatelessWidget {
                                             .map((ProductModifierModel item) =>
                                                 item.name)
                                             .toList(),
-                                        onSelected: (String selected) =>
+                                        onSelected: (String? selected) =>
                                             print(selected))
                                   else
                                     CheckboxGroup(
@@ -183,7 +183,7 @@ class _RestaurantMenuItemView extends StatelessWidget {
                                           .map((ProductModifierModel item) =>
                                               item.name)
                                           .toList(),
-                                      onSelected: (List<String> checked) =>
+                                      onSelected: (List<String?> checked) =>
                                           print(
                                         checked.toString(),
                                       ),

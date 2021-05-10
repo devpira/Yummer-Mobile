@@ -58,13 +58,13 @@ class RestaurantCheckoutItemRow extends StatelessWidget {
                             color:
                                 AppConfig.of(context)!.theme!.offsetHeadingColor),
                       ),
-                      SizedBox(
-                        height: height * 0.02,
-                      ),
-                      Text(
-                        "description",
-                        style: Theme.of(context).textTheme.caption,
-                      ),
+                      // SizedBox(
+                      //   height: height * 0.02,
+                      // ),
+                      // Text(
+                      //   "description",
+                      //   style: Theme.of(context).textTheme.caption,
+                      // ),
                       SizedBox(
                         height: height * 0.02,
                       ),

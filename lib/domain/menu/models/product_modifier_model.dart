@@ -25,8 +25,11 @@ class ProductModifierModel extends Equatable {
     };
   }
 
+  static const empty =
+      ProductModifierModel(id: '', name: '', priceUnitAmount: -1);
+
   factory ProductModifierModel.fromMap(Map<String, dynamic>? map) {
-    if (map == null) return null;
+    if (map == null) return ProductModifierModel.empty;
 
     return ProductModifierModel(
       id: map['_id'] as String?,

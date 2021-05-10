@@ -7,8 +7,7 @@ abstract class AbstractGraphQL {
   final AppValues _appValues;
 
   AbstractGraphQL.instance({required AppValues appValues})
-      : assert(appValues != null),
-        _appValues = appValues;
+      : _appValues = appValues;
 
   Future<GraphQLClient> createClient() async {
     final String idToken =
@@ -35,15 +34,15 @@ abstract class AbstractGraphQL {
     String? defaultErrorMessage,
   }) async {
     final client = await createClient();
+ 
     final QueryResult result = await client.query(QueryOptions(
-      document: gql(query),
-      variables: variables,
-      fetchPolicy: FetchPolicy.cacheAndNetwork,
-      // ignore all GraphQL errors.
-      errorPolicy: ErrorPolicy.ignore,
-      // ignore cache data.
-      cacheRereadPolicy: CacheRereadPolicy.mergeOptimistic
-    ));
+        document: gql(query),
+        variables: variables,
+        fetchPolicy: FetchPolicy.cacheAndNetwork,
+        // ignore all GraphQL errors.
+        errorPolicy: ErrorPolicy.ignore,
+        // ignore cache data.
+        cacheRereadPolicy: CacheRereadPolicy.mergeOptimistic));
 
     checkForErrors(result: result, defaultErrorMessage: defaultErrorMessage);
 
@@ -73,9 +72,10 @@ abstract class AbstractGraphQL {
     required QueryResult result,
     String? defaultErrorMessage,
   }) {
+    print(result);
     if (result.hasException) {
       // Check if any custom user friendly errors sent from graphql:
-      if (result?.exception?.graphqlErrors != null) {
+      if (result.exception?.graphqlErrors != null) {
         // If any found, throw those errors:
         for (final GraphQLError error in result.exception!.graphqlErrors) {
           print(error.message);
@@ -93,7 +93,7 @@ abstract class AbstractGraphQL {
               "Oops, there was an issue connecting to our servers. Please try again.",
         );
       }
-
+   
       // If none found then throw a generic error:
       if (defaultErrorMessage != null) {
         throw GraphQLException(

@@ -9,15 +9,14 @@ class MyWalletRepository {
 
   const MyWalletRepository({
     required MyWalletApi myWalletApi,
-  })  : assert(myWalletApi != null),
-        _myWalletApi = myWalletApi;
+  }) : _myWalletApi = myWalletApi;
 
   Future<List<CardPaymentMethodModel>?> getAllCardPaymentMethods() async {
     try {
       final List<CardPaymentMethodModel> resultList = [];
-      final result = await (_myWalletApi.getAllCardPaymentMethods() as FutureOr<List<Object>>);
+      final result = await _myWalletApi.getAllCardPaymentMethods();
 
-      for (final Object item in result) {
+      for (final Object? item in result) {
         resultList
             .add(CardPaymentMethodModel.fromMap(item as Map<String, dynamic>));
       }
@@ -30,10 +29,13 @@ class MyWalletRepository {
   }
 
   Future<CardPaymentMethodModel?> attachPaymentMethod(
-      String? paymentMethodId) async {
+      String paymentMethodId) async {
     try {
-      return CardPaymentMethodModel.fromMap(
-          await (_myWalletApi.attachPaymentMethod(paymentMethodId) as FutureOr<Map<String, dynamic>>));
+      final result = await _myWalletApi.attachPaymentMethod(paymentMethodId);
+      if (result == null) {
+        return null;
+      }
+      return CardPaymentMethodModel.fromMap(result);
     } catch (e) {
       print(e);
       return null;

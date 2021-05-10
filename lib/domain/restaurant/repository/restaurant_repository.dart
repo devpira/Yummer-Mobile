@@ -16,10 +16,8 @@ class RestaurantRepository {
     try {
       final List<BasicRestaurantModel> resultList = [];
       final result = await _restaurantApi.getAllBasicEnabledRestaurants();
-      if (result == null) {
-        return null;
-      }
-      for (final Object item in result) {
+  
+      for (final Object? item in result) {
         resultList
             .add(BasicRestaurantModel.fromMap(item as Map<String, dynamic>));
       }

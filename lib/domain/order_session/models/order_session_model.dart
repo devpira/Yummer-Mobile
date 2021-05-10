@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 
-import 'order_session_cart_item_model.dart';
+import 'order_session_item_model.dart';
 
 class OrderSessionModel extends Equatable {
   final String? id;
@@ -13,7 +13,7 @@ class OrderSessionModel extends Equatable {
   final String? invoiceId;
   final int? totalCostUnitAmount;
   final int? orderStatus;
-  final List<OrderSessionCartItemModel> cart;
+  final List<OrderSessionItemModel> orderItems;
 
   const OrderSessionModel({
     required this.id,
@@ -23,7 +23,7 @@ class OrderSessionModel extends Equatable {
     required this.invoiceId,
     required this.totalCostUnitAmount,
     required this.orderStatus,
-    required this.cart,
+    required this.orderItems,
   });
 
   @override
@@ -36,7 +36,7 @@ class OrderSessionModel extends Equatable {
       invoiceId,
       totalCostUnitAmount,
       orderStatus,
-      cart,
+      orderItems,
     ];
   }
 
@@ -49,7 +49,7 @@ class OrderSessionModel extends Equatable {
       'invoiceId': invoiceId,
       'totalCostUnitAmount': totalCostUnitAmount,
       'orderStatus': orderStatus,
-      'cart': cart?.map((x) => x.toMap())?.toList(),
+      'orderItems': orderItems.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -63,9 +63,9 @@ class OrderSessionModel extends Equatable {
       totalCostUnitAmount: map['totalCostUnitAmount'] as int?,
       orderStatus: map['orderStatus'] as int?,
       // ignore: argument_type_not_assignable
-      cart: List<OrderSessionCartItemModel>.from(
+      orderItems: List<OrderSessionItemModel>.from(
         // ignore: argument_type_not_assignable
-          map['cart']?.map((x) => OrderSessionCartItemModel.fromMap(x))),
+          map['orderItems'].map((x) => OrderSessionItemModel.fromMap(x))),
     );
   }
 

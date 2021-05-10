@@ -21,14 +21,12 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
   MyWalletAddPaymentCubit({
     required AppValues appValues,
     required MyWalletRepository myWalletRepository,
-  })  : assert(appValues != null),
-        assert(myWalletRepository != null),
-        _appValues = appValues,
+  })   : _appValues = appValues,
         _myWalletRepository = myWalletRepository,
         super(const MyWalletAddPaymentState());
 
-  void cardNumberChanged(String value) {
-    final number = CardNumberValueObject.dirty(value);
+  void cardNumberChanged(String? value) {
+    final number = CardNumberValueObject.dirty(value ?? "");
     CardType cardType = state.cardType;
 
     if (value != null && value.length == 1) {
@@ -161,7 +159,7 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
       ).then((paymentMethod) async {
         print(paymentMethod.id);
         final result =
-            await _myWalletRepository.attachPaymentMethod(paymentMethod.id);
+            await _myWalletRepository.attachPaymentMethod(paymentMethod.id!);
 
         if (result == null || result.id == null || result.last4 == null) {
           emit(
@@ -192,7 +190,7 @@ class MyWalletAddPaymentCubit extends Cubit<MyWalletAddPaymentState> {
       emit(
         state.copyWith(
             status: FormzStatus.submissionFailure,
-            errorMessage: e != null && e.toString().isNotEmpty
+            errorMessage: e.toString().isNotEmpty
                 ? e.toString()
                 : "Failed to create payment method. Please try again."),
       );

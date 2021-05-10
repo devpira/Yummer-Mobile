@@ -10,14 +10,16 @@ class MenuRepository {
 
   const MenuRepository({
     required MenuApi menuApi,
-  })  : assert(menuApi != null),
-        _menuApi = menuApi;
+  }) : _menuApi = menuApi;
 
   Future<MenuModel?> getCurrentRestaurantMenyToDisplay(
       String restaurantId) async {
     try {
       final result =
-          await (_menuApi.getCurrentRestaurantMenyToDisplay(restaurantId) as FutureOr<Map<String, dynamic>>);
+          await _menuApi.getCurrentRestaurantMenyToDisplay(restaurantId);
+      if (result == null) {
+        return null;
+      }
       return MenuModel.fromMap(result);
     } catch (e) {
       print(e);

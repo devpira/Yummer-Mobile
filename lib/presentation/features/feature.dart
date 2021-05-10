@@ -1,7 +1,12 @@
 export 'a_home/home.dart';
 export 'home_profile/home_profile.dart';
+export 'home_profile_settings/home_profile_settings.dart';
 export 'home_restaurant/home_restaurant.dart';
-export  'my_wallet/my_wallet.dart';
+export 'home_social/home_social.dart';
+export 'my_wallet/my_wallet.dart';
 export 'restaurant/restaurant.dart';
 export 'restaurant_order_session/restaurant_order_session.dart';
+export 'user_follow/user_follow.dart';
 export 'user_profile_creation/user_profile_creation.dart';
+export 'user_profile_edit/user_profile_edit.dart';
+export 'user_search/user_search.dart';

@@ -49,7 +49,7 @@ class MenuProductModel extends Equatable {
       'name': name,
       'description': description,
       'imageUrls': imageUrls,
-      'modiferGroups': modiferGroups?.map((x) => x.toMap())?.toList(),
+      'modiferGroups': modiferGroups.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -63,7 +63,7 @@ class MenuProductModel extends Equatable {
       description: map['description'] as String?,
       imageUrls: List<String>.from(map['imageUrls']),
       modiferGroups: List<ProductModifierGroupModel>.from(
-        map['modiferGroups']?.map(
+        map['modiferGroups'].map(
           (x) => ProductModifierGroupModel.fromMap(
             x as Map<String, dynamic>,
           ),

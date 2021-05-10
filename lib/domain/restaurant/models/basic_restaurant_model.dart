@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-
 class BasicRestaurantModel extends Equatable {
   final String? id;
   final String? name;
@@ -28,9 +27,14 @@ class BasicRestaurantModel extends Equatable {
     };
   }
 
+  static const empty =
+      BasicRestaurantModel(id: '', name: '', description: '', imageUrl: '');
+
   factory BasicRestaurantModel.fromMap(Map<String, dynamic>? map) {
-    if (map == null) return null;
-    
+    if (map == null) {
+      return BasicRestaurantModel.empty;
+    }
+
     return BasicRestaurantModel(
       id: map['_id'] as String?,
       name: map['name'] as String?,
@@ -42,5 +46,6 @@ class BasicRestaurantModel extends Equatable {
   String toJson() => json.encode(toMap());
 
   factory BasicRestaurantModel.fromJson(String source) =>
-      BasicRestaurantModel.fromMap(json.decode(source) as Map<String, dynamic>?);
+      BasicRestaurantModel.fromMap(
+          json.decode(source) as Map<String, dynamic>?);
 }

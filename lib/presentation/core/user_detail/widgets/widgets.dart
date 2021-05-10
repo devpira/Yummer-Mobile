@@ -1,0 +1,1 @@
+export 'user_detail_row_item.dart';

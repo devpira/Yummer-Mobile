@@ -14,7 +14,7 @@ class MyWalletApi extends AbstractGraphQL {
     const bool isDefault = true;
 
     final Map<String, dynamic> result = await executeMutation(mutation: """
-          mutation(\$paymentMethodId: String, \$isDefault:Boolean){
+          mutation(\$paymentMethodId: String!, \$isDefault:Boolean){
             attachPaymentMethod(paymentMethodId: \$paymentMethodId, isDefault: \$isDefault){
               id
               brand
@@ -89,7 +89,7 @@ class MyWalletApi extends AbstractGraphQL {
     return result['changeDefaultPaymentMethod']['status'] as bool?;
   }
 
-  Future<List<Object>?> getAllCardPaymentMethods() async {
+  Future<List<Object?>> getAllCardPaymentMethods() async {
     final Map<String, dynamic> result = await executeQuery(
       query: """
           query cardPaymentMethods() {
@@ -114,6 +114,6 @@ class MyWalletApi extends AbstractGraphQL {
       );
     }
 
-    return result['cardPaymentMethods'] as List<Object>?;
+    return result['cardPaymentMethods'] as List<Object?>;
   }
 }

@@ -4,7 +4,7 @@ abstract class UserDetailState extends Equatable {
   const UserDetailState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class UserDetailNotLoaded extends UserDetailState {}
@@ -14,8 +14,7 @@ class UserDetailLoading extends UserDetailState {}
 class UserDetailLoadFailed extends UserDetailState {
   final UserModel user;
   final String errorMessage;
-  const UserDetailLoadFailed(
-      {required this.errorMessage, required this.user});
+  const UserDetailLoadFailed({required this.errorMessage, required this.user});
   @override
   List<Object> get props => [errorMessage, user];
 }
@@ -33,14 +32,16 @@ class UserDetailLoadLostInternet extends UserDetailState {
 class UserDetailLoaded extends UserDetailState {
   final UserModel user;
   final UserDetailModel userDetails;
+  final bool? isRefresh;
 
   const UserDetailLoaded({
     required this.user,
     required this.userDetails,
+    this.isRefresh = false,
   });
 
   @override
-  List<Object> get props => [user, userDetails];
+  List<Object?> get props => [user, userDetails, isRefresh];
 
   Map<String, dynamic> toMap() {
     return {
@@ -50,7 +51,6 @@ class UserDetailLoaded extends UserDetailState {
   }
 
   factory UserDetailLoaded.fromMap(Map<String, dynamic> map) {
-
     return UserDetailLoaded(
       user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
       userDetails:

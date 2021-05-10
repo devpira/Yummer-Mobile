@@ -10,7 +10,9 @@ class TextFieldStyleOne extends StatelessWidget {
   final String? labelText;
   final String? initialValue;
   final String? helperText;
+  final String? hintText;
   final int? maxLength;
+  final int? maxLines;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final bool autofocus;
@@ -25,7 +27,9 @@ class TextFieldStyleOne extends StatelessWidget {
     this.initialValue,
     this.errorText,
     this.helperText,
+    this.hintText,
     this.maxLength,
+     this.maxLines,
     this.focusedBorder,
     this.textInputAction,
     this.keyboardType,
@@ -42,6 +46,7 @@ class TextFieldStyleOne extends StatelessWidget {
       textInputAction: textInputAction ?? TextInputAction.done,
       initialValue: initialValue,
       maxLength: maxLength,
+       maxLines: maxLines,
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: TextStyle(
@@ -67,6 +72,7 @@ class TextFieldStyleOne extends StatelessWidget {
         ),
         prefixIcon: iconData != null? Icon(iconData): null,
         helperText: helperText,
+        hintText: hintText,
         errorText: errorText,
       ),
     );

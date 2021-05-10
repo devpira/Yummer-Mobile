@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yummer/config/config.dart';
 import 'package:yummer/presentation/core/authentication/authentication.dart';
 import 'package:yummer/presentation/core/internet_connectivity/internet_connectivity.dart';
-import 'package:yummer/domain/user_detail/user_detail.dart';
+import 'package:yummer/domain/user/user_detail.dart';
 import 'package:yummer/injection.dart';
 import 'package:yummer/presentation/core/user_detail/user_detail.dart';
 import 'package:yummer/presentation/core_widgets/core_widgets.dart';
@@ -39,7 +39,7 @@ class _CreateUserDetailsPageForm extends StatelessWidget {
     return BlocListener<CreateUserDetailCubit, CreateUserDetailState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
@@ -68,22 +68,31 @@ class _CreateUserDetailsPageForm extends StatelessWidget {
                 // ),
 
                 SizedBox(
-                  height: height * 0.05,
+                  height: height * 0.03,
                 ),
-                SizedBox(
-                  height: screenHeight * 0.23,
-                  child: Center(
-                    child: Image.asset(
-                      "assets/images/create_profile_img.png",
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: screenHeight * 0.15,
+                //   child: Center(
+                //     child: Image.asset(
+                //       "assets/images/create_profile_img.png",
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: height * 0.02,
                 ),
                 _buildTitle(context, width, "Complete Your Account"),
+
                 SizedBox(
-                  height: height * 0.03,
+                  height: height * 0.05,
+                ),
+                _DisplayNameInput(
+                  user: user,
+                  screenHeight: screenHeight,
+                  screenWidth: screenWidth,
+                ),
+                SizedBox(
+                  height: height * 0.01,
                 ),
                 _NameInput(
                   user: user,
@@ -144,6 +153,54 @@ class _CreateUserDetailsPageForm extends StatelessWidget {
   }
 }
 
+class _DisplayNameInput extends StatelessWidget {
+  final UserModel user;
+  final double screenHeight;
+  final double screenWidth;
+
+  const _DisplayNameInput({
+    required this.user,
+    required this.screenHeight,
+    required this.screenWidth,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CreateUserDetailCubit, CreateUserDetailState>(
+      buildWhen: (previous, current) =>
+          previous.displayName != current.displayName ||
+          previous.name != current.name ||
+          previous.formSubmitted != current.formSubmitted,
+      builder: (context, state) {
+        String errorText = "";
+        if (state.formSubmitted && state.displayName.invalid) {
+          errorText = "Please enter a valid display name";
+          if (state.displayName.error != null) {
+            final DisplayNameValidationError error = state.displayName.error!;
+            if (error == DisplayNameValidationError.tooShort) {
+              errorText = "Must be atleast 6 chars";
+            } else if (error == DisplayNameValidationError.invalidChar) {
+              errorText = "Only underscores and periods are allowed";
+            }
+          }
+        }
+        return TextFieldStyleOne(
+          screenHeight: screenHeight,
+          screenWidth: screenWidth,
+          onChanged: (String displayName) => context
+              .read<CreateUserDetailCubit>()
+              .displayNameChanged(displayName),
+          textInputAction: TextInputAction.next,
+          labelText: 'Display Name',
+          helperText: 'Unique username for profile',
+          maxLength: 25,
+        
+          errorText: errorText == "" ? null : errorText,
+        );
+      },
+    );
+  }
+}
+
 class _NameInput extends StatelessWidget {
   final UserModel user;
   final double screenHeight;
@@ -157,7 +214,7 @@ class _NameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? name;
-    if (user != null && user.name != null) {
+    if (user != UserModel.empty && user.name != null) {
       name = user.name;
     }
 

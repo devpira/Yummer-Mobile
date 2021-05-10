@@ -13,7 +13,7 @@ class MobileEntryFormView extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(content: Text(state.errorMessage!)),

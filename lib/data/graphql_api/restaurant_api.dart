@@ -8,7 +8,7 @@ class RestaurantApi extends AbstractGraphQL {
     required AppValues appValues,
   }) : super.instance(appValues: appValues);
 
-  Future<List<Object>?> getAllBasicEnabledRestaurants() async {
+  Future<List<Object?>> getAllBasicEnabledRestaurants() async {
     final Map<String, dynamic> result = await executeQuery(
       query: """
           query GetAllBasicEnabledRestaurants() {
@@ -29,7 +29,7 @@ class RestaurantApi extends AbstractGraphQL {
       );
     }
 
-    return result['basicEnabledRestaurantInfos'] as List<Object>?;
+    return result['basicEnabledRestaurantInfos'] as List<Object?>;
   }
 
   Future<Map<String, dynamic>?> getFullRestaurantInfo(

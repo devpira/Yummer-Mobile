@@ -5,14 +5,15 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i1;
-import 'package:flutter/widgets.dart' as _i7;
-import 'package:yummer/domain/menu/menu.dart' as _i4;
+import 'package:flutter/widgets.dart' as _i4;
+import 'package:yummer/domain/menu/menu.dart' as _i6;
 import 'package:yummer/domain/my_wallet/models/card_payment_method_model.dart'
-    as _i6;
+    as _i8;
+import 'package:yummer/domain/user/user_detail.dart' as _i5;
 import 'package:yummer/presentation/core/core.dart' as _i2;
 import 'package:yummer/presentation/features/feature.dart' as _i3;
 import 'package:yummer/presentation/features/restaurant/bloc/restaurant_bloc.dart'
-    as _i5;
+    as _i7;
 
 class MyRouter extends _i1.RootStackRouter {
   MyRouter();
@@ -42,6 +43,52 @@ class MyRouter extends _i1.RootStackRouter {
       return _i1.CustomPage(
           entry: entry,
           child: _i3.HomePage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    HomePublicProfilePageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<HomePublicProfilePageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.HomePublicProfilePage(
+              key: args.key, userDetails: args.userDetails),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    HomeProfileSettingsPageRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.HomeProfileSettingsPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    UserSearchPageRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: const _i3.UserSearchPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    UserFollowersPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<UserFollowersPageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child:
+              _i3.UserFollowersPage(key: args.key, pageForUid: args.pageForUid),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    UserFollowingPageRoute.name: (entry) {
+      var args = entry.routeData.argsAs<UserFollowingPageRouteArgs>();
+      return _i1.CustomPage(
+          entry: entry,
+          child:
+              _i3.UserFollowingPage(key: args.key, pageForUid: args.pageForUid),
           transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
           opaque: true,
           barrierDismissible: false);
@@ -114,6 +161,14 @@ class MyRouter extends _i1.RootStackRouter {
           opaque: true,
           barrierDismissible: false);
     },
+    UserProfileEditPageRoute.name: (entry) {
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i3.UserProfileEditPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
     SystemErrorPageRoute.name: (entry) {
       var args = entry.routeData.argsAs<SystemErrorPageRouteArgs>(
           orElse: () => SystemErrorPageRouteArgs());
@@ -155,6 +210,15 @@ class MyRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(CreateUserDetailsPageRoute.name,
             path: '/create-user-details-page'),
         _i1.RouteConfig(HomePageRoute.name, path: '/home-page'),
+        _i1.RouteConfig(HomePublicProfilePageRoute.name,
+            path: '/home-public-profile-page'),
+        _i1.RouteConfig(HomeProfileSettingsPageRoute.name,
+            path: '/home-profile-settings-page'),
+        _i1.RouteConfig(UserSearchPageRoute.name, path: '/user-search-page'),
+        _i1.RouteConfig(UserFollowersPageRoute.name,
+            path: '/user-followers-page'),
+        _i1.RouteConfig(UserFollowingPageRoute.name,
+            path: '/user-following-page'),
         _i1.RouteConfig(RestaurantPageRoute.name, path: '/restaurant-page'),
         _i1.RouteConfig(RestaurantMenuItemPageRoute.name,
             path: '/restaurant-menu-item-page'),
@@ -167,6 +231,8 @@ class MyRouter extends _i1.RootStackRouter {
             path: '/my-wallet-add-card-page'),
         _i1.RouteConfig(MyWalletEditCardPageRoute.name,
             path: '/my-wallet-edit-card-page'),
+        _i1.RouteConfig(UserProfileEditPageRoute.name,
+            path: '/user-profile-edit-page'),
         _i1.RouteConfig(SystemErrorPageRoute.name, path: '/system-error-page'),
         _i1.RouteConfig(LoadingScreenRoute.name, path: '/loading-screen'),
         _i1.RouteConfig(NoInternetPageRoute.name, path: '/no-internet-page')
@@ -198,6 +264,75 @@ class HomePageRoute extends _i1.PageRouteInfo {
   static const String name = 'HomePageRoute';
 }
 
+class HomePublicProfilePageRoute
+    extends _i1.PageRouteInfo<HomePublicProfilePageRouteArgs> {
+  HomePublicProfilePageRoute(
+      {_i4.Key? key, required _i5.UserDetailModel userDetails})
+      : super(name,
+            path: '/home-public-profile-page',
+            args: HomePublicProfilePageRouteArgs(
+                key: key, userDetails: userDetails));
+
+  static const String name = 'HomePublicProfilePageRoute';
+}
+
+class HomePublicProfilePageRouteArgs {
+  const HomePublicProfilePageRouteArgs({this.key, required this.userDetails});
+
+  final _i4.Key? key;
+
+  final _i5.UserDetailModel userDetails;
+}
+
+class HomeProfileSettingsPageRoute extends _i1.PageRouteInfo {
+  const HomeProfileSettingsPageRoute()
+      : super(name, path: '/home-profile-settings-page');
+
+  static const String name = 'HomeProfileSettingsPageRoute';
+}
+
+class UserSearchPageRoute extends _i1.PageRouteInfo {
+  const UserSearchPageRoute() : super(name, path: '/user-search-page');
+
+  static const String name = 'UserSearchPageRoute';
+}
+
+class UserFollowersPageRoute
+    extends _i1.PageRouteInfo<UserFollowersPageRouteArgs> {
+  UserFollowersPageRoute({_i4.Key? key, required String pageForUid})
+      : super(name,
+            path: '/user-followers-page',
+            args: UserFollowersPageRouteArgs(key: key, pageForUid: pageForUid));
+
+  static const String name = 'UserFollowersPageRoute';
+}
+
+class UserFollowersPageRouteArgs {
+  const UserFollowersPageRouteArgs({this.key, required this.pageForUid});
+
+  final _i4.Key? key;
+
+  final String pageForUid;
+}
+
+class UserFollowingPageRoute
+    extends _i1.PageRouteInfo<UserFollowingPageRouteArgs> {
+  UserFollowingPageRoute({_i4.Key? key, required String pageForUid})
+      : super(name,
+            path: '/user-following-page',
+            args: UserFollowingPageRouteArgs(key: key, pageForUid: pageForUid));
+
+  static const String name = 'UserFollowingPageRoute';
+}
+
+class UserFollowingPageRouteArgs {
+  const UserFollowingPageRouteArgs({this.key, required this.pageForUid});
+
+  final _i4.Key? key;
+
+  final String pageForUid;
+}
+
 class RestaurantPageRoute extends _i1.PageRouteInfo<RestaurantPageRouteArgs> {
   RestaurantPageRoute({required String restaurantId})
       : super(name,
@@ -216,8 +351,8 @@ class RestaurantPageRouteArgs {
 class RestaurantMenuItemPageRoute
     extends _i1.PageRouteInfo<RestaurantMenuItemPageRouteArgs> {
   RestaurantMenuItemPageRoute(
-      {required _i4.MenuProductModel productItem,
-      required _i5.RestaurantBloc restaurantBloc})
+      {required _i6.MenuProductModel productItem,
+      required _i7.RestaurantBloc restaurantBloc})
       : super(name,
             path: '/restaurant-menu-item-page',
             args: RestaurantMenuItemPageRouteArgs(
@@ -230,14 +365,14 @@ class RestaurantMenuItemPageRouteArgs {
   const RestaurantMenuItemPageRouteArgs(
       {required this.productItem, required this.restaurantBloc});
 
-  final _i4.MenuProductModel productItem;
+  final _i6.MenuProductModel productItem;
 
-  final _i5.RestaurantBloc restaurantBloc;
+  final _i7.RestaurantBloc restaurantBloc;
 }
 
 class RestaurantCheckoutPageRoute
     extends _i1.PageRouteInfo<RestaurantCheckoutPageRouteArgs> {
-  RestaurantCheckoutPageRoute({required _i5.RestaurantBloc restaurantBloc})
+  RestaurantCheckoutPageRoute({required _i7.RestaurantBloc restaurantBloc})
       : super(name,
             path: '/restaurant-checkout-page',
             args: RestaurantCheckoutPageRouteArgs(
@@ -249,7 +384,7 @@ class RestaurantCheckoutPageRoute
 class RestaurantCheckoutPageRouteArgs {
   const RestaurantCheckoutPageRouteArgs({required this.restaurantBloc});
 
-  final _i5.RestaurantBloc restaurantBloc;
+  final _i7.RestaurantBloc restaurantBloc;
 }
 
 class RestaurantOrderSessionPageRoute extends _i1.PageRouteInfo {
@@ -294,7 +429,7 @@ class MyWalletEditCardPageRoute
     extends _i1.PageRouteInfo<MyWalletEditCardPageRouteArgs> {
   MyWalletEditCardPageRoute(
       {required _i3.MyWalletBloc myWalletBloc,
-      required _i6.CardPaymentMethodModel cardPaymentMethodModel})
+      required _i8.CardPaymentMethodModel cardPaymentMethodModel})
       : super(name,
             path: '/my-wallet-edit-card-page',
             args: MyWalletEditCardPageRouteArgs(
@@ -310,12 +445,19 @@ class MyWalletEditCardPageRouteArgs {
 
   final _i3.MyWalletBloc myWalletBloc;
 
-  final _i6.CardPaymentMethodModel cardPaymentMethodModel;
+  final _i8.CardPaymentMethodModel cardPaymentMethodModel;
+}
+
+class UserProfileEditPageRoute extends _i1.PageRouteInfo {
+  const UserProfileEditPageRoute()
+      : super(name, path: '/user-profile-edit-page');
+
+  static const String name = 'UserProfileEditPageRoute';
 }
 
 class SystemErrorPageRoute extends _i1.PageRouteInfo<SystemErrorPageRouteArgs> {
   SystemErrorPageRoute(
-      {_i7.Key? key,
+      {_i4.Key? key,
       String? errorMessage,
       Function? tryAgainFunction,
       bool showLogOut = false})
@@ -337,7 +479,7 @@ class SystemErrorPageRouteArgs {
       this.tryAgainFunction,
       this.showLogOut = false});
 
-  final _i7.Key? key;
+  final _i4.Key? key;
 
   final String? errorMessage;
 
@@ -354,7 +496,7 @@ class LoadingScreenRoute extends _i1.PageRouteInfo {
 
 class NoInternetPageRoute extends _i1.PageRouteInfo<NoInternetPageRouteArgs> {
   NoInternetPageRoute(
-      {_i7.Key? key, Function? tryAgainFunction, bool showLogOut = false})
+      {_i4.Key? key, Function? tryAgainFunction, bool showLogOut = false})
       : super(name,
             path: '/no-internet-page',
             args: NoInternetPageRouteArgs(
@@ -369,7 +511,7 @@ class NoInternetPageRouteArgs {
   const NoInternetPageRouteArgs(
       {this.key, this.tryAgainFunction, this.showLogOut = false});
 
-  final _i7.Key? key;
+  final _i4.Key? key;
 
   final Function? tryAgainFunction;
 

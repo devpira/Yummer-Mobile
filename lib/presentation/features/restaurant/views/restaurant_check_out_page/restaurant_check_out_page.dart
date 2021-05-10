@@ -8,6 +8,7 @@ import 'package:yummer/presentation/core_widgets/core_widgets.dart';
 import 'package:yummer/presentation/features/feature.dart';
 import 'package:yummer/presentation/features/restaurant/bloc/restaurant_bloc.dart';
 import 'package:yummer/presentation/features/restaurant/views/restaurant_check_out_page/restaurant_cart_items_section.dart';
+import 'package:yummer/presentation/features/restaurant_order_session/bloc/restaurant_order_session_bloc.dart';
 import 'package:yummer/routes/router.gr.dart';
 
 class RestaurantCheckoutPage extends StatelessWidget {
@@ -86,7 +87,7 @@ class _RestaurantCheckoutPage extends StatelessWidget {
       body: BlocListener<RestaurantBloc, RestaurantState>(
         listener: (context, state) {
           if (state.errorMessage != null) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 SnackBar(
@@ -95,6 +96,9 @@ class _RestaurantCheckoutPage extends StatelessWidget {
               );
           } else if (state.orderSessionModel != null) {
             Navigator.pop(context);
+            context.read<RestaurantOrderSessionBloc>().add(
+                RestaurantOrderSessionEventStartOrderSession(
+                    orderSessionModel: state.orderSessionModel!));
             AutoRouter.of(context)
                 .replace(const RestaurantOrderSessionPageRoute());
           }
@@ -323,9 +327,8 @@ class _PaymentInformationSection extends StatelessWidget {
   });
 
   void onChangePaymentClicked(BuildContext context) {
-        AutoRouter.of(context)
-                .push(MyWalletPageRoute(myWalletBloc: context.read<MyWalletBloc>()));
-
+    AutoRouter.of(context)
+        .push(MyWalletPageRoute(myWalletBloc: context.read<MyWalletBloc>()));
   }
 
   @override

@@ -26,7 +26,7 @@ class MenuModel extends Equatable {
       '_id': id,
       'restaurantId': restaurantId,
       'name': name,
-      'displayGroups': displayGroups?.map((x) => x.toMap())?.toList(),
+      'displayGroups': displayGroups.map((x) => x.toMap()).toList(),
     };
   }
 

@@ -17,8 +17,7 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
 
   MyWalletBloc({
     required MyWalletRepository myWalletRepository,
-  })  : assert(myWalletRepository != null),
-        _myWalletRepository = myWalletRepository,
+  })   : _myWalletRepository = myWalletRepository,
         super(const MyWalletState());
 
   @override
@@ -35,8 +34,10 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
         return;
       }
 
-      final cardPaymentMethods =
-          await (_myWalletRepository.getAllCardPaymentMethods() as FutureOr<List<CardPaymentMethodModel>>);
+      var cardPaymentMethods =
+          await _myWalletRepository.getAllCardPaymentMethods();
+
+      cardPaymentMethods ??= [];
 
       CardPaymentMethodModel? defaultPaymentMethod;
       cardPaymentMethods.forEach((item) {
@@ -52,7 +53,8 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
     } else if (event is MyWalletEventAddCardMethod) {
       print("ADDING A CARD");
       print(state.cardPaymentMethods!.length);
-      final List<CardPaymentMethodModel?> copiedCardPaymentMethods = state.cardPaymentMethods!.map((item) {
+      final List<CardPaymentMethodModel?> copiedCardPaymentMethods =
+          state.cardPaymentMethods!.map((item) {
         return item!.copyWith(isDefault: false);
       }).toList();
       copiedCardPaymentMethods.insert(0, event.cardPaymentMethodModel);
@@ -73,10 +75,10 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
       }
 
       print("REMOVING A CARD");
-      final result = await (_myWalletRepository.deletePaymentMethod(
-          event.posCustomerId, event.cardPaymentMethodModel.id) as FutureOr<bool>);
+      final result = await _myWalletRepository.deletePaymentMethod(
+          event.posCustomerId, event.cardPaymentMethodModel.id);
 
-      if (!result) {
+      if (result == null || !result) {
         yield state.copyWith(
             errorMessage:
                 "Failed to delete payment method. Please try again later.");
@@ -90,7 +92,8 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
       yield state.copyWith(
         defaultPaymentMethodCanBeNull: true,
         defaultPaymentMethod: state.defaultPaymentMethod != null &&
-                state.defaultPaymentMethod!.id == event.cardPaymentMethodModel.id
+                state.defaultPaymentMethod!.id ==
+                    event.cardPaymentMethodModel.id
             ? null
             : state.defaultPaymentMethod,
         cardPaymentMethods: copiedCardPaymentMethods,
@@ -105,17 +108,17 @@ class MyWalletBloc extends Bloc<MyWalletEvent, MyWalletState> {
         return;
       }
 
-      final result = await (_myWalletRepository
-          .changeDefaultPaymentMethod(event.cardPaymentMethodModel.id) as FutureOr<bool>);
+      final result = await _myWalletRepository
+          .changeDefaultPaymentMethod(event.cardPaymentMethodModel.id);
 
-      if (!result) {
+      if (result == null || !result) {
         yield state.copyWith(
             errorMessage:
                 "Failed to change default payment method. Please try again later.");
         return;
       }
 
-    final copiedCardPaymentMethods = state.cardPaymentMethods!.map((item) {
+      final copiedCardPaymentMethods = state.cardPaymentMethods!.map((item) {
         if (item!.id == event.cardPaymentMethodModel.id) {
           return item.copyWith(isDefault: true);
         }

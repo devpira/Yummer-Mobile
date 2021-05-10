@@ -12,7 +12,7 @@ class LoginForm extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(content: Text(state.errorMessage!)),

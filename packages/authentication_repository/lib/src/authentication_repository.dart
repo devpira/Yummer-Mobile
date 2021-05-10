@@ -167,7 +167,7 @@ class AuthenticationRepository {
     }
 
     try {
-      if (userCredential == null || userCredential.user == null) {
+      if (userCredential.user == null) {
         throw new Exception();
       }
 
@@ -281,9 +281,9 @@ class AuthenticationRepository {
       {required Function onSuccess, required Function onError}) async {
     try {
       FirebaseDynamicLinks.instance.onLink(
-          onSuccess: (PendingDynamicLinkData dynamicLink) async {
+          onSuccess: (PendingDynamicLinkData? dynamicLink) async {
         if (dynamicLink != null) {
-          final Uri deepLink = dynamicLink.link;
+          final Uri? deepLink = dynamicLink.link;
           print("YOOO");
           if (deepLink != null) {
             print("YOOO2");
@@ -300,7 +300,7 @@ class AuthenticationRepository {
       final PendingDynamicLinkData? data =
           await FirebaseDynamicLinks.instance.getInitialLink();
       if (data != null) {
-        final Uri deepLink = data.link;
+        final Uri? deepLink = data.link;
 
         if (deepLink != null) {
           await firebase_auth.FirebaseAuth.instance.currentUser?.reload();
@@ -317,7 +317,7 @@ class AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    assert(email != null && password != null);
+  
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -401,7 +401,7 @@ class AuthenticationRepository {
         }
         onVerificationFailed(errorMessage);
       },
-      codeSent: (String verificationId, int resendToken) async {
+      codeSent: (String verificationId, int? resendToken) async {
         onCodeSent(verificationId, resendToken);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
@@ -416,7 +416,7 @@ class AuthenticationRepository {
     required String verificationId,
     required String smsCode,
   }) async {
-    assert(smsCode != null && verificationId != null);
+
     try {
       await _firebaseAuth.signInWithCredential(
         firebase_auth.PhoneAuthProvider.credential(
@@ -456,7 +456,7 @@ extension on firebase_auth.User {
   UserModel get toUser {
     return UserModel(
       id: uid,
-      phoneNumber: phoneNumber,
+      phoneNumber: phoneNumber!,
       email: email,
       name: displayName,
       photo: photoURL,

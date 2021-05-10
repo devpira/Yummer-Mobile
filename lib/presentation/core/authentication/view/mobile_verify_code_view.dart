@@ -25,7 +25,7 @@ class MobileVerifyCodeView extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
+          ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(content: Text(state.errorMessage!)),
@@ -62,7 +62,7 @@ class MobileVerifyCodeView extends StatelessWidget {
                   PinPut(
                     fieldsCount: 6,
                     autofocus: true,
-                    onSubmit: (String pin) {
+                    onSubmit: (String? pin) {
                       FocusScope.of(context).unfocus();
                       if (pin != null && pin.isNotEmpty) {
                         context.read<LoginCubit>().verifyMobileSMSCode(pin);

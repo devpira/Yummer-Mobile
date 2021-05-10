@@ -58,7 +58,7 @@ class _MyWalletPage extends StatelessWidget {
         listener: (context, state) {
           print("STATE LISTEN CHANGED");
           if (state.errorMessage != null) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 SnackBar(

@@ -1,10 +1,19 @@
 part of 'restaurant_order_session_bloc.dart';
 
-abstract class RestaurantOrderSessionState extends Equatable {
-  const RestaurantOrderSessionState();
-  
-  @override
-  List<Object> get props => [];
-}
+class RestaurantOrderSessionState extends Equatable {
+  final OrderSessionModel? orderSessionModel;
+  const RestaurantOrderSessionState({
+    this.orderSessionModel,
+  });
 
-class RestaurantOrderSessionInitial extends RestaurantOrderSessionState {}
+  @override
+  List<Object?> get props => [orderSessionModel];
+
+  RestaurantOrderSessionState copyWith({
+    OrderSessionModel? orderSessionModel,
+  }) {
+    return RestaurantOrderSessionState(
+      orderSessionModel: orderSessionModel ?? this.orderSessionModel,
+    );
+  }
+}

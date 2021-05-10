@@ -37,7 +37,7 @@ class ProductModifierGroupModel extends Equatable {
       'name': name,
       'minSelection': minSelection,
       'maxSelection': maxSelection,
-      'modifiers': modifiers?.map((x) => x.toMap())?.toList(),
+      'modifiers': modifiers.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -48,7 +48,7 @@ class ProductModifierGroupModel extends Equatable {
       minSelection: map['minSelection'] as int?,
       maxSelection: map['maxSelection'] as int?,
       modifiers: List<ProductModifierModel>.from(
-        map['modifiers']?.map(
+        map['modifiers'].map(
           (x) => ProductModifierModel.fromMap(
             x as Map<String, dynamic>,
           ),

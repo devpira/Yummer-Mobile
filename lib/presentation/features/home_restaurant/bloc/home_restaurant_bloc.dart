@@ -15,8 +15,7 @@ class HomeRestaurantBloc
 
   HomeRestaurantBloc({
     required RestaurantRepository restaurantRepository,
-  })  : assert(restaurantRepository != null),
-        _restaurantRepository = restaurantRepository,
+  })   : _restaurantRepository = restaurantRepository,
         super(const HomeRestaurantState(restuarantList: [])) {
     add(HomeRestaurantEventLoadAllBasicRestaurants());
   }
@@ -28,9 +27,14 @@ class HomeRestaurantBloc
     if (event is HomeRestaurantEventLoadAllBasicRestaurants) {
       print("LOAD RESTAURANTS");
       yield state.copyWith(isFetchingInProgress: true);
-      final List<BasicRestaurantModel> restaurantList = await (_restaurantRepository.getAllBasicEnabledRestaurants() as FutureOr<List<BasicRestaurantModel>>);
+      final restaurantList =
+          await _restaurantRepository.getAllBasicEnabledRestaurants();
+      if (restaurantList == null) {
+        yield state.copyWith(restuarantList: []);
+        return;
+      }
       print(restaurantList.length);
-      yield state.copyWith(restuarantList: restaurantList?? []);
+      yield state.copyWith(restuarantList: restaurantList);
     }
   }
 }

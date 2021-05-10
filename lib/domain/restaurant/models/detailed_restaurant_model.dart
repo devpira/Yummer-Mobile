@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-
-
 import 'package:yummer/domain/restaurant/restaurant.dart';
 
 class DetailedRestaurantModel extends BasicRestaurantModel {
@@ -71,8 +69,26 @@ class DetailedRestaurantModel extends BasicRestaurantModel {
     };
   }
 
+  static const empty = DetailedRestaurantModel(
+      id: '',
+      name: '',
+      description: '',
+      imageUrl: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      stateProvince: '',
+      country: '',
+      zipPostalCode: '',
+      phoneNumber: '',
+      email: '',
+      website: '',
+      posAccountId: '');
+
   factory DetailedRestaurantModel.fromMap(Map<String, dynamic>? map) {
-    if (map == null) return null;
+    if (map == null) {
+      return DetailedRestaurantModel.empty;
+    }
 
     return DetailedRestaurantModel(
       id: map['_id'] as String?,

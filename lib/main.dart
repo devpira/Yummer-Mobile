@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:yummer/config/config.dart';
 import 'package:yummer/presentation/core/core.dart';
+import 'package:yummer/presentation/features/feature.dart';
 import 'package:yummer/routes/router.gr.dart';
 
 import 'injection.dart';
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<InternetConnectivityCubit>(
           create: (_) => getIt<InternetConnectivityCubit>(),
+        ),
+        BlocProvider<RestaurantOrderSessionBloc>(
+          create: (_) => getIt<RestaurantOrderSessionBloc>(),
         ),
       ],
       child: AppConfig(
@@ -120,8 +124,9 @@ class AppView extends StatelessWidget {
                     context
                         .read<UserDetailBloc>()
                         .add(UserDetailRemoveRequested());
-                    _appRouter.replace(
+                    _appRouter.pushAndRemoveUntil(
                       const LoginPageRoute(),
+                      predicate: (route)=> false,
                     );
                     break;
                   default:
@@ -131,10 +136,15 @@ class AppView extends StatelessWidget {
             ),
             BlocListener<UserDetailBloc, UserDetailState>(
               listener: (context, state) {
-                if (state is UserDetailLoaded) {
+                if (state is UserDetailLoaded && !state.isRefresh!) {
+                  print("cammmmme here @@@@");
                   _appRouter.replace(
                     const HomePageRoute(),
                   );
+                    //       _appRouter.pushAndRemoveUntil(
+                    //   const HomePageRoute(),
+                    //   predicate: (route)=> false,
+                    // );
                 } else if (state is UserDetailLoading) {
                   _appRouter.replace(
                     const LoadingScreenRoute(),

@@ -1,8 +1,16 @@
 part of 'restaurant_order_session_bloc.dart';
 
-abstract class RestaurantOrderSessionEvent extends Equatable {
+class RestaurantOrderSessionEvent extends Equatable {
   const RestaurantOrderSessionEvent();
 
   @override
   List<Object> get props => [];
+}
+
+class RestaurantOrderSessionEventStartOrderSession extends RestaurantOrderSessionEvent {
+  final OrderSessionModel orderSessionModel;
+
+  const RestaurantOrderSessionEventStartOrderSession({
+    required this.orderSessionModel,
+  });
 }
