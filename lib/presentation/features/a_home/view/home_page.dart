@@ -57,17 +57,17 @@ class _HomePageView extends StatelessWidget {
                   icon: Icon(FontAwesomeIcons.users),
                   label: 'Home',
                 ),
-                const BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.solidClock),
-                  label: 'Home',
-                ),
+                // const BottomNavigationBarItem(
+                //   icon: Icon(FontAwesomeIcons.solidClock),
+                //   label: 'Home',
+                // ),
                 BottomNavigationBarItem(
                   icon: CachedAvatarImage(
                     imageUrl: userDetails != null && userDetails.profileImageUrl != ""? userDetails.profileImageUrl!:
                         null,
                     radius: screenWidth * 0.045,
                     borderWidth: screenWidth * 0.008,
-                    borderColor: state.bottomNavIndex == 3? AppConfig.of(context)!.theme!.primaryColor :Colors.white,
+                    borderColor: state.bottomNavIndex == 2? AppConfig.of(context)!.theme!.primaryColor :Colors.white,
                   ),
                   label: 'Home',
                 ),

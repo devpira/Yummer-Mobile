@@ -125,7 +125,7 @@ class _LoadedRestaurantView extends StatelessWidget {
                                 width: double.infinity,
                                 height: contraintHeigth * 0.65,
                                 child: Image.network(
-                                  'https://www.brampton.ca/EN/Arts-Culture-Tourism/Tourism-Brampton/Visitors/PublishingImages/Tourism%20Strategy%202020/PageBanner-FoodTourism.jpg',
+                                  state.restaurantModel!.imageUrl!,
                                   fit: BoxFit.cover,
                                 ),
                               ),

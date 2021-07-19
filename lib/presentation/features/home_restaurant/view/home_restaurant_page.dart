@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:yummer/config/app_config.dart';
 import 'package:yummer/domain/restaurant/models/basic_restaurant_model.dart';
 import 'package:yummer/injection.dart';
@@ -42,7 +42,7 @@ class _HomeRestaurantView extends StatelessWidget {
                 sliver: SliverAppBar(
                   // pinned: true,
                   elevation: 0,
-                  expandedHeight: height * 0.23,
+                  expandedHeight: height * 0.16,
                   backgroundColor: Colors.white,
                   flexibleSpace: LayoutBuilder(
                     builder: (context, BoxConstraints constraint) {
@@ -60,7 +60,7 @@ class _HomeRestaurantView extends StatelessWidget {
                           width: double.infinity,
                           child: Container(
                             margin: EdgeInsets.only(
-                              top: height * 0.07,
+                              top: height * 0.08,
                               left: width * 0.053,
                               right: width * 0.053,
                             ),
@@ -70,28 +70,28 @@ class _HomeRestaurantView extends StatelessWidget {
                                   screenHeight: height,
                                   screenWidth: width,
                                 ),
-                                Row(
-                                  children: [
-                                    _buildIconButton(
-                                        context: context,
-                                        screenHeight: height,
-                                        screenWidth: width,
-                                        label: "Map",
-                                        width: width * 0.25,
-                                        iconData: FontAwesomeIcons.mapMarked),
-                                    SizedBox(
-                                      width: width * 0.05,
-                                    ),
-                                    _buildIconButton(
-                                      context: context,
-                                      screenHeight: height,
-                                      screenWidth: width,
-                                      label: "Filter",
-                                      width: width * 0.25,
-                                      iconData: FontAwesomeIcons.filter,
-                                    )
-                                  ],
-                                )
+                                // Row(
+                                //   children: [
+                                //     _buildIconButton(
+                                //         context: context,
+                                //         screenHeight: height,
+                                //         screenWidth: width,
+                                //         label: "Map",
+                                //         width: width * 0.25,
+                                //         iconData: FontAwesomeIcons.mapMarked),
+                                //     SizedBox(
+                                //       width: width * 0.05,
+                                //     ),
+                                //     _buildIconButton(
+                                //       context: context,
+                                //       screenHeight: height,
+                                //       screenWidth: width,
+                                //       label: "Filter",
+                                //       width: width * 0.25,
+                                //       iconData: FontAwesomeIcons.filter,
+                                //     )
+                                //   ],
+                                // )
                               ],
                             ),
                           ),
@@ -236,8 +236,7 @@ class _Body extends StatelessWidget {
                           screenWidth: screenWidth,
                           screenHeight: screenHeight,
                           restaurantModel: item,
-                          imageUrl:
-                              'https://www.brampton.ca/EN/Arts-Culture-Tourism/Tourism-Brampton/Visitors/PublishingImages/Tourism%20Strategy%202020/PageBanner-FoodTourism.jpg',
+                          imageUrl: item.imageUrl!,
                         ))
                     .toList(),
               ),
@@ -341,7 +340,7 @@ class _RestuarantRow extends StatelessWidget {
                       ),
                       child: Image.network(
                         imageUrl,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -352,9 +351,14 @@ class _RestuarantRow extends StatelessWidget {
                       children: [
                         Text(
                           restaurantModel.name!,
-                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              color: AppConfig.of(context)!.theme!.accentColor,
-                              fontWeight: FontWeight.w800),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                color:
+                                    AppConfig.of(context)!.theme!.accentColor,
+                                fontWeight: FontWeight.w800,
+                              ),
                         ),
                         Text(
                           "2 min away (95 m)",

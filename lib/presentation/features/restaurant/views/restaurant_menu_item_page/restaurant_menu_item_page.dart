@@ -258,23 +258,23 @@ class _RestaurantMenuItemView extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.06,
-                    vertical: screenHeight * 0.03),
-                child: AccentRaisedButton(
-                  onClick: () {
-                    context.read<RestaurantBloc>().add(
-                        RestaurantEventAddToCart(productItem: productItem));
-                        Navigator.pop(context);
-                  },
-                  elevation: 7,
-                  text: "ADD TO CART (\$${productItem.priceUnitAmount! / 100})",
-                ),
-              ),
-            )
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: Container(
+            //     margin: EdgeInsets.symmetric(
+            //         horizontal: screenWidth * 0.06,
+            //         vertical: screenHeight * 0.03),
+            //     child: AccentRaisedButton(
+            //       onClick: () {
+            //         context.read<RestaurantBloc>().add(
+            //             RestaurantEventAddToCart(productItem: productItem));
+            //             Navigator.pop(context);
+            //       },
+            //       elevation: 7,
+            //       text: "ADD TO CART (\$${productItem.priceUnitAmount! / 100})",
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),
