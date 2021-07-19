@@ -22,11 +22,11 @@ class HomePageCubit extends Cubit<HomePageState> {
         viewType = HomePageSocialView();
         break;
       case 2:
-        viewType = HomePageOrderHistoryView();
-        break;
-      case 3:
         viewType = HomePageProfileView();
         break;
+      // case 3:
+      //   viewType = HomePageProfileView();
+      //   break;
       default:
         break;
     }

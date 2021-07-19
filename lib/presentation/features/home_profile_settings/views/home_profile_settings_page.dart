@@ -64,30 +64,30 @@ class HomeProfileSettingsPage extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () => onMyWalletClicked(context),
-                child: Ink(
-                  color: Colors.white,
-                  height: screenHeight * 0.065,
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "My Wallet",
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(fontWeight: FontWeight.w700),
-                      ),
-                      Icon(
-                        FontAwesomeIcons.chevronRight,
-                        size: screenWidth * 0.05,
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () => onMyWalletClicked(context),
+              //   child: Ink(
+              //     color: Colors.white,
+              //     height: screenHeight * 0.065,
+              //     padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              //         Text(
+              //           "My Wallet",
+              //           style: Theme.of(context)
+              //               .textTheme
+              //               .subtitle1!
+              //               .copyWith(fontWeight: FontWeight.w700),
+              //         ),
+              //         Icon(
+              //           FontAwesomeIcons.chevronRight,
+              //           size: screenWidth * 0.05,
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               InkWell(
                 onTap: () {},
                 child: Ink(

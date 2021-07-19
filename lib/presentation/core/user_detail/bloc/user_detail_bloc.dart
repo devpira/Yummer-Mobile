@@ -74,6 +74,9 @@ class UserDetailBloc extends HydratedBloc<UserDetailEvent, UserDetailState> {
       if (result == ConnectivityResult.none) {
         return;
       }
+      if (state is UserDetailLoadFailed) {
+        return;
+      }
       final UserDetailLoaded stateData = state as UserDetailLoaded;
       final userDetailModel = await _userFollowRepository.refreshFollowCount(
           userDetailModel: stateData.userDetails);
