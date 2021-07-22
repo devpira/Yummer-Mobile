@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>681777731847-35l18ejbokgacnr6sk82pgtk6ruu1upf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.681777731847-35l18ejbokgacnr6sk82pgtk6ruu1upf</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>681777731847-at98q51h38egrbs6vq98mgobkbhi7134.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDpITvqC11fOpJh97tJLHLw-kA8fAlJ2Ek</string>
+	<key>GCM_SENDER_ID</key>
+	<string>681777731847</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.yummer.app.yummer</string>
+	<key>PROJECT_ID</key>
+	<string>yummer-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>yummer-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:681777731847:ios:4b6b65c7b8538f9f350da2</string>
+	<key>DATABASE_URL</key>
+	<string>https://yummer-app.firebaseio.com</string>
+</dict>
+</plist>
