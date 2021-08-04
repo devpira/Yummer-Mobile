@@ -193,7 +193,6 @@ class _DisplayNameInput extends StatelessWidget {
           labelText: 'Display Name',
           helperText: 'Unique username for profile',
           maxLength: 25,
-        
           errorText: errorText == "" ? null : errorText,
         );
       },
