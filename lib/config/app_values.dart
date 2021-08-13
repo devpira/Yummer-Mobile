@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 class AppValues {
   String appName = "Yummer";
   String androidPackageName = "com.yummer.app.yummer";
-  String graphQLUri = "http://35.203.93.133:4000/graphql";
+  String graphQLUri = "http://34.124.121.39:4000/graphql";
   String deepLinkUri = "https://travelapp.page.link";
   String appInviteDeepLink = "https://travelapp.page.link/join";
 
