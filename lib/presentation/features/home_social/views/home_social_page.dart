@@ -50,7 +50,7 @@ class _SearchRestuarantInput extends StatelessWidget {
     return ButtonTextField(
       screenHeight: screenHeight,
       screenWidth: screenWidth,
-      label: "Search User",
+      label: "Search user",
       //value: state.destinationString,
       icon: FontAwesomeIcons.search,
       // iconColor: state.selectedDestinations != null &&

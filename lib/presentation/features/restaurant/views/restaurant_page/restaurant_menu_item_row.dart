@@ -53,7 +53,44 @@ class RestaurantMenuItemRow extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: width * 0.05333,
+                    width: width * 0.08,
+                  ),
+
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          productItem.name!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2!
+                              .copyWith(
+                                  color: AppConfig.of(context)!
+                                      .theme!
+                                      .offsetHeadingColor),
+                        ),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        Text(
+                          productItem.description!,
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        Text(
+                            "\$ ${(productItem.priceUnitAmount! / 100).toStringAsFixed(2)}",
+                            style: TextStyle(
+                                color: AppConfig.of(context)!
+                                    .theme!
+                                    .offsetTextColor))
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.042666,
                   ),
                   Hero(
                     tag: productItem.id!,
@@ -81,37 +118,7 @@ class RestaurantMenuItemRow extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: width * 0.042666,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          productItem.name!,
-                          style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              color: AppConfig.of(context)!
-                                  .theme!
-                                  .offsetHeadingColor),
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Text(
-                          productItem.description!,
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Text(
-                            "\$ ${(productItem.priceUnitAmount! / 100).toStringAsFixed(2)}",
-                            style: TextStyle(
-                                color: AppConfig.of(context)!
-                                    .theme!
-                                    .offsetTextColor))
-                      ],
-                    ),
+                    width: width * 0.08,
                   ),
                   // (productItem.quantity == 0)
                   //     ? Container(

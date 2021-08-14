@@ -263,16 +263,19 @@ class _CardInfo extends StatelessWidget {
                 Text(
                   //"BRUNCH HEAVEN",
                   state.restaurantModel!.name!,
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppConfig.of(context)!.theme!.offsetHeadingColor),
                 ),
                 if (top > 200)
-                  Text(
-                    // "AMERICAN - PANCAKES",
-                    state.restaurantModel!.description!,
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
+                  if (state.restaurantModel!.description != null ||
+                      state.restaurantModel!.description != "")
+                    Text(
+                      // "AMERICAN - PANCAKES",
+                      state.restaurantModel!.description!,
+                      style: Theme.of(context).textTheme.subtitle2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                 if (top > 200)
                   Text(
                     //"Leslieville's favourite comfort-brunch spot",
@@ -280,6 +283,7 @@ class _CardInfo extends StatelessWidget {
                     style: Theme.of(context).textTheme.caption!.copyWith(
                         color:
                             AppConfig.of(context)!.theme!.offsetHeadingColor),
+                    overflow: TextOverflow.ellipsis,
                   )
               ],
             ),

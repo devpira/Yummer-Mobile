@@ -38,7 +38,7 @@ class _UserSearchView extends StatelessWidget {
           //     icon: const Icon(FontAwesomeIcons.solidTimesCircle),
           //     onPressed: () => context.router.pop()),
           title: Text(
-            "Search User",
+            "Search user",
             style: TextStyle(
                 fontSize: screenWidth * 0.05, fontWeight: FontWeight.w700),
           ),

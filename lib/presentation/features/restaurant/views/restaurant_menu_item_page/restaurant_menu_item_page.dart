@@ -195,63 +195,63 @@ class _RestaurantMenuItemView extends StatelessWidget {
                         )
                         .toList(),
                   ),
-                  Theme(
-                    data:
-                        ThemeData().copyWith(dividerColor: Colors.transparent),
-                    child: ListTileTheme(
-                      dense: true,
-                      tileColor:
-                          AppConfig.of(context)!.theme!.lightGreyBackground,
-                      child: ExpansionTile(
-                        maintainState: true,
-                        initiallyExpanded: true,
-                        title: Text(
-                          "Leave a Note",
-                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: AppConfig.of(context)!
-                                    .theme!
-                                    .offsetHeadingColor,
-                              ),
-                        ),
-                        children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.02,
-                              horizontal: screenWidth * 0.05,
-                            ),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(
-                                    left: screenWidth * 0.04,
-                                    right: screenWidth * 0.04,
-                                    top: screenHeight * 0.022,
-                                    bottom: screenHeight * 0.022),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[300]!),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: AppConfig.of(context)!
-                                          .theme!
-                                          .primaryColor),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                  // Theme(
+                  //   data:
+                  //       ThemeData().copyWith(dividerColor: Colors.transparent),
+                  //   child: ListTileTheme(
+                  //     dense: true,
+                  //     tileColor:
+                  //         AppConfig.of(context)!.theme!.lightGreyBackground,
+                  //     child: ExpansionTile(
+                  //       maintainState: true,
+                  //       initiallyExpanded: true,
+                  //       title: Text(
+                  //         "Leave a Note",
+                  //         style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                  //               fontWeight: FontWeight.w700,
+                  //               color: AppConfig.of(context)!
+                  //                   .theme!
+                  //                   .offsetHeadingColor,
+                  //             ),
+                  //       ),
+                  //       children: [
+                  //         Container(
+                  //           margin: EdgeInsets.symmetric(
+                  //             vertical: screenHeight * 0.02,
+                  //             horizontal: screenWidth * 0.05,
+                  //           ),
+                  //           child: TextFormField(
+                  //             decoration: InputDecoration(
+                  //               contentPadding: EdgeInsets.only(
+                  //                   left: screenWidth * 0.04,
+                  //                   right: screenWidth * 0.04,
+                  //                   top: screenHeight * 0.022,
+                  //                   bottom: screenHeight * 0.022),
+                  //               enabledBorder: OutlineInputBorder(
+                  //                 borderSide:
+                  //                     BorderSide(color: Colors.grey[300]!),
+                  //                 borderRadius: BorderRadius.circular(8),
+                  //               ),
+                  //               focusedBorder: OutlineInputBorder(
+                  //                 borderSide: BorderSide(
+                  //                     color: AppConfig.of(context)!
+                  //                         .theme!
+                  //                         .primaryColor),
+                  //                 borderRadius: BorderRadius.circular(8),
+                  //               ),
 
-                                hintText: "Enter any note for the server",
-                                // errorText: errorText,
-                              ),
-                              textInputAction: TextInputAction.done,
-                              minLines: 4,
-                              maxLines: 5,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  //               hintText: "Enter any note for the server",
+                  //               // errorText: errorText,
+                  //             ),
+                  //             textInputAction: TextInputAction.done,
+                  //             minLines: 4,
+                  //             maxLines: 5,
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: screenHeight * 0.12,
                   )

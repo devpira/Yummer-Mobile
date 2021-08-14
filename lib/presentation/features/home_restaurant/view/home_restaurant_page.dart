@@ -28,6 +28,7 @@ class _HomeRestaurantView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: AppConfig.of(context).theme.greyBackground,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: LayoutBuilder(builder: (context, size) {
         final double height = size.maxHeight;
@@ -360,13 +361,13 @@ class _RestuarantRow extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                               ),
                         ),
-                        Text(
-                          "2 min away (95 m)",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        // Text(
+                        //   "2 min away (95 m)",
+                        //   style: Theme.of(context)
+                        //       .textTheme
+                        //       .bodyText1!
+                        //       .copyWith(fontWeight: FontWeight.w400),
+                        // ),
                       ],
                     ),
                   ),

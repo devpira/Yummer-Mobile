@@ -37,6 +37,7 @@ class _HomePageView extends StatelessWidget {
     });
     return Scaffold(
       backgroundColor: Colors.white,
+    
       bottomNavigationBar: BlocBuilder<HomePageCubit, HomePageState>(
           buildWhen: (previous, current) =>
               previous.bottomNavIndex != current.bottomNavIndex,
@@ -55,7 +56,7 @@ class _HomePageView extends StatelessWidget {
                 ),
                 const BottomNavigationBarItem(
                   icon: Icon(FontAwesomeIcons.users),
-                  label: 'Home',
+                  label: 'users',
                 ),
                 // const BottomNavigationBarItem(
                 //   icon: Icon(FontAwesomeIcons.solidClock),
@@ -69,7 +70,7 @@ class _HomePageView extends StatelessWidget {
                     borderWidth: screenWidth * 0.008,
                     borderColor: state.bottomNavIndex == 2? AppConfig.of(context)!.theme!.primaryColor :Colors.white,
                   ),
-                  label: 'Home',
+                  label: 'Profile',
                 ),
               ],
               currentIndex: state.bottomNavIndex,
