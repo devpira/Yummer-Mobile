@@ -74,7 +74,7 @@ class UserDetailBloc extends HydratedBloc<UserDetailEvent, UserDetailState> {
       if (result == ConnectivityResult.none) {
         return;
       }
-      if (state is UserDetailLoadFailed) {
+      if (state is UserDetailLoadFailed || state is UserDetailNotCreated) {
         return;
       }
       final UserDetailLoaded stateData = state as UserDetailLoaded;

@@ -52,31 +52,36 @@ class LoginCubit extends Cubit<LoginState> {
       }
       print("STARTING AUTH");
       await _authenticationRepository.loginWithPhone(
-        phoneNumber: "+1${state.phoneNumber.value}",
-        onVerificationCompleted: () {
-          emit(state.copyWith(
-              currentPage: LoginMobileNumberVerifyPageState(),
-              status: FormzStatus.submissionSuccess));
-        },
-        onCodeSent: (String verificationId, int resendToken) {
-          emit(state.copyWith(
-              phoneVerificationId: verificationId,
-              phoneResendToken: resendToken,
-              currentPage: LoginMobileNumberVerifyPageState(),
-              status: FormzStatus.submissionSuccess));
-        },
-        onVerificationFailed: (String value) => {
-          emit(state.copyWith(
-              status: FormzStatus.submissionFailure, errorMessage: value))
-        },
-        codeAutoRetrievalTimeout: () => {
+          phoneNumber: "+1${state.phoneNumber.value}",
+          onVerificationCompleted: () {
+            print("onVerificationCompleted");
             emit(state.copyWith(
-              status: FormzStatus.submissionFailure,
-              errorMessage: "SMS Verification timed out. Please try again.",
-             currentPage: LoginMobileEntryPageState(),
-          ),),
-        }
-      );
+                currentPage: LoginMobileNumberVerifyPageState(),
+                status: FormzStatus.submissionSuccess));
+          },
+          onCodeSent: (String verificationId, int? resendToken) {
+            print("onCodeSent");
+            emit(state.copyWith(
+                phoneVerificationId: verificationId,
+                phoneResendToken: resendToken,
+                currentPage: LoginMobileNumberVerifyPageState(),
+                status: FormzStatus.submissionSuccess));
+          },
+          onVerificationFailed: (String value) {
+            print("onVerificationFailed");
+            emit(state.copyWith(
+                status: FormzStatus.submissionFailure, errorMessage: value));
+          },
+          codeAutoRetrievalTimeout: () => {
+                emit(
+                  state.copyWith(
+                    status: FormzStatus.submissionFailure,
+                    errorMessage:
+                        "SMS Verification timed out. Please try again.",
+                    currentPage: LoginMobileEntryPageState(),
+                  ),
+                ),
+              });
 
       // emit(state.copyWith(
       //     currentPage: LoginMobileNumberVerifyPageState(),

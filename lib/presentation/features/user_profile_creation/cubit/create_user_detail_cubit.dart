@@ -1,5 +1,6 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:yummer/presentation/core/authentication/authentication.dart';
@@ -18,7 +19,7 @@ class CreateUserDetailCubit extends Cubit<CreateUserDetailState> {
     required UserDetailRepository userDetailRepository,
     required AuthenticationBloc authenticationBloc,
     required InternetConnectivityCubit internetConnectivityCubit,
-  })   : _userDetailRepository = userDetailRepository,
+  })  : _userDetailRepository = userDetailRepository,
         _authenticationBloc = authenticationBloc,
         _internetConnectivityCubit = internetConnectivityCubit,
         super(const CreateUserDetailState());
@@ -48,10 +49,18 @@ class CreateUserDetailCubit extends Cubit<CreateUserDetailState> {
   }
 
   Future<void> createUserDetails() async {
-    if (_internetConnectivityCubit.state is InternetConnected == false) {
+    print("CREATE USER PROFILE");
+
+    final ConnectivityResult connectivityResult =
+        await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
       emit(
-        state.copyWith(errorMessage: "No internet connection."),
+        state.copyWith(
+          errorMessage: "No internet connection.",
+          status: FormzStatus.submissionFailure,
+        ),
       );
+      print("No internet connection.");
       return;
     }
 
