@@ -1,4 +1,4 @@
-# yummer
+# Yummer Mobile
 
 yummer application
 
